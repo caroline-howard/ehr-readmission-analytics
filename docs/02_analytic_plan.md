@@ -2,11 +2,11 @@
 
 ## Study Objective
 
-Evaluate demographic, clinical, prior utilization, and discharge-related factors associated with all-cause 30-day inpatient readmission after a first eligible acute inpatient hospitalization using synthetic EHR data.
+Evaluate post-discharge utilization patterns and factors associated with all-cause 30-day inpatient readmission after a first eligible acute inpatient hospitalization using synthetic EHR data.
 
 ## Research Question
 
-Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, what demographic, clinical, prior utilization, and discharge-related factors are associated with all-cause inpatient readmission within 30 days of discharge?
+Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, how are outpatient follow-up timing, demographic characteristics, clinical conditions, prior utilization, and discharge-related factors associated with all-cause inpatient readmission within 30 days of discharge?
 
 ## Study Design
 
@@ -18,12 +18,15 @@ This project will use Synthea synthetic EHR data. Synthea generates realistic bu
 
 ## Literature-Informed Design Considerations
 
-The analytic design is informed by published readmission studies and CMS readmission reporting examples. These sources reinforce several operational choices for this portfolio project:
+The analytic design is informed by outpatient follow-up and readmission literature, including Balasubramanian et al. (2025), as well as published readmission studies and CMS readmission reporting examples. These sources reinforce several operational choices for this portfolio project:
 
 - Use a clear index encounter and a 30-day post-discharge follow-up window.
+- Derive outpatient follow-up timing across 7-day, 14-day, and 30-day windows.
 - Distinguish inpatient readmissions from ED-only revisits and observation-only encounters.
+- Treat readmission, ED revisit, outpatient follow-up, and mortality as related but distinct post-discharge measures.
 - Evaluate prior utilization, including prior encounters and prior emergency visits.
 - Consider comorbidity burden and selected chronic condition flags.
+- Explore age, disease group, and baseline risk strata when supported by the synthetic data.
 - Include discharge-related variables, such as discharge disposition or post-acute setting, when available.
 - Assess equity-relevant patient characteristics, including race, ethnicity, sex, and payer, while avoiding clinical claims from synthetic data.
 
@@ -56,7 +59,7 @@ Observation-only encounters and ED-only visits will not be counted as inpatient 
 
 The index encounter is defined as the first eligible acute inpatient hospitalization for each patient. The first eligible hospitalization will be used to reduce within-patient correlation and simplify interpretation of readmission outcomes in the initial project version.
 
-## Outcome Definition
+## Primary Outcome
 
 Thirty-day readmission is defined as any subsequent eligible inpatient encounter occurring within 30 days after discharge from the index encounter.
 
@@ -64,14 +67,71 @@ The readmission window begins after the index encounter stop date. The primary o
 
 The primary outcome will be all-cause inpatient readmission. If Synthea fields do not support a reliable planned versus unplanned readmission distinction, planned readmissions will not be separately excluded in the initial project version. This limitation will be documented in the report.
 
+## Secondary Post-Discharge Utilization Measures
+
+Secondary measures will describe utilization after discharge from the index inpatient encounter:
+
+- `outpatient_followup_7d`
+- `outpatient_followup_14d`
+- `outpatient_followup_30d`
+- `ed_revisit_30d`, if encounter data support ED classification
+- `days_to_first_outpatient_followup`
+- `days_to_first_postdischarge_encounter`
+- `total_postdischarge_encounters_30d`
+- Death within the 30-day post-discharge window, if death data are available
+
+These measures are intended to describe post-discharge utilization patterns and support exploratory modeling. They will not be interpreted as causal effects.
+
+## Outpatient Follow-Up Definition
+
+Outpatient follow-up is defined as an outpatient or ambulatory encounter occurring after discharge from the index inpatient encounter and within the specified follow-up window.
+
+ED-only encounters will not count as outpatient follow-up. Observation encounters, inpatient encounters, and same-episode transfer-like encounters will not count as outpatient follow-up. If Synthea encounter class fields differ from expected values, the SQL implementation will map the available encounter types to the closest defensible categories and document the decision.
+
+## Timing Windows
+
+Outpatient follow-up will be evaluated in three post-discharge windows:
+
+- 0-7 days after discharge
+- 0-14 days after discharge
+- 0-30 days after discharge
+
+The same 30-day post-discharge window will be used for the primary readmission outcome and ED revisit measure.
+
+## Temporal Sequencing and Bias-Aware Logic
+
+Patients readmitted before an outpatient follow-up occurs create time-dependent interpretation problems because they may not have had an opportunity to complete follow-up. This project will derive timing variables and flag cases where the readmission occurs before outpatient follow-up.
+
+Outpatient visits after a readmission will not be treated as preventing that readmission. The initial portfolio version will report associations only and will avoid causal language about outpatient follow-up reducing readmission.
+
 ## Readmission Edge-Case Logic
 
 - Same-day encounters after discharge may be reviewed separately as possible transfers or continuation-of-care events rather than automatically counted as readmissions.
 - Observation-only encounters will not be counted as inpatient readmissions in the primary outcome.
 - ED-only revisits may be summarized as utilization covariates but will not be counted as inpatient readmissions.
+- Outpatient visits after a readmission will not be counted as follow-up exposure before that readmission.
+- Deaths during the index admission will be excluded from the primary cohort if death data are available.
+- Deaths after discharge but before 30 days will be flagged if death data are available.
 - Patients with death dates before completion of the 30-day follow-up window will be flagged for review and may be excluded from the primary outcome or included in a sensitivity analysis, depending on available fields.
 - Patients discharged near the end of available observation data may be excluded or flagged if a complete 30-day follow-up window cannot be observed.
 - If an ED encounter directly precedes an inpatient admission and appears to be part of the same acute episode, it may be linked to the inpatient encounter rather than treated as a separate readmission event.
+
+## Age and Risk Stratification
+
+Planned descriptive stratification will include:
+
+- Age group, such as under 65 versus 65 and older
+- Chronic condition count
+- Prior utilization burden
+- Length of stay category
+
+These strata are intended to describe whether follow-up patterns and readmission rates differ across patient risk profiles. They will not establish clinical effectiveness.
+
+## Disease and Condition Grouping
+
+If feasible with Synthea data, the project will document simplified disease groupings for common readmission-relevant conditions, such as heart failure, COPD, diabetes, hypertension, chronic kidney disease, and AMI-like cardiovascular conditions.
+
+If the generated Synthea export does not support reliable disease grouping, the project will use available condition records and simplified groupings suitable for synthetic EHR data. Exact grouping logic will be documented in SQL scripts and the data dictionary.
 
 ## Candidate Covariates
 
@@ -85,6 +145,9 @@ The primary outcome will be all-cause inpatient readmission. If Synthea fields d
 - Prior emergency visits if available
 - Prior institutional or post-acute exposure if available
 - Primary diagnosis category if available
+- Outpatient follow-up within 7, 14, and 30 days
+- ED revisit within 30 days if available
+- Days to first post-discharge encounter
 - Diabetes flag
 - Hypertension flag
 - Chronic kidney disease flag
@@ -126,6 +189,8 @@ Planned validation checks include:
 - Cohort attrition counts
 - Encounter start and stop date ordering
 - Thirty-day readmission window logic
+- Outpatient follow-up timing window logic
+- Cases where readmission occurs before outpatient follow-up
 - Follow-up completeness near the end of the available data
 - Separation of inpatient readmissions from ED-only and observation-only revisits
 - Frequency checks for discharge disposition, payer, and optional post-acute setting variables
@@ -140,6 +205,8 @@ Logistic regression was selected as the primary modeling approach because the ou
 
 Model covariates will be chosen based on clinical interpretability, literature-informed readmission domains, missingness, and availability in the synthetic export. The model will not be presented as a validated clinical risk prediction tool.
 
+Outpatient follow-up variables may be included as exploratory covariates only, with careful interpretation due to temporal sequencing, confounding by illness severity, and differences in baseline readmission risk. The analysis will describe associations and will not claim that follow-up causes changes in readmission.
+
 ## Planned Outputs
 
 - Final analytic dataset
@@ -147,6 +214,8 @@ Model covariates will be chosen based on clinical interpretability, literature-i
 - Missingness report
 - Table 1
 - Readmission summary
+- Outpatient follow-up timing summary
+- ED revisit summary, if supported by encounter data
 - Logistic regression results table
 - Cohort flow figure
 - Odds ratio plot

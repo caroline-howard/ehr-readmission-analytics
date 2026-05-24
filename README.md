@@ -1,28 +1,28 @@
-# Retrospective EHR Analytics Workflow for 30-Day Readmission
+# Retrospective Post-Discharge Utilization Analytics Workflow
 
 [Overview](#project-overview) | [Research Question](#research-question) | [Why It Matters](#why-this-project-matters) | [Technical Approach](#technical-approach) | [Skills](#skills-demonstrated) | [Workflow](#planned-workflow) | [Structure](#repository-structure) | [Data Source](#data-source) | [Outputs](#planned-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
-This project demonstrates an end-to-end retrospective healthcare research analytics workflow using Synthea synthetic EHR data. It is designed to show how an analyst can move from a clinical research question to cohort definition, outcome derivation, validation, statistical analysis, and manuscript-style reporting.
+This project demonstrates an end-to-end retrospective healthcare utilization analytics workflow using Synthea synthetic EHR data. It simulates a health system analytics request to define an adult inpatient cohort, track post-discharge utilization, identify outpatient follow-up timing, and evaluate factors associated with 30-day inpatient readmission.
 
 The project is built for healthcare analytics, clinical research analytics, and health system research data analyst roles where reproducibility, data governance, SQL logic, and clear communication are essential.
 
 ## Research Question
 
-Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, what demographic, clinical, prior utilization, and discharge-related factors are associated with all-cause inpatient readmission within 30 days of discharge?
+Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, how are outpatient follow-up timing, demographic characteristics, clinical conditions, prior utilization, and discharge-related factors associated with all-cause inpatient readmission within 30 days of discharge?
 
 ## Why This Project Matters
 
-Health system research teams need reproducible workflows for defining cohorts, deriving outcomes, validating EHR data, assessing missingness, conducting statistical analysis, and preparing manuscript-ready outputs. This project is intended to demonstrate those skills in a public, privacy-preserving way using synthetic data.
+Health system research and population health teams need reproducible workflows for defining cohorts, deriving post-discharge outcomes, validating EHR data, assessing missingness, conducting statistical analysis, and preparing manuscript-ready outputs. This project is intended to demonstrate those skills in a public, privacy-preserving way using synthetic data.
 
 ## Technical Approach
 
-The workflow will use SQL for cohort construction, encounter-level logic, and 30-day readmission outcome derivation. Python notebooks will support data profiling, validation checks, missingness assessment, descriptive statistics, logistic regression, and generation of manuscript-style tables and figures.
+The workflow will use SQL for cohort construction, encounter-level logic, outpatient follow-up timing, ED revisit measures, and 30-day readmission outcome derivation. Python notebooks will support data profiling, validation checks, missingness assessment, descriptive statistics, logistic regression, and generation of manuscript-style tables and figures.
 
-The project design is informed by published readmission studies and CMS readmission reporting examples that emphasize careful follow-up windows, prior utilization, discharge setting, comorbidity burden, and equity-relevant patient characteristics.
+The project design is informed by health services research on outpatient follow-up and readmissions, including Balasubramanian et al. (2025), as well as published readmission studies and CMS readmission reporting examples. These sources motivate clear definitions for post-discharge time windows, outpatient follow-up exposure, inpatient readmission, ED revisits, mortality flags when available, comorbidity burden, age groups, disease groups, prior utilization, and baseline risk.
 
-Planned validation checks include patient and encounter count reconciliation, duplicate review, encounter date ordering, length-of-stay plausibility, readmission window verification, and assessment of missing or unexpected values in key analytic fields.
+Planned validation checks include patient and encounter count reconciliation, duplicate review, encounter date ordering, length-of-stay plausibility, readmission window verification, follow-up timing verification, and assessment of missing or unexpected values in key analytic fields. Outpatient follow-up variables will be interpreted as observational utilization measures, not as evidence that follow-up causes readmission reduction.
 
 ## Skills Demonstrated
 
@@ -31,6 +31,8 @@ Planned validation checks include patient and encounter count reconciliation, du
 - Synthetic EHR data
 - SQL cohort definition
 - 30-day readmission outcome derivation
+- Post-discharge outpatient follow-up measures
+- ED revisit utilization measures
 - Data validation and QA
 - Missingness assessment
 - Logistic regression
@@ -43,12 +45,13 @@ Planned validation checks include patient and encounter count reconciliation, du
 1. Project setup and documentation
 2. Synthea data ingestion
 3. SQL cohort definition
-4. 30-day readmission outcome derivation
-5. Data validation and missingness assessment
-6. Descriptive statistics
-7. Logistic regression
-8. Manuscript-style outputs
-9. Hugging Face demo
+4. Post-discharge utilization measure derivation
+5. 30-day readmission outcome derivation
+6. Data validation and missingness assessment
+7. Descriptive statistics
+8. Logistic regression
+9. Manuscript-style outputs
+10. Hugging Face demo
 
 ## Repository Structure
 
@@ -73,6 +76,8 @@ This repository will not contain real patient data. It will also avoid committin
 - Missingness report
 - Table 1 baseline characteristics
 - Readmission summary table
+- Outpatient follow-up timing summary
+- ED revisit summary, if supported by encounter data
 - Logistic regression results
 - Cohort flow figure
 - Odds ratio plot
