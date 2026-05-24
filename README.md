@@ -1,5 +1,7 @@
 # Retrospective EHR Analytics Workflow for 30-Day Readmission
 
+[Overview](#project-overview) | [Research Question](#research-question) | [Why It Matters](#why-this-project-matters) | [Technical Approach](#technical-approach) | [Skills](#skills-demonstrated) | [Workflow](#planned-workflow) | [Structure](#repository-structure) | [Data Source](#data-source) | [Outputs](#planned-outputs) | [Responsible Use](#responsible-use)
+
 ## Project Overview
 
 This project demonstrates an end-to-end retrospective healthcare research analytics workflow using Synthea synthetic EHR data. It is designed to show how an analyst can move from a clinical research question to cohort definition, outcome derivation, validation, statistical analysis, and manuscript-style reporting.
@@ -13,6 +15,12 @@ Among adult patients with qualifying inpatient encounters, what demographic, cli
 ## Why This Project Matters
 
 Health system research teams need reproducible workflows for defining cohorts, deriving outcomes, validating EHR data, assessing missingness, conducting statistical analysis, and preparing manuscript-ready outputs. This project is intended to demonstrate those skills in a public, privacy-preserving way using synthetic data.
+
+## Technical Approach
+
+The workflow will use SQL for cohort construction, encounter-level logic, and 30-day readmission outcome derivation. Python notebooks will support data profiling, validation checks, missingness assessment, descriptive statistics, logistic regression, and generation of manuscript-style tables and figures.
+
+Planned validation checks include patient and encounter count reconciliation, duplicate review, encounter date ordering, length-of-stay plausibility, readmission window verification, and assessment of missing or unexpected values in key analytic fields.
 
 ## Skills Demonstrated
 
