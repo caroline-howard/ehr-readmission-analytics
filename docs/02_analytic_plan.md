@@ -1,65 +1,98 @@
 # Analytic Plan
 
+## Study Objective
+
+Evaluate demographic, clinical, and utilization factors associated with 30-day hospital readmission using synthetic EHR data.
+
 ## Research Question
 
-Among patients with an eligible inpatient encounter in synthetic EHR data, what patient and encounter characteristics are associated with 30-day hospital readmission?
+Among adult patients with qualifying inpatient encounters, what factors are associated with 30-day hospital readmission?
 
 ## Study Design
 
-Retrospective cohort study using Synthea synthetic EHR data.
+Retrospective cohort study using synthetic EHR-style data.
 
 ## Data Source
 
-The planned source data are Synthea CSV exports representing synthetic patients, encounters, conditions, medications, procedures, observations, and related EHR tables. The exact tables used will be documented after data ingestion.
+This project will use Synthea synthetic EHR data. Synthea generates realistic but artificial patient records for education, testing, and demonstration. These data are synthetic and are not real patient records.
 
-## Target Population
+## Study Population
 
-The planned cohort will include patients with at least one eligible inpatient encounter during the study period. Eligibility rules will be finalized after reviewing available Synthea encounter classes, dates, and table structure.
+Adult patients with at least one qualifying inpatient encounter.
 
-## Index Encounter
+## Inclusion Criteria
 
-The index encounter will be an eligible inpatient hospitalization. If a patient has multiple eligible hospitalizations, the project will define whether to use the first eligible hospitalization, all eligible hospitalizations, or a sensitivity analysis approach.
+- Age 18 or older at index encounter
+- At least one inpatient encounter
+- Valid encounter start and stop dates
+- Valid patient identifier
 
-## Primary Outcome
+## Exclusion Criteria
 
-The primary outcome is all-cause hospital readmission within 30 days after discharge from the index encounter.
+- Patients under age 18
+- Encounters with missing or invalid start/end dates
+- Encounters where discharge occurs before admission
+- Duplicate or unresolved patient identifiers
+- Patients without enough follow-up data to evaluate readmission, if applicable
 
-Planned outcome logic:
+## Index Encounter Definition
 
-- Identify discharge date for the index encounter.
-- Search for a subsequent inpatient encounter for the same patient.
-- Classify readmission as present if the subsequent inpatient encounter begins within 30 days after discharge.
-- Exclude same-day transfers or continuation encounters if the source data support that distinction.
+The index encounter is defined as the first qualifying inpatient encounter for each patient.
+
+## Outcome Definition
+
+Thirty-day readmission is defined as any subsequent inpatient encounter occurring within 30 days after discharge from the index encounter.
 
 ## Candidate Covariates
 
-Planned covariate domains include:
+- Age
+- Sex
+- Race
+- Ethnicity
+- Length of stay
+- Prior encounters
+- Prior emergency visits if available
+- Diabetes flag
+- Hypertension flag
+- Chronic kidney disease flag
+- COPD flag
+- Number of chronic conditions
+- Discharge disposition if available
 
-- Demographics: age, sex, race, ethnicity, and insurance or payer if available
-- Encounter characteristics: length of stay, admission type, discharge disposition if available
-- Clinical history: selected chronic conditions or diagnosis groupings
-- Utilization history: prior encounters or prior inpatient use
-- Medication or procedure indicators if supported by data quality
+## Data Validation Plan
 
-## Analysis Plan
+Planned data validation checks include:
 
-The initial analysis will include:
+- One index encounter per patient
+- No negative length of stay
+- Age 18+ only
+- No missing primary outcome
+- Duplicate patient IDs
+- Missingness by variable
+- Outcome distribution
+- Cohort attrition counts
 
-- Cohort counts and inclusion/exclusion flow
-- Descriptive statistics stratified by readmission status
-- Missingness and data quality checks
-- Bivariate comparisons where appropriate
-- A parsimonious regression model or classification model if the data support it
+## Statistical Analysis Plan
 
-Any model outputs will be interpreted as portfolio demonstrations using synthetic data, not as clinically generalizable findings.
+The analysis will begin with descriptive statistics for the final analytic cohort. A Table 1 will compare patients with and without 30-day readmission.
 
-## Validation Plan
+Categorical variables will be compared using chi-square tests where appropriate. Continuous variables will be compared using t-tests or nonparametric alternatives where appropriate, depending on distributional assumptions and sample size.
 
-Validation will focus on:
+Logistic regression will be used to estimate adjusted associations between candidate covariates and 30-day readmission. Model outputs will include odds ratios, 95% confidence intervals, and p-values.
 
-- Unique patient and encounter counts
-- Encounter date ordering
-- Length-of-stay plausibility
-- Outcome date logic
-- Duplicate rows and unexpected null values
-- Reproducibility of cohort counts from raw tables to analytic dataset
+## Planned Outputs
+
+- Final analytic dataset
+- Cohort attrition table
+- Missingness report
+- Table 1
+- Readmission summary
+- Logistic regression results table
+- Cohort flow figure
+- Odds ratio plot
+
+## Limitations
+
+This project uses synthetic data and is not supported by real-world clinical validation. Coding logic may simplify the complexity of real EHR workflows, including encounter classification, diagnosis grouping, discharge disposition, and follow-up observation windows.
+
+Findings from this project will be educational and portfolio-focused. They should not be interpreted as clinical evidence or used for clinical decision-making.
