@@ -1,0 +1,10 @@
+duckdb
+gradio
+jupyter
+matplotlib
+numpy
+pandas
+scikit-learn
+scipy
+seaborn
+statsmodels
