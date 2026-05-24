@@ -10,7 +10,7 @@ The project is built for healthcare analytics, clinical research analytics, and 
 
 ## Research Question
 
-Among adult patients with qualifying inpatient encounters, what demographic, clinical, and utilization factors are associated with 30-day hospital readmission?
+Among adult patients with qualifying inpatient encounters, what demographic, clinical, prior utilization, and discharge-related factors are associated with 30-day hospital readmission?
 
 ## Why This Project Matters
 
@@ -19,6 +19,8 @@ Health system research teams need reproducible workflows for defining cohorts, d
 ## Technical Approach
 
 The workflow will use SQL for cohort construction, encounter-level logic, and 30-day readmission outcome derivation. Python notebooks will support data profiling, validation checks, missingness assessment, descriptive statistics, logistic regression, and generation of manuscript-style tables and figures.
+
+The project design is informed by published readmission studies and CMS readmission reporting examples that emphasize careful follow-up windows, prior utilization, discharge setting, comorbidity burden, and equity-relevant patient characteristics.
 
 Planned validation checks include patient and encounter count reconciliation, duplicate review, encounter date ordering, length-of-stay plausibility, readmission window verification, and assessment of missing or unexpected values in key analytic fields.
 
