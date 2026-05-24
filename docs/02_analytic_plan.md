@@ -2,7 +2,7 @@
 
 ## Study Objective
 
-Evaluate post-discharge utilization patterns and factors associated with all-cause 30-day inpatient readmission after a first eligible acute inpatient hospitalization using synthetic EHR data.
+Evaluate post-discharge utilization patterns among adults with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, including outpatient follow-up timing, ED revisits, and all-cause 30-day inpatient readmission. The project will demonstrate how to define an inpatient cohort, derive time-window-based post-discharge measures, validate encounter logic, and assess patient, clinical, utilization, and discharge-related factors associated with readmission.
 
 ## Research Question
 
@@ -10,7 +10,7 @@ Among adult patients with a first eligible acute inpatient hospitalization in Sy
 
 ## Study Design
 
-Retrospective cohort study using synthetic EHR-style data.
+Retrospective cohort study using synthetic EHR-style patient, encounter, and condition data. The unit of analysis will be the patient-index hospitalization, with one first eligible inpatient encounter selected per adult patient. Post-discharge utilization measures will be derived from encounter records after index discharge using predefined 7-day, 14-day, and 30-day windows.
 
 ## Data Source
 
