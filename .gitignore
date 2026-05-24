@@ -12,7 +12,10 @@ env/
 .DS_Store
 
 # Data and generated artifacts
-data/
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
 *.db
 *.sqlite
 *.sqlite3
