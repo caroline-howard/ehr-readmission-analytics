@@ -67,9 +67,48 @@ The readmission window begins after the index encounter stop date. The primary o
 
 The primary outcome will be all-cause inpatient readmission. If Synthea fields do not support a reliable planned versus unplanned readmission distinction, planned readmissions will not be separately excluded in the initial project version. This limitation will be documented in the report.
 
+## Variable Scope
+
+To keep the first project version feasible, variables will be separated into a core MVP set and optional exploratory variables.
+
+Core MVP variables are required for the initial cohort build, validation workflow, descriptive analysis, and primary model:
+
+- Patient identifier
+- Index encounter identifier
+- Age at index
+- Sex
+- Race
+- Ethnicity
+- Index encounter start and stop dates
+- Length of stay
+- Prior encounters in the 12 months before index admission
+- Prior ED visits in the 12 months before index admission, if ED encounter class is identifiable
+- Outpatient follow-up within 7, 14, and 30 days
+- Days to first outpatient follow-up
+- ED revisit within 30 days, if ED encounter class is identifiable
+- Thirty-day inpatient readmission outcome
+- Days to readmission
+- Core comorbidity flags: diabetes, hypertension, chronic kidney disease, and COPD
+- Chronic condition count
+
+Optional exploratory variables may be profiled or added only if the Synthea export supports defensible derivation:
+
+- Payer
+- Discharge disposition
+- Post-acute discharge setting
+- Disease or condition subgroup
+- AMI-like cardiovascular condition grouping
+- Substance use flag
+- Death during index admission
+- Death within 30 days after discharge
+- Medication count at discharge
+- Discharge-adjacent lab values
+- Functional status proxies
+- Prior institutional exposure
+
 ## Secondary Post-Discharge Utilization Measures
 
-Secondary measures will describe utilization after discharge from the index inpatient encounter:
+Core secondary measures will describe utilization after discharge from the index inpatient encounter:
 
 - `outpatient_followup_7d`
 - `outpatient_followup_14d`
@@ -78,6 +117,9 @@ Secondary measures will describe utilization after discharge from the index inpa
 - `days_to_first_outpatient_followup`
 - `days_to_first_postdischarge_encounter`
 - `total_postdischarge_encounters_30d`
+
+Optional secondary measures may include:
+
 - Death within the 30-day post-discharge window, if death data are available
 
 These measures are intended to describe post-discharge utilization patterns and support exploratory modeling. They will not be interpreted as causal effects.
@@ -129,11 +171,11 @@ These strata are intended to describe whether follow-up patterns and readmission
 
 ## Disease and Condition Grouping
 
-If feasible with Synthea data, the project will document simplified disease groupings for common readmission-relevant conditions, such as heart failure, COPD, diabetes, hypertension, chronic kidney disease, and AMI-like cardiovascular conditions.
+If feasible with Synthea data, the project may document simplified disease groupings for common readmission-relevant conditions, such as heart failure, COPD, diabetes, hypertension, chronic kidney disease, and AMI-like cardiovascular conditions. These groupings are optional exploratory variables, not required for the MVP workflow.
 
 If the generated Synthea export does not support reliable disease grouping, the project will use available condition records and simplified groupings suitable for synthetic EHR data. Exact grouping logic will be documented in SQL scripts and the data dictionary.
 
-## Candidate Covariates
+## Core Candidate Covariates
 
 - Age
 - Sex
@@ -141,10 +183,7 @@ If the generated Synthea export does not support reliable disease grouping, the 
 - Ethnicity
 - Length of stay
 - Prior encounters
-- Prior inpatient encounters
 - Prior emergency visits if available
-- Prior institutional or post-acute exposure if available
-- Primary diagnosis category if available
 - Outpatient follow-up within 7, 14, and 30 days
 - ED revisit within 30 days if available
 - Days to first post-discharge encounter
@@ -152,8 +191,15 @@ If the generated Synthea export does not support reliable disease grouping, the 
 - Hypertension flag
 - Chronic kidney disease flag
 - COPD flag
-- Substance use flag if available
 - Number of chronic conditions
+
+## Optional Exploratory Covariates
+
+- Prior inpatient encounters
+- Prior institutional or post-acute exposure if available
+- Primary diagnosis category if available
+- Disease or condition subgroup if reproducible from condition records
+- Substance use flag if available
 - Payer if available
 - Discharge disposition if available
 - Post-acute discharge setting if available

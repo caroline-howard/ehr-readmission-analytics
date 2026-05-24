@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-This project demonstrates an end-to-end retrospective healthcare utilization analytics workflow using Synthea synthetic EHR data. It simulates a health system analytics request to define an adult inpatient cohort, track post-discharge utilization, identify outpatient follow-up timing, and evaluate factors associated with 30-day inpatient readmission.
+This project demonstrates an end-to-end retrospective healthcare utilization analytics workflow using Synthea synthetic EHR data. It simulates a health system analytics request to define an adult inpatient cohort, track core post-discharge utilization measures, identify outpatient follow-up timing, and evaluate factors associated with 30-day inpatient readmission.
 
 The project is built for healthcare analytics, clinical research analytics, and health system research data analyst roles where reproducibility, data governance, SQL logic, and clear communication are essential.
 
@@ -21,6 +21,8 @@ Health system research and population health teams need reproducible workflows f
 The workflow will use SQL for cohort construction, encounter-level logic, outpatient follow-up timing, ED revisit measures, and 30-day readmission outcome derivation. Python notebooks will support data profiling, validation checks, missingness assessment, descriptive statistics, logistic regression, and generation of manuscript-style tables and figures.
 
 The project design is informed by health services research on outpatient follow-up and readmissions, including Balasubramanian et al. (2025), as well as published readmission studies and CMS readmission reporting examples. These sources motivate clear definitions for post-discharge time windows, outpatient follow-up exposure, inpatient readmission, ED revisits, mortality flags when available, comorbidity burden, age groups, disease groups, prior utilization, and baseline risk.
+
+The first project version will focus on a core MVP variable set: patient demographics, index hospitalization dates, length of stay, prior utilization, outpatient follow-up within 7, 14, and 30 days, ED revisit within 30 days when identifiable, and 30-day inpatient readmission. Additional variables such as disease subgroups, discharge disposition, payer, mortality, post-acute setting, medication counts, and lab values will be treated as optional exploratory variables only if the Synthea export supports defensible derivation.
 
 Planned validation checks include patient and encounter count reconciliation, duplicate review, encounter date ordering, length-of-stay plausibility, readmission window verification, follow-up timing verification, and assessment of missing or unexpected values in key analytic fields. Outpatient follow-up variables will be interpreted as observational utilization measures, not as evidence that follow-up causes readmission reduction.
 
@@ -81,8 +83,7 @@ This repository will not contain real patient data. It will also avoid committin
 - Logistic regression results
 - Cohort flow figure
 - Odds ratio plot
-- Abstract
-- Results summary
+- Brief results summary
 - Hugging Face app
 
 ## Responsible Use
