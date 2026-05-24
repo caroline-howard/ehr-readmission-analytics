@@ -12,6 +12,10 @@ This portfolio project simulates that request using Synthea synthetic EHR data s
 
 The documentation and planned variables are informed by examples from readmission research and CMS readmission reporting. Those sources highlight the importance of defining the index encounter, distinguishing inpatient readmissions from ED-only revisits, handling incomplete follow-up windows, and considering factors such as prior utilization, comorbidity burden, discharge setting, payer, race, and ethnicity.
 
+## Research Question
+
+Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, what demographic, clinical, prior utilization, and discharge-related factors are associated with all-cause inpatient readmission within 30 days of discharge?
+
 ## What This Project Demonstrates
 
 The project demonstrates the practical analytics work behind a retrospective health system study:
