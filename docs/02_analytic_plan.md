@@ -2,11 +2,11 @@
 
 ## Study Objective
 
-Evaluate demographic, clinical, and utilization factors associated with 30-day hospital readmission using synthetic EHR data.
+Evaluate demographic, clinical, prior utilization, and discharge-related factors associated with all-cause 30-day inpatient readmission after a first eligible acute inpatient hospitalization using synthetic EHR data.
 
 ## Research Question
 
-Among adult patients with qualifying inpatient encounters, what demographic, clinical, prior utilization, and discharge-related factors are associated with 30-day hospital readmission?
+Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, what demographic, clinical, prior utilization, and discharge-related factors are associated with all-cause inpatient readmission within 30 days of discharge?
 
 ## Study Design
 
@@ -29,7 +29,7 @@ The analytic design is informed by published readmission studies and CMS readmis
 
 ## Study Population
 
-The study population will include adult patients with at least one qualifying inpatient encounter. The analytic dataset will be constructed at the patient-index encounter level, with one index encounter per patient.
+The study population will include adult patients with at least one eligible acute inpatient hospitalization. The analytic dataset will be constructed at the patient-index encounter level, with one index encounter per patient.
 
 ## Inpatient Encounter Definition
 
@@ -40,7 +40,7 @@ Observation-only encounters and ED-only visits will not be counted as inpatient 
 ## Inclusion Criteria
 
 - Age 18 or older at index encounter
-- At least one qualifying inpatient encounter
+- At least one eligible acute inpatient hospitalization
 - Valid encounter start and stop dates
 - Valid patient identifier
 
@@ -54,11 +54,11 @@ Observation-only encounters and ED-only visits will not be counted as inpatient 
 
 ## Index Encounter Definition
 
-The index encounter is defined as the first qualifying inpatient encounter for each patient. The first qualifying inpatient encounter will be used to reduce within-patient correlation and simplify interpretation of readmission outcomes in the initial project version.
+The index encounter is defined as the first eligible acute inpatient hospitalization for each patient. The first eligible hospitalization will be used to reduce within-patient correlation and simplify interpretation of readmission outcomes in the initial project version.
 
 ## Outcome Definition
 
-Thirty-day readmission is defined as any subsequent qualifying inpatient encounter occurring within 30 days after discharge from the index encounter.
+Thirty-day readmission is defined as any subsequent eligible inpatient encounter occurring within 30 days after discharge from the index encounter.
 
 The readmission window begins after the index encounter stop date. The primary outcome will be coded as `readmitted_30d = 1` when a subsequent inpatient encounter starts within 30 days after index discharge and `readmitted_30d = 0` otherwise, assuming sufficient follow-up data are available.
 
