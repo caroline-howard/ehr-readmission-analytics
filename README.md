@@ -10,7 +10,7 @@ The project is built for healthcare analytics, clinical research analytics, and 
 
 ## Research Question
 
-Among adult patients with qualifying inpatient encounters, what demographic, clinical, prior utilization, and discharge-related factors are associated with 30-day hospital readmission?
+Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, what demographic, clinical, prior utilization, and discharge-related factors are associated with all-cause inpatient readmission within 30 days of discharge?
 
 ## Why This Project Matters
 
