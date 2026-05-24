@@ -6,7 +6,7 @@ Evaluate demographic, clinical, and utilization factors associated with 30-day h
 
 ## Research Question
 
-Among adult patients with qualifying inpatient encounters, what factors are associated with 30-day hospital readmission?
+Among adult patients with qualifying inpatient encounters, what demographic, clinical, prior utilization, and discharge-related factors are associated with 30-day hospital readmission?
 
 ## Study Design
 
@@ -15,6 +15,17 @@ Retrospective cohort study using synthetic EHR-style data.
 ## Data Source
 
 This project will use Synthea synthetic EHR data. Synthea generates realistic but artificial patient records for education, testing, and demonstration. These data are synthetic and are not real patient records.
+
+## Literature-Informed Design Considerations
+
+The analytic design is informed by published readmission studies and CMS readmission reporting examples. These sources reinforce several operational choices for this portfolio project:
+
+- Use a clear index encounter and a 30-day post-discharge follow-up window.
+- Distinguish inpatient readmissions from ED-only revisits and observation-only encounters.
+- Evaluate prior utilization, including prior encounters and prior emergency visits.
+- Consider comorbidity burden and selected chronic condition flags.
+- Include discharge-related variables, such as discharge disposition or post-acute setting, when available.
+- Assess equity-relevant patient characteristics, including race, ethnicity, sex, and payer, while avoiding clinical claims from synthetic data.
 
 ## Study Population
 
@@ -51,6 +62,8 @@ Thirty-day readmission is defined as any subsequent qualifying inpatient encount
 
 The readmission window begins after the index encounter stop date. The primary outcome will be coded as `readmitted_30d = 1` when a subsequent inpatient encounter starts within 30 days after index discharge and `readmitted_30d = 0` otherwise, assuming sufficient follow-up data are available.
 
+The primary outcome will be all-cause inpatient readmission. If Synthea fields do not support a reliable planned versus unplanned readmission distinction, planned readmissions will not be separately excluded in the initial project version. This limitation will be documented in the report.
+
 ## Readmission Edge-Case Logic
 
 - Same-day encounters after discharge may be reviewed separately as possible transfers or continuation-of-care events rather than automatically counted as readmissions.
@@ -58,6 +71,7 @@ The readmission window begins after the index encounter stop date. The primary o
 - ED-only revisits may be summarized as utilization covariates but will not be counted as inpatient readmissions.
 - Patients with death dates before completion of the 30-day follow-up window will be flagged for review and may be excluded from the primary outcome or included in a sensitivity analysis, depending on available fields.
 - Patients discharged near the end of available observation data may be excluded or flagged if a complete 30-day follow-up window cannot be observed.
+- If an ED encounter directly precedes an inpatient admission and appears to be part of the same acute episode, it may be linked to the inpatient encounter rather than treated as a separate readmission event.
 
 ## Candidate Covariates
 
@@ -67,19 +81,28 @@ The readmission window begins after the index encounter stop date. The primary o
 - Ethnicity
 - Length of stay
 - Prior encounters
+- Prior inpatient encounters
 - Prior emergency visits if available
+- Prior institutional or post-acute exposure if available
+- Primary diagnosis category if available
 - Diabetes flag
 - Hypertension flag
 - Chronic kidney disease flag
 - COPD flag
+- Substance use flag if available
 - Number of chronic conditions
+- Payer if available
 - Discharge disposition if available
+- Post-acute discharge setting if available
+- Discharge medication count and selected discharge-adjacent lab values if available
 
 ## Comorbidity Logic
 
 Comorbidity flags will initially be derived from condition records occurring before or during the index encounter. The project will use simplified condition grouping logic appropriate for synthetic EHR data. Exact diagnosis grouping logic will be documented in SQL scripts and the data dictionary.
 
-The initial comorbidity feature set will focus on diabetes, hypertension, chronic kidney disease, COPD, and a count of selected chronic conditions. Additional condition groupings may be added only if they improve interpretability and can be derived reproducibly from the available Synthea fields.
+The initial comorbidity feature set will focus on diabetes, hypertension, chronic kidney disease, COPD, substance use if available, and a count of selected chronic conditions. Additional condition groupings may be added only if they improve interpretability and can be derived reproducibly from the available Synthea fields.
+
+If available in the Synthea export, medication count near discharge and selected discharge-adjacent observations such as hemoglobin may be profiled as exploratory covariates. These variables will be treated as optional because availability and realism may vary across synthetic exports.
 
 ## Missingness Handling
 
@@ -104,6 +127,8 @@ Planned validation checks include:
 - Encounter start and stop date ordering
 - Thirty-day readmission window logic
 - Follow-up completeness near the end of the available data
+- Separation of inpatient readmissions from ED-only and observation-only revisits
+- Frequency checks for discharge disposition, payer, and optional post-acute setting variables
 
 ## Statistical Analysis Plan
 
@@ -112,6 +137,8 @@ The analysis will begin with descriptive statistics for the final analytic cohor
 Categorical variables will be compared using chi-square tests where appropriate. Continuous variables will be compared using t-tests or nonparametric alternatives where appropriate, depending on distributional assumptions and sample size.
 
 Logistic regression was selected as the primary modeling approach because the outcome is binary and the model provides interpretable adjusted associations suitable for healthcare research reporting. Model outputs will include odds ratios, 95% confidence intervals, and p-values.
+
+Model covariates will be chosen based on clinical interpretability, literature-informed readmission domains, missingness, and availability in the synthetic export. The model will not be presented as a validated clinical risk prediction tool.
 
 ## Planned Outputs
 
