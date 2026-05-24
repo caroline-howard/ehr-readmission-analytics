@@ -2,19 +2,19 @@
 
 ## Working Title
 
-Retrospective EHR Analytics Workflow for 30-Day Readmission
+Retrospective Post-Discharge Utilization Analytics Workflow
 
 ## Scenario
 
-A health system research or population health analytics team has been asked to support a physician investigator studying inpatient readmissions. The request is to build a reproducible retrospective EHR analytics workflow that defines an inpatient cohort, derives a 30-day readmission outcome, validates the analytic dataset, and prepares outputs suitable for research reporting.
+A physician investigator, quality improvement leader, or population health analytics team asks whether post-discharge follow-up patterns are associated with 30-day readmission in an adult inpatient population. This project demonstrates how I would translate that request into a reproducible SQL and Python analytics workflow.
 
-This portfolio project simulates that request using Synthea synthetic EHR data so the workflow can be shared publicly without real patient information.
+The simulated request is: can we use EHR-style encounter data to define an inpatient cohort, track post-discharge utilization, identify outpatient follow-up timing, and evaluate factors associated with 30-day inpatient readmission?
 
-The documentation and planned variables are informed by examples from readmission research and CMS readmission reporting. Those sources highlight the importance of defining the index encounter, distinguishing inpatient readmissions from ED-only revisits, handling incomplete follow-up windows, and considering factors such as prior utilization, comorbidity burden, discharge setting, payer, race, and ethnicity.
+This portfolio project uses Synthea synthetic EHR data so the workflow can be shared publicly without real patient information. The emphasis is on the analytic process a healthcare data analyst would need to demonstrate: cohort definition, time-window logic, data validation, reproducible analysis, and clear reporting.
 
 ## Research Question
 
-Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, what demographic, clinical, prior utilization, and discharge-related factors are associated with all-cause inpatient readmission within 30 days of discharge?
+Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, how are outpatient follow-up timing, demographic characteristics, clinical conditions, prior utilization, and discharge-related factors associated with all-cause inpatient readmission within 30 days of discharge?
 
 ## What This Project Demonstrates
 
@@ -23,26 +23,27 @@ The project demonstrates the practical analytics work behind a retrospective hea
 - Translating a clinical analytics request into a cohort definition
 - Building reproducible SQL logic for encounter selection and outcome derivation
 - Validating patient, encounter, date, and outcome logic
-- Translating literature-informed risk domains into variables supported by available EHR fields
+- Translating literature-informed post-discharge utilization concepts into variables supported by available EHR fields
 - Assessing missingness and data quality issues
 - Producing analysis-ready datasets for Python-based statistics
 - Preparing manuscript-style tables, figures, and documentation
 
 ## Why a Healthcare Analytics Team Would Need This
 
-Readmission analyses often require consistent definitions, transparent assumptions, and repeatable logic across data pulls. A healthcare analytics team needs a workflow that can be reviewed by investigators, adapted to available EHR fields, and audited when cohort counts or outcome rates change.
+Post-discharge utilization analyses often require consistent definitions, transparent assumptions, and repeatable logic across data pulls. A healthcare analytics team needs a workflow that can distinguish inpatient readmissions from ED revisits and outpatient follow-up, adapt to available EHR fields, and be audited when cohort counts or outcome rates change.
 
 This project focuses on that workflow rather than on clinical deployment. It is intended to show the documentation, validation, and implementation thinking expected in healthcare analytics, clinical research analytics, and population health analytics roles.
 
 ## Source Materials Used for Design
 
-The project design was informed by examples from readmission research and reporting, including:
+The project design was informed by health services research and readmission reporting examples, including:
 
+- Balasubramanian et al. (2025), "Outpatient Follow-Up and 30-Day Readmissions: A Systematic Review and Meta-Analysis"
 - A CMS/NCQA report on readmissions reduction initiatives and vulnerable populations
 - A retrospective EHR-based study of 30-day readmission after hypoglycemia-related emergency and inpatient encounters
 - A retrospective study of 30-day readmission after acute inpatient cancer rehabilitation
 
-These sources informed the planned attention to all-cause readmission definitions, prior utilization, discharge setting, comorbidity burden, equity-relevant characteristics, ED versus inpatient revisit distinctions, and follow-up window completeness. They do not provide results for this synthetic-data portfolio project.
+These sources informed the planned attention to outpatient follow-up timing, 7-day, 14-day, and 30-day windows, readmission and ED revisit distinctions, mortality flags when available, age and disease group stratification, prior utilization, comorbidity burden, and bias-aware interpretation. They do not provide results for this synthetic-data portfolio project.
 
 ## Planned Deliverables
 
