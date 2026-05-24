@@ -2,34 +2,45 @@
 
 ## Working Title
 
-EHR Readmission Analytics: A Retrospective 30-Day Hospital Readmission Workflow Using Synthetic EHR Data
+Retrospective EHR Analytics Workflow for 30-Day Readmission
 
-## Purpose
+## Scenario
 
-This project demonstrates a healthcare research analytics workflow using synthetic EHR data. The primary objective is to build a reproducible process for defining an inpatient cohort, identifying 30-day hospital readmissions, validating the analytic dataset, and producing manuscript-style outputs.
+A health system research or population health analytics team has been asked to support a physician investigator studying inpatient readmissions. The request is to build a reproducible retrospective EHR analytics workflow that defines an inpatient cohort, derives a 30-day readmission outcome, validates the analytic dataset, and prepares outputs suitable for research reporting.
 
-The project is intended for portfolio review by teams hiring for healthcare data analytics, clinical research analytics, population health analytics, and health services research roles.
+This portfolio project simulates that request using Synthea synthetic EHR data so the workflow can be shared publicly without real patient information.
 
-## Research Context
+## What This Project Demonstrates
 
-Hospital readmission within 30 days is a common quality, utilization, and outcomes measure. A retrospective EHR-based study requires careful attention to encounter definitions, date logic, exclusion criteria, repeated admissions, diagnosis coding, patient characteristics, and validation of derived outcomes.
+The project demonstrates the practical analytics work behind a retrospective health system study:
 
-This portfolio project uses Synthea synthetic data so the workflow can be shared publicly without exposing real patient information.
+- Translating a clinical analytics request into a cohort definition
+- Building reproducible SQL logic for encounter selection and outcome derivation
+- Validating patient, encounter, date, and outcome logic
+- Assessing missingness and data quality issues
+- Producing analysis-ready datasets for Python-based statistics
+- Preparing manuscript-style tables, figures, and documentation
+
+## Why a Healthcare Analytics Team Would Need This
+
+Readmission analyses often require consistent definitions, transparent assumptions, and repeatable logic across data pulls. A healthcare analytics team needs a workflow that can be reviewed by investigators, adapted to available EHR fields, and audited when cohort counts or outcome rates change.
+
+This project focuses on that workflow rather than on clinical deployment. It is intended to show the documentation, validation, and implementation thinking expected in healthcare analytics, clinical research analytics, and population health analytics roles.
 
 ## Planned Deliverables
 
-- Analytic plan and cohort definition
-- Data dictionary for derived analytic variables
-- SQL scripts for cohort construction and validation
-- Notebook-based exploratory and statistical analysis
-- Tables and figures suitable for a short report
-- Manuscript-style final report
-- Lightweight Gradio app for project presentation
+- Project overview and operational analytic plan
+- Draft data dictionary for planned analytic variables
+- SQL scripts for cohort construction, outcome derivation, and validation
+- Notebook-based descriptive and statistical analysis
+- Cohort attrition, missingness, and validation summaries
+- Manuscript-style tables and figures
+- Lightweight Gradio app for portfolio presentation
 
-## Out of Scope for Initial Setup
+## Out of Scope
 
 - Real patient data
-- Large synthetic data files
-- Final statistical results
-- Claims about clinical validity or operational performance
-- A production application
+- Large synthetic data files committed to the repository
+- Fake or placeholder results
+- Clinical decision support
+- Production deployment
