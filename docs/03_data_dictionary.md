@@ -2,6 +2,14 @@
 
 This draft data dictionary describes planned analytic variables for the Synthea EHR post-discharge utilization and 30-day readmission workflow. Variable availability and exact source columns may change after the Synthea export is generated and profiled.
 
+## Variable Scope
+
+The first project version will prioritize the core MVP variables needed to define the cohort, derive outpatient follow-up timing, derive 30-day readmission, validate temporal logic, and run the primary descriptive/modeling workflow.
+
+Core MVP variables include patient and encounter identifiers, age, sex, race, ethnicity, encounter dates, length of stay, prior utilization counts, outpatient follow-up timing, ED revisit within 30 days when identifiable, 30-day readmission, days to readmission, selected comorbidity flags, and chronic condition count.
+
+Optional exploratory variables include payer, discharge disposition, post-acute discharge setting, disease subgrouping, substance use, death indicators, functional status proxies, medication counts, lab values, and prior institutional exposure. These variables will only be used if the Synthea export supports defensible derivation.
+
 | Variable | Definition | Source | Type | Planned Derivation | Notes |
 | --- | --- | --- | --- | --- | --- |
 | patient_id | Unique synthetic patient identifier. | patients, encounters | String | Use the patient identifier linking patient-level records to encounters and clinical tables. | Required for cohort construction and table joins. |

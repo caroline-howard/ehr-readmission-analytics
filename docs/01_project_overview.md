@@ -8,9 +8,11 @@ Retrospective Post-Discharge Utilization Analytics Workflow
 
 A physician investigator, quality improvement leader, or population health analytics team asks whether post-discharge follow-up patterns are associated with 30-day readmission in an adult inpatient population. This project demonstrates how I would translate that request into a reproducible SQL and Python analytics workflow.
 
-The simulated request is: can we use EHR-style encounter data to define an inpatient cohort, track post-discharge utilization, identify outpatient follow-up timing, and evaluate factors associated with 30-day inpatient readmission?
+The simulated request is: can we use EHR-style encounter data to define an inpatient cohort, track core post-discharge utilization measures, identify outpatient follow-up timing, and evaluate factors associated with 30-day inpatient readmission?
 
 This portfolio project uses Synthea synthetic EHR data so the workflow can be shared publicly without real patient information. The emphasis is on the analytic process a healthcare data analyst would need to demonstrate: cohort definition, time-window logic, data validation, reproducible analysis, and clear reporting.
+
+The first implementation will prioritize a focused MVP variable set. Additional fields such as payer, discharge disposition, mortality, disease subgrouping, post-acute setting, medications, and labs will be documented as optional exploratory variables rather than required project scope.
 
 ## Research Question
 
