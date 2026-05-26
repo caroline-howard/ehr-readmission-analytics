@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Mirror](#how-this-mirrors-a-real-healthcare-analytics-workflow) | [Why It Matters](#why-this-project-matters) | [Technical Approach](#technical-approach) | [Skills](#skills-demonstrated) | [Workflow](#planned-workflow) | [Structure](#repository-structure) | [Data Source](#data-source) | [Data Setup](#data-setup) | [Outputs](#planned-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Measures](#outcome-and-utilization-measures) | [Technical Environment](#technical-environment) | [Skills](#skills-demonstrated) | [Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#planned-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -16,41 +16,53 @@ Among adult patients with a first eligible acute inpatient hospitalization in Sy
 
 This project demonstrates the practical workflow behind a retrospective EHR analytics request: profiling raw data extracts, validating encounter classifications, defining an eligible inpatient cohort, deriving post-discharge utilization measures, creating a 30-day readmission outcome, and preparing reproducible analysis-ready outputs.
 
-## How This Mirrors a Real Healthcare Analytics Workflow
+## Healthcare Analytics Workflow Design
 
-Retrospective healthcare analytics work usually begins with raw EHR data profiling before cohort logic or modeling is written. Analysts need to understand what tables, fields, encounter classes, date structures, and missingness patterns are available before defining the cohort or deriving outcomes.
+This project follows a validation-first analytics workflow common in healthcare operations, population health, and clinical research analytics. Raw synthetic EHR extracts are profiled before cohort construction so available tables, fields, encounter classes, date structures, and missingness patterns are understood before outcome derivation.
 
-```text
-Clinical team asks a post-discharge utilization or readmission question
-↓
-Analyst receives raw EHR extracts
-↓
-Analyst profiles available tables and fields
-↓
-Analyst validates encounter classes and date structure
-↓
-Analyst checks missingness and data quality
-↓
-Analyst defines the eligible inpatient cohort
-↓
-Analyst derives post-discharge utilization measures
-↓
-Analyst defines the 30-day readmission outcome
-↓
-Analyst validates temporal logic and edge cases
-↓
-Analyst produces reproducible datasets, tables, figures, and documentation
-```
+The workflow emphasizes validation of encounter classification, temporal sequencing, missingness, and operational edge cases before analysis. SQL and Python are used to support reproducible, auditable healthcare analytics workflows that can be reviewed by technical analysts, clinical stakeholders, and population health teams.
 
-This project intentionally separates data profiling, cohort construction, outcome derivation, validation, and statistical analysis to mirror how retrospective healthcare analytics workflows are commonly implemented in health systems and clinical research analytics teams.
+This project intentionally separates data profiling, cohort construction, outcome derivation, validation, statistical analysis, and reporting so each step can be reviewed and updated independently.
 
 ## Why This Project Matters
 
 Health system research and population health teams need reproducible workflows for defining cohorts, deriving post-discharge outcomes, validating EHR data, assessing missingness, conducting statistical analysis, and preparing manuscript-ready outputs. This project is intended to demonstrate those skills in a public, privacy-preserving way using synthetic data.
 
-## Technical Approach
+## Core Analytics Focus
 
-The workflow will use SQL for cohort construction, encounter-level logic, outpatient follow-up timing, ED revisit measures, and 30-day readmission outcome derivation. Python notebooks will support data profiling, validation checks, missingness assessment, descriptive statistics, logistic regression, and generation of manuscript-style tables and figures.
+- Retrospective EHR analytics
+- Inpatient cohort construction
+- Post-discharge utilization tracking
+- 30-day readmission derivation
+- Temporal sequencing validation
+- SQL and Python healthcare analytics workflows
+- Data validation and QA workflows
+- Healthcare analytics-oriented documentation
+
+## Outcome and Utilization Measures
+
+- 30-day inpatient readmission
+- ED revisit within 30 days
+- Outpatient follow-up within 7, 14, and 30 days
+- Days to first outpatient follow-up
+- Total post-discharge encounters within 30 days
+
+## Technical Environment
+
+- SQL
+- Python / pandas
+- Jupyter notebooks
+- Synthea synthetic EHR data
+- Power BI or Tableau
+- GitHub workflow with feature branching and pull requests
+
+## Dashboard and BI Layer
+
+The project also incorporates a healthcare operations and population health dashboard layer intended to simulate stakeholder-facing KPI reporting and utilization analytics workflows commonly used in health systems.
+
+The BI layer is designed around readmission KPIs, follow-up analytics, ED revisit reporting, cohort summaries, and operational healthcare metrics. It is intended to support clear communication of cohort trends and post-discharge utilization patterns without presenting the project as a clinical decision tool.
+
+## Analytic Scope
 
 The project design is informed by health services research on outpatient follow-up and readmissions, including Balasubramanian et al. (2025), as well as published readmission studies and CMS readmission reporting examples. These sources motivate clear definitions for post-discharge time windows, outpatient follow-up exposure, inpatient readmission, ED revisits, mortality flags when available, comorbidity burden, age groups, disease groups, prior utilization, and baseline risk.
 
@@ -61,6 +73,8 @@ Planned validation checks include patient and encounter count reconciliation, du
 ## Skills Demonstrated
 
 - Healthcare analytics
+- Population health analytics
+- Healthcare operations analytics
 - Retrospective clinical research
 - Synthetic EHR data
 - SQL cohort definition
@@ -70,6 +84,7 @@ Planned validation checks include patient and encounter count reconciliation, du
 - Data validation and QA
 - Missingness assessment
 - Logistic regression
+- BI/dashboard reporting workflows
 - Manuscript-style tables and figures
 - Mock IRB/data governance documentation
 - Hugging Face Gradio demo
@@ -135,4 +150,6 @@ The profiling step checks which Synthea tables are available, reviews table shap
 
 ## Responsible Use
 
-This project is educational and portfolio-focused. It uses synthetic data and is not intended for clinical decision-making, patient risk prediction, quality reporting, or operational deployment.
+This project is educational and portfolio-focused. It uses synthetic data only and does not include real patient data. It is not intended for clinical decision-making, patient risk prediction, quality reporting, or operational deployment.
+
+Analyses from this project should be interpreted as synthetic-data demonstrations of workflow design. The project does not make causal claims about outpatient follow-up, readmission, ED revisits, or any clinical outcome.
