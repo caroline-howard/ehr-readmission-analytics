@@ -12,4 +12,4 @@ Included outputs:
 - `readmission_timing_validation.csv`
 - `outpatient_followup_timing_validation.csv`
 
-These tables do not contain real patient data or patient-level synthetic records. They are reproducible by running the SQL scripts in `sql/` in order, ending with `sql/07_create_validation_outputs.sql`.
+These tables do not contain real patient data or patient-level synthetic records. They are reproducible by placing Synthea CSVs in `data/raw/` and running the SQL scripts in `sql/` in order, ending with `sql/07_create_validation_outputs.sql`.

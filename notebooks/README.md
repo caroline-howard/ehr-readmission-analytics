@@ -1,13 +1,13 @@
 # Notebooks
 
-This folder will contain analysis notebooks for exploratory data analysis, cohort validation, statistical modeling, and output generation.
+This folder contains notebook-based workflow steps for the synthetic EHR readmission analytics project.
 
-Planned notebooks may include:
+Current notebook:
 
-- Data profiling and quality checks
-- Cohort validation
-- Descriptive analysis
-- Readmission outcome analysis
-- Tables and figures for the final report
+- `01_synthea_data_profile.ipynb` profiles local Synthea CSV extracts before cohort SQL is written or refreshed.
 
-Notebook outputs should be kept lightweight, reproducible, and free of real patient data.
+The profiling notebook checks available files, table shapes, columns, encounter classes, date fields, and missingness. It reuses the command-line profiling logic in `scripts/profile_synthea_data.py` so notebook and script behavior stay aligned.
+
+Future notebooks may cover descriptive summaries, statistical analysis, and report-ready figures after the SQL cohort and validation workflow has been reviewed.
+
+Notebook outputs should stay lightweight, reproducible, and free of real patient data.
