@@ -86,6 +86,12 @@ Key aggregate outputs:
 
 The current report is available in `report/final_report.md`. Dashboard-ready aggregate tables are available in `outputs/bi/`.
 
+## Dashboard Mockup
+
+The project includes a static dashboard mockup built from aggregate BI-ready outputs. It is intended to show how the current KPI tables could support a Power BI or Tableau dashboard for healthcare operations or population health stakeholders.
+
+![Post-discharge utilization dashboard mockup](outputs/figures/dashboard_mockup.png)
+
 ## Analytic Scope
 
 The project design is informed by health services research on outpatient follow-up and readmissions, including Balasubramanian et al. (2025), as well as published readmission studies and CMS readmission reporting examples. These sources motivate clear definitions for post-discharge time windows, outpatient follow-up exposure, inpatient readmission, ED revisits, mortality flags when available, comorbidity burden, age groups, disease groups, prior utilization, and baseline risk.
@@ -112,7 +118,7 @@ Planned validation checks include patient and encounter count reconciliation, du
 - Table 1 descriptive analysis
 - Exploratory logistic regression
 - Mock IRB/data governance documentation
-- Placeholder Gradio demo structure
+- Lightweight Gradio portfolio demo app
 
 ## Planned Workflow
 
@@ -163,6 +169,8 @@ The current profiling review is documented in `docs/06_synthea_profile_review.md
 
 Small aggregate validation and BI outputs are committed under `outputs/validation/` and `outputs/bi/` so reviewers can see the QA and dashboard layers without downloading raw data.
 
+Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
+
 ## Current Outputs
 
 - Source table profile review
@@ -182,8 +190,19 @@ Small aggregate validation and BI outputs are committed under `outputs/validatio
 - Exploratory logistic regression results
 - Report-ready figures
 - Current report summary
+- Static dashboard mockup
+- Lightweight Gradio demo app
+- Reproducibility guide
+- Portfolio and resume summary
 
-Future milestones may add report refinements, sensitivity analyses, and a richer Gradio demo after the current SQL/QA/BI and analysis layer is reviewed.
+Future milestones may add sensitivity analyses or expanded dashboard views after the current SQL/QA/BI, analysis, report, and app layers are reviewed.
+
+## Portfolio Materials
+
+- Final report: `report/final_report.md`
+- Gradio demo app: `app/app.py`
+- Reproducibility guide: `docs/07_reproducibility_guide.md`
+- Portfolio summary and resume bullets: `docs/08_portfolio_summary.md`
 
 ## Responsible Use
 

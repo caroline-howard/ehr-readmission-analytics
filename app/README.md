@@ -2,6 +2,19 @@
 
 This folder contains a lightweight Gradio app for presenting the portfolio project.
 
-The current app is a placeholder that introduces the retrospective post-discharge utilization analytics workflow. It is not a clinical tool and does not present patient-level data.
+The app displays aggregate project outputs only:
 
-Future versions may summarize project context, cohort logic, validation checks, BI-ready aggregate outputs, and final report materials after the analysis workflow is complete.
+- project overview
+- cohort, readmission, outpatient follow-up, and ED revisit KPI cards
+- dashboard mockup and report-ready figures
+- BI-ready aggregate tables
+- Table 1 and exploratory logistic regression outputs
+- report excerpt and repository guide links
+
+The app does not contain real patient data, patient-level synthetic records, clinical decision support, or causal claims.
+
+Run locally from the repository root:
+
+```bash
+python app/app.py
+```
