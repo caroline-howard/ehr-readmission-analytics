@@ -1,0 +1,2 @@
+index_rows,distinct_patients,duplicate_patient_index_rows,missing_patient_id_rows,missing_index_encounter_id_rows,under_18_index_rows,negative_length_of_stay_rows,discharge_before_admission_rows
+255,255,0,0,0,0,0,0

@@ -27,6 +27,9 @@ data/processed/*
 # Large or generated outputs
 outputs/*
 !outputs/README.md
+!outputs/validation/
+!outputs/validation/README.md
+!outputs/validation/*.csv
 report/generated/
 
 # App/runtime
