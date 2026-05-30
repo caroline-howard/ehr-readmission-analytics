@@ -134,6 +134,8 @@ Before cohort construction, run one of the profiling workflows:
 
 The profiling step checks which Synthea tables are available, reviews table shapes and columns, summarizes encounter class/type values, and assesses date fields and missingness before final cohort SQL is written.
 
+The current profiling review is documented in `docs/06_synthea_profile_review.md`.
+
 ## Planned Outputs
 
 - Cohort attrition table
