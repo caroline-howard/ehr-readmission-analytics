@@ -33,6 +33,9 @@ outputs/*
 !outputs/bi/
 !outputs/bi/README.md
 !outputs/bi/*.csv
+!outputs/figures/
+!outputs/figures/README.md
+!outputs/figures/*.png
 report/generated/
 
 # App/runtime
