@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Measures](#outcome-and-utilization-measures) | [Technical Environment](#technical-environment) | [Skills](#skills-demonstrated) | [Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#planned-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Measures](#outcome-and-utilization-measures) | [Results](#current-results-snapshot) | [Technical Environment](#technical-environment) | [Skills](#skills-demonstrated) | [Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -62,6 +62,27 @@ The project also incorporates a healthcare operations and population health dash
 
 The BI layer is designed around readmission KPIs, follow-up analytics, ED revisit reporting, cohort summaries, and operational healthcare metrics. It is intended to support clear communication of cohort trends and post-discharge utilization patterns without presenting the project as a clinical decision tool.
 
+## Current Results Snapshot
+
+The current workflow has completed data profiling, SQL cohort construction, validation QA, and aggregate BI/dashboard output generation using local Synthea synthetic CSV data. These results are synthetic-data workflow outputs for portfolio demonstration only.
+
+Key aggregate outputs:
+
+- Final analysis dataset: 255 adult patients with a first eligible inpatient encounter
+- 30-day inpatient readmission: 13 patients, 5.1%
+- Outpatient follow-up: 9.0% within 7 days, 12.9% within 14 days, and 21.6% within 30 days
+- ED revisit within 30 days: 2 patients, 0.8%
+- One index encounter per patient validation: 255 index rows and 255 distinct patients
+- Date validation: no missing or invalid encounter start/stop dates in the final analysis dataset
+
+![Cohort attrition and analysis dataset construction](outputs/figures/cohort_attrition.png)
+
+![Post-discharge utilization and readmission KPIs](outputs/figures/postdischarge_kpis.png)
+
+![Synthea encounter class distribution](outputs/figures/encounter_class_distribution.png)
+
+The current report is available in `report/final_report.md`. Dashboard-ready aggregate tables are available in `outputs/bi/`.
+
 ## Analytic Scope
 
 The project design is informed by health services research on outpatient follow-up and readmissions, including Balasubramanian et al. (2025), as well as published readmission studies and CMS readmission reporting examples. These sources motivate clear definitions for post-discharge time windows, outpatient follow-up exposure, inpatient readmission, ED revisits, mortality flags when available, comorbidity burden, age groups, disease groups, prior utilization, and baseline risk.
@@ -83,11 +104,11 @@ Planned validation checks include patient and encounter count reconciliation, du
 - ED revisit utilization measures
 - Data validation and QA
 - Missingness assessment
-- Logistic regression
 - BI/dashboard reporting workflows
-- Manuscript-style tables and figures
+- Report-ready aggregate tables and figures
+- Statistical analysis planning
 - Mock IRB/data governance documentation
-- Hugging Face Gradio demo
+- Placeholder Gradio demo structure
 
 ## Planned Workflow
 
@@ -138,19 +159,24 @@ The current profiling review is documented in `docs/06_synthea_profile_review.md
 
 Small aggregate validation and BI outputs are committed under `outputs/validation/` and `outputs/bi/` so reviewers can see the QA and dashboard layers without downloading raw data.
 
-## Planned Outputs
+## Current Outputs
 
+- Source table profile review
+- SQL cohort construction scripts
 - Cohort attrition table
 - Missingness report
-- Table 1 baseline characteristics
-- Readmission summary table
-- Outpatient follow-up timing summary
-- ED revisit summary, if supported by encounter data
-- Logistic regression results
-- Cohort flow figure
-- Odds ratio plot
-- Brief results summary
-- Hugging Face app
+- Readmission timing validation
+- Outpatient follow-up timing validation
+- Encounter class distribution
+- BI-ready cohort summary table
+- BI-ready readmission KPI table
+- BI-ready follow-up timing table
+- BI-ready ED revisit table
+- BI-ready demographic/utilization summary table
+- Report-ready figures
+- Current report summary
+
+Future milestones may add descriptive Table 1 outputs, logistic regression, report refinements, and a richer Gradio demo after the current SQL/QA/BI layer is reviewed.
 
 ## Responsible Use
 

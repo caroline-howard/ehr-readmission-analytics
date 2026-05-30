@@ -8,5 +8,6 @@ Currently committed output folders:
 
 - `outputs/validation/` contains aggregate QA tables for cohort attrition, index encounter checks, date validity, encounter classes, missingness, readmission timing, and outpatient follow-up timing.
 - `outputs/bi/` contains Power BI/Tableau-ready aggregate tables for cohort summary, readmission KPIs, follow-up timing, ED revisits, and demographic/utilization summaries.
+- `outputs/figures/` contains selected PNG figures used in the README and report.
 
 These committed outputs do not contain real patient data or patient-level synthetic records. Raw Synthea CSV files remain outside version control in `data/raw/`. Processed data and local database files remain outside version control in `data/processed/`.
