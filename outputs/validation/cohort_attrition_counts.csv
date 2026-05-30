@@ -1,0 +1,8 @@
+step,record_count
+source_patients,1163
+source_encounters,61459
+source_inpatient_encounters,1728
+eligible_adult_inpatient_encounters,1623
+patients_with_eligible_adult_inpatient_encounter,255
+index_encounters,255
+final_analysis_dataset_rows,255

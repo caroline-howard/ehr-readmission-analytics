@@ -10,6 +10,7 @@ Run order:
 4. `04_define_postdischarge_utilization.sql`
 5. `05_define_30_day_readmission.sql`
 6. `06_create_final_analysis_dataset.sql`
+7. `07_create_validation_outputs.sql`
 
 Example:
 
@@ -20,6 +21,7 @@ duckdb data/processed/ehr_readmission.duckdb < sql/03_define_index_encounter.sql
 duckdb data/processed/ehr_readmission.duckdb < sql/04_define_postdischarge_utilization.sql
 duckdb data/processed/ehr_readmission.duckdb < sql/05_define_30_day_readmission.sql
 duckdb data/processed/ehr_readmission.duckdb < sql/06_create_final_analysis_dataset.sql
+duckdb data/processed/ehr_readmission.duckdb < sql/07_create_validation_outputs.sql
 ```
 
 The scripts create reusable views for:
@@ -30,5 +32,6 @@ The scripts create reusable views for:
 - post-discharge outpatient follow-up and ED revisit measures
 - all-cause 30-day inpatient readmission
 - final MVP analysis dataset
+- aggregate validation outputs for cohort attrition, index encounter checks, date validity, encounter classes, missingness, readmission timing, and outpatient follow-up timing
 
-Generated databases, source CSVs, and SQL outputs are not stored here.
+Generated databases and source CSVs are not stored here. Small aggregate QA tables may be intentionally committed under `outputs/validation/`.
