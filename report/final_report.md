@@ -4,7 +4,7 @@
 
 This report summarizes the current SQL, validation, and BI/dashboard layer of the `ehr-readmission-analytics` portfolio project. The project uses Synthea synthetic EHR data to demonstrate a retrospective healthcare analytics workflow focused on inpatient cohort definition, post-discharge utilization tracking, outpatient follow-up timing, ED revisits, and all-cause 30-day inpatient readmission.
 
-The current milestone includes data profiling, SQL cohort construction, validation QA outputs, and aggregate dashboard-ready tables. It does not include statistical modeling or causal inference.
+The current milestone includes data profiling, SQL cohort construction, validation QA outputs, aggregate dashboard-ready tables, descriptive analysis outputs, and an exploratory logistic regression model. It does not include causal inference.
 
 ## Research Question
 
@@ -28,6 +28,7 @@ The SQL workflow uses DuckDB-compatible scripts to:
 6. Create the final analysis dataset.
 7. Export aggregate validation QA tables.
 8. Export Power BI/Tableau-ready aggregate tables.
+9. Generate descriptive analysis outputs and exploratory logistic regression results in notebooks.
 
 The current workflow intentionally separates data profiling, cohort construction, validation, and dashboard output generation so each layer can be reviewed independently.
 
@@ -105,6 +106,43 @@ The project includes dashboard-ready aggregate CSV files in `outputs/bi/`:
 
 These tables are designed for Power BI or Tableau import and support stakeholder-facing reporting around readmission KPIs, outpatient follow-up timing, ED revisits, cohort demographics, and utilization summaries.
 
+## Descriptive Analysis Outputs
+
+The notebook workflow generates aggregate analysis outputs in `outputs/analysis/`:
+
+- `table1_baseline_characteristics.csv`
+- `readmission_summary.csv`
+- `outpatient_followup_summary.csv`
+- `ed_revisit_summary.csv`
+
+Table 1 compares baseline characteristics by 30-day readmission status using aggregate summaries only. Continuous variables are summarized as mean and standard deviation; categorical variables are summarized as count and percent.
+
+## Exploratory Logistic Regression
+
+An exploratory logistic regression model was fit for 30-day inpatient readmission using a parsimonious predictor set:
+
+- Age, per 10 years
+- Male sex
+- Log length of stay
+- Prior encounters in the 12 months before index admission
+- Chronic condition count
+- Outpatient follow-up within 30 days
+
+The model included 255 observations and 13 readmission events. The model converged, with pseudo R-squared of 0.0665. Model coefficients and odds ratios are available in `outputs/analysis/logistic_regression_results.csv`.
+
+| Predictor | Odds ratio | 95% CI | p-value |
+| --- | ---: | --- | ---: |
+| Age, per 10 years | 1.1158 | 0.8201-1.5180 | 0.4855 |
+| Male sex | 1.2994 | 0.3896-4.3341 | 0.6700 |
+| Log length of stay | 1.6847 | 1.1189-2.5365 | 0.0125 |
+| Prior encounters, 12 months | 1.0621 | 0.9457-1.1929 | 0.3092 |
+| Chronic condition count | 0.8868 | 0.3387-2.3218 | 0.8067 |
+| Outpatient follow-up within 30 days | 0.9978 | 0.2193-4.5402 | 0.9977 |
+
+![Exploratory logistic regression odds ratios](../outputs/figures/logistic_regression_odds_ratios.png)
+
+These model results are synthetic-data demonstration outputs. They should not be interpreted as clinically valid estimates.
+
 ## Interpretation
 
 These results should be interpreted as synthetic-data workflow outputs. They demonstrate cohort construction, validation, temporal logic, and aggregate reporting, but they do not establish clinical validity or causal relationships.
@@ -118,7 +156,7 @@ Outpatient follow-up measures are descriptive utilization measures. The current 
 - The current report is based on aggregate outputs and does not include patient-level review.
 - Condition flags use simplified grouping logic suitable for synthetic EHR data.
 - Planned versus unplanned readmission distinctions are not implemented in the current MVP.
-- Statistical modeling and adjusted association estimates have not been completed.
+- The logistic regression model is exploratory and limited by the small number of synthetic readmission events.
 - The project is not intended for clinical decision-making, quality reporting, or operational deployment.
 
 ## Reproducibility
@@ -129,4 +167,6 @@ To reproduce the current outputs:
 2. Run SQL scripts `01` through `08` in `sql/` using DuckDB.
 3. Review aggregate QA outputs in `outputs/validation/`.
 4. Review BI-ready aggregate outputs in `outputs/bi/`.
-5. Review report figures in `outputs/figures/`.
+5. Run `notebooks/02_descriptive_analysis.ipynb` and `notebooks/03_logistic_regression.ipynb`.
+6. Review analysis outputs in `outputs/analysis/`.
+7. Review report figures in `outputs/figures/`.

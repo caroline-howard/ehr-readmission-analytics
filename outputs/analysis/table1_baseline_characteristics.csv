@@ -1,0 +1,29 @@
+variable,level,overall,not_readmitted,readmitted,p_value,test
+"Age at index, years",Mean (SD),47.79 (19.34),47.55 (19.64),52.23 (12.15),0.2291,Mann-Whitney U
+"Length of stay, days",Mean (SD),23.92 (311.96),23.44 (319.60),32.92 (92.06),0.5005,Mann-Whitney U
+"Prior encounters, 12 months",Mean (SD),3.73 (4.64),3.66 (4.70),4.92 (3.23),0.0405,Mann-Whitney U
+"Prior ED visits, 12 months",Mean (SD),0.26 (0.59),0.24 (0.58),0.69 (0.63),0.0005,Mann-Whitney U
+Chronic condition count,Mean (SD),0.42 (0.65),0.41 (0.65),0.54 (0.66),0.391,Mann-Whitney U
+Sex,F,148 (58.0%),141 (58.3%),7 (53.8%),0.9792,Chi-square
+,M,107 (42.0%),101 (41.7%),6 (46.2%),,
+Race,asian,15 (5.9%),15 (6.2%),0 (0.0%),0.5017,Chi-square
+,black,26 (10.2%),23 (9.5%),3 (23.1%),,
+,hawaiian,3 (1.2%),3 (1.2%),0 (0.0%),,
+,other,2 (0.8%),2 (0.8%),0 (0.0%),,
+,white,209 (82.0%),199 (82.2%),10 (76.9%),,
+Ethnicity,hispanic,19 (7.5%),19 (7.9%),0 (0.0%),0.6114,Chi-square
+,nonhispanic,236 (92.5%),223 (92.1%),13 (100.0%),,
+Age group 65+,0,208 (81.6%),196 (81.0%),12 (92.3%),0.5106,Chi-square
+,1,47 (18.4%),46 (19.0%),1 (7.7%),,
+Diabetes flag,0,234 (91.8%),223 (92.1%),11 (84.6%),0.6565,Chi-square
+,1,21 (8.2%),19 (7.9%),2 (15.4%),,
+Hypertension flag,0,181 (71.0%),172 (71.1%),9 (69.2%),1.0,Chi-square
+,1,74 (29.0%),70 (28.9%),4 (30.8%),,
+CKD flag,0,247 (96.9%),235 (97.1%),12 (92.3%),0.8804,Chi-square
+,1,8 (3.1%),7 (2.9%),1 (7.7%),,
+COPD flag,0,251 (98.4%),238 (98.3%),13 (100.0%),1.0,Chi-square
+,1,4 (1.6%),4 (1.7%),0 (0.0%),,
+Outpatient follow-up within 30 days,0,200 (78.4%),190 (78.5%),10 (76.9%),1.0,Chi-square
+,1,55 (21.6%),52 (21.5%),3 (23.1%),,
+ED revisit within 30 days,0,253 (99.2%),240 (99.2%),13 (100.0%),1.0,Chi-square
+,1,2 (0.8%),2 (0.8%),0 (0.0%),,
