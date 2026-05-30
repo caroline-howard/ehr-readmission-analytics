@@ -1,5 +1,9 @@
 # Retrospective EHR Post-Discharge Utilization Analytics Report
 
+## Abstract
+
+This project demonstrates a retrospective healthcare analytics workflow using Synthea synthetic EHR data. The analysis defines an adult inpatient cohort, selects the first eligible inpatient encounter as the index hospitalization, derives post-discharge outpatient follow-up timing and ED revisit measures, identifies all-cause 30-day inpatient readmission, validates cohort and temporal logic, and produces aggregate reporting outputs for healthcare operations and research analytics audiences. The final synthetic cohort included 255 adult patients with a first eligible inpatient encounter. The 30-day inpatient readmission rate was 5.1%, outpatient follow-up within 30 days was 21.6%, and ED revisit within 30 days was 0.8%. An exploratory logistic regression model was fit for demonstration only and should not be interpreted as clinical evidence. The project is intended as a portfolio workflow and does not use real patient data.
+
 ## Executive Summary
 
 This report summarizes the current SQL, validation, and BI/dashboard layer of the `ehr-readmission-analytics` portfolio project. The project uses Synthea synthetic EHR data to demonstrate a retrospective healthcare analytics workflow focused on inpatient cohort definition, post-discharge utilization tracking, outpatient follow-up timing, ED revisits, and all-cause 30-day inpatient readmission.
@@ -106,6 +110,10 @@ The project includes dashboard-ready aggregate CSV files in `outputs/bi/`:
 
 These tables are designed for Power BI or Tableau import and support stakeholder-facing reporting around readmission KPIs, outpatient follow-up timing, ED revisits, cohort demographics, and utilization summaries.
 
+The project also includes a static dashboard mockup that illustrates how the aggregate outputs could be arranged for a healthcare operations or population health audience.
+
+![Post-discharge utilization dashboard mockup](../outputs/figures/dashboard_mockup.png)
+
 ## Descriptive Analysis Outputs
 
 The notebook workflow generates aggregate analysis outputs in `outputs/analysis/`:
@@ -142,6 +150,22 @@ The model included 255 observations and 13 readmission events. The model converg
 ![Exploratory logistic regression odds ratios](../outputs/figures/logistic_regression_odds_ratios.png)
 
 These model results are synthetic-data demonstration outputs. They should not be interpreted as clinically valid estimates.
+
+## Translation to a Real Health System Setting
+
+In a real hospital or health system analytics environment, this workflow would map to a common post-discharge utilization request from a physician investigator, quality improvement leader, or population health team. The same structure could be adapted to deidentified EHR warehouse tables by replacing Synthea source files with governed encounter, patient, diagnosis, payer, and utilization extracts.
+
+Operationally, the workflow would support:
+
+- confirming whether inpatient, outpatient, ambulatory, emergency, and observation encounters are reliably distinguishable
+- agreeing on cohort inclusion and exclusion criteria with clinical stakeholders
+- validating index admission, discharge timing, follow-up windows, and readmission logic
+- documenting how transfers, same-day returns, ED-only revisits, and incomplete follow-up windows are handled
+- producing aggregate QA outputs for analyst and stakeholder review before modeling
+- creating BI-ready tables for readmission KPIs, post-discharge follow-up monitoring, ED revisit reporting, and cohort summaries
+- communicating limitations, data quality concerns, and non-causal interpretation clearly
+
+Additional real-world steps would include IRB or quality-improvement determination, data access approvals, privacy review, code review, clinical validation of definitions, and comparison against known operational reporting logic.
 
 ## Interpretation
 
