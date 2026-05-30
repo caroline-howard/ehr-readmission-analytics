@@ -125,16 +125,18 @@ This repository will not contain real patient data. It will also avoid committin
 
 This project uses Synthea synthetic CSV data. Raw CSV files should be placed locally in `data/raw/`.
 
-Raw data is not committed to GitHub. Processed data, local databases, and generated profiling outputs are also excluded from version control unless a small artifact is intentionally added for portfolio review.
+The `data/raw/` and `data/processed/` folders are intentionally empty on GitHub except for `.gitkeep` files. Raw data is not committed to GitHub. Processed data, local databases, and generated profiling outputs are also excluded from version control unless a small aggregate artifact is intentionally added for portfolio review.
 
 Before cohort construction, run one of the profiling workflows:
 
 - `notebooks/01_synthea_data_profile.ipynb`
 - `scripts/profile_synthea_data.py`
 
-The profiling step checks which Synthea tables are available, reviews table shapes and columns, summarizes encounter class/type values, and assesses date fields and missingness before final cohort SQL is written.
+The profiling step checks which Synthea tables are available, reviews table shapes and columns, summarizes encounter class/type values, and assesses date fields and missingness before cohort SQL is run or refreshed.
 
 The current profiling review is documented in `docs/06_synthea_profile_review.md`.
+
+Small aggregate validation and BI outputs are committed under `outputs/validation/` and `outputs/bi/` so reviewers can see the QA and dashboard layers without downloading raw data.
 
 ## Planned Outputs
 

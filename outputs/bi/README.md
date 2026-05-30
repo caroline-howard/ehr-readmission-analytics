@@ -10,4 +10,4 @@ Included dashboard-ready tables:
 - `ed_revisit_table.csv`
 - `demographic_utilization_summary_table.csv`
 
-These files contain aggregate summaries only. They do not include real patient data or patient-level synthetic records, and they should not be interpreted as clinical results.
+These files contain aggregate summaries only. They do not include real patient data or patient-level synthetic records, and they should not be interpreted as clinical results. They are reproducible by placing Synthea CSVs in `data/raw/` and running the SQL scripts in `sql/` in order, ending with `sql/08_create_bi_dashboard_tables.sql`.
