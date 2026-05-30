@@ -30,6 +30,9 @@ outputs/*
 !outputs/validation/
 !outputs/validation/README.md
 !outputs/validation/*.csv
+!outputs/bi/
+!outputs/bi/README.md
+!outputs/bi/*.csv
 report/generated/
 
 # App/runtime

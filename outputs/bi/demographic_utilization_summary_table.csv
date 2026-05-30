@@ -1,0 +1,16 @@
+summary_domain,category,patient_count,patient_percent_within_domain,readmitted_30d_count,readmission_rate_30d_percent,outpatient_followup_30d_count,outpatient_followup_30d_percent,ed_revisit_30d_count,ed_revisit_30d_percent,mean_length_of_stay_days,mean_prior_encounters_12mo,mean_chronic_condition_count
+age_group,65+,47,18.4,1,2.1,12,25.5,0,0.0,1.5,6.06,0.64
+age_group,Under 65,208,81.6,12,5.8,43,20.7,2,1.0,28.99,3.2,0.37
+chronic_condition_count,0,165,64.7,7,4.2,36,21.8,2,1.2,2.21,3.24,0.0
+chronic_condition_count,1,78,30.6,5,6.4,14,17.9,0,0.0,73.35,3.24,1.0
+chronic_condition_count,2,7,2.7,1,14.3,2,28.6,0,0.0,1.0,8.43,2.0
+chronic_condition_count,3,5,2.0,0,0.0,3,60.0,0,0.0,1.41,20.8,3.0
+ethnicity,hispanic,19,7.5,0,0.0,6,31.6,1,5.3,1.7,3.79,0.37
+ethnicity,nonhispanic,236,92.5,13,5.5,49,20.8,1,0.4,25.71,3.72,0.42
+race,asian,15,5.9,0,0.0,3,20.0,0,0.0,1.14,3.47,0.53
+race,black,26,10.2,3,11.5,9,34.6,0,0.0,2.59,5.12,0.38
+race,hawaiian,3,1.2,0,0.0,2,66.7,0,0.0,3.67,5.33,0.33
+race,other,2,0.8,0,0.0,0,0.0,0,0.0,1.0,9.0,1.5
+race,white,209,82.0,10,4.8,41,19.6,2,1.0,28.72,3.5,0.41
+sex,F,148,58.0,7,4.7,36,24.3,2,1.4,39.63,3.98,0.41
+sex,M,107,42.0,6,5.6,19,17.8,0,0.0,2.2,3.37,0.44
