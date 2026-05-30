@@ -1,0 +1,2 @@
+cohort_patients,mean_age_at_index,median_age_at_index,patients_age_65plus,percent_age_65plus,mean_length_of_stay_days,median_length_of_stay_days,mean_prior_encounters_12mo,mean_chronic_condition_count
+255,47.8,46.0,47,18.4,23.92,1.0,3.73,0.42

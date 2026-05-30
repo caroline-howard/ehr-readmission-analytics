@@ -1,0 +1,2 @@
+cohort_patients,readmitted_30d_count,readmission_rate_30d_percent,mean_days_to_readmission,median_days_to_readmission,min_days_to_readmission,max_days_to_readmission,possible_same_day_transfer_count,readmission_before_outpatient_followup_count
+255,13,5.1,20.98,27.0,1.3708333333333333,29.87986111111111,0,0

@@ -1,0 +1,4 @@
+followup_window,followup_window_days,followup_count,followup_percent,mean_days_to_first_followup
+0-7 days,7,23,9.0,1.62
+0-14 days,14,33,12.9,4.39
+0-30 days,30,55,21.6,10.71
