@@ -1,0 +1,2 @@
+model_type,outcome,n_observations,readmission_events,converged,pseudo_r_squared,llr_p_value,interpretation_note
+Logistic regression,30-day inpatient readmission,255,13,True,0.0665,0.3368,Exploratory synthetic-data model; associations only; not a validated clinical prediction tool.

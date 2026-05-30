@@ -36,6 +36,9 @@ outputs/*
 !outputs/figures/
 !outputs/figures/README.md
 !outputs/figures/*.png
+!outputs/analysis/
+!outputs/analysis/README.md
+!outputs/analysis/*.csv
 report/generated/
 
 # App/runtime

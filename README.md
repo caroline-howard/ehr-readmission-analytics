@@ -74,12 +74,15 @@ Key aggregate outputs:
 - ED revisit within 30 days: 2 patients, 0.8%
 - One index encounter per patient validation: 255 index rows and 255 distinct patients
 - Date validation: no missing or invalid encounter start/stop dates in the final analysis dataset
+- Exploratory logistic regression completed with 255 observations and 13 readmission events; model outputs are provided as synthetic-data demonstration results only
 
 ![Cohort attrition and analysis dataset construction](outputs/figures/cohort_attrition.png)
 
 ![Post-discharge utilization and readmission KPIs](outputs/figures/postdischarge_kpis.png)
 
 ![Synthea encounter class distribution](outputs/figures/encounter_class_distribution.png)
+
+![Exploratory logistic regression odds ratios](outputs/figures/logistic_regression_odds_ratios.png)
 
 The current report is available in `report/final_report.md`. Dashboard-ready aggregate tables are available in `outputs/bi/`.
 
@@ -106,7 +109,8 @@ Planned validation checks include patient and encounter count reconciliation, du
 - Missingness assessment
 - BI/dashboard reporting workflows
 - Report-ready aggregate tables and figures
-- Statistical analysis planning
+- Table 1 descriptive analysis
+- Exploratory logistic regression
 - Mock IRB/data governance documentation
 - Placeholder Gradio demo structure
 
@@ -173,10 +177,13 @@ Small aggregate validation and BI outputs are committed under `outputs/validatio
 - BI-ready follow-up timing table
 - BI-ready ED revisit table
 - BI-ready demographic/utilization summary table
+- Table 1 baseline characteristics
+- Readmission, outpatient follow-up, and ED revisit summary tables
+- Exploratory logistic regression results
 - Report-ready figures
 - Current report summary
 
-Future milestones may add descriptive Table 1 outputs, logistic regression, report refinements, and a richer Gradio demo after the current SQL/QA/BI layer is reviewed.
+Future milestones may add report refinements, sensitivity analyses, and a richer Gradio demo after the current SQL/QA/BI and analysis layer is reviewed.
 
 ## Responsible Use
 

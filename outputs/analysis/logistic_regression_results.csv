@@ -1,0 +1,8 @@
+term,label,coefficient,odds_ratio,ci_lower,ci_upper,p_value
+const,Intercept,-4.407,0.0122,0.0019,0.0774,0.0
+age_per_10_years,"Age, per 10 years",0.1096,1.1158,0.8201,1.518,0.4855
+male_sex,Male sex,0.2619,1.2994,0.3896,4.3341,0.67
+log_length_of_stay,Log length of stay,0.5216,1.6847,1.1189,2.5365,0.0125
+prior_encounters_12mo,"Prior encounters, 12 months",0.0602,1.0621,0.9457,1.1929,0.3092
+chronic_condition_count,Chronic condition count,-0.1202,0.8868,0.3387,2.3218,0.8067
+outpatient_followup_30d,Outpatient follow-up within 30 days,-0.0022,0.9978,0.2193,4.5402,0.9977
