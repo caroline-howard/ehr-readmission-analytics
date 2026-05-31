@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Measures](#outcome-and-utilization-measures) | [Results](#current-results-snapshot) | [Analysis](#analysis-layer) | [Technical Environment](#technical-environment) | [Skills](#skills-demonstrated) | [Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -47,6 +47,14 @@ Health system research and population health teams need reproducible workflows f
 - Days to first outpatient follow-up
 - Total post-discharge encounters within 30 days
 
+## Analytic Scope
+
+The project is framed around post-discharge utilization analytics rather than generic readmission prediction. The core workflow focuses on defining an adult inpatient cohort, validating encounter and date logic, deriving outpatient follow-up timing, identifying ED revisits, and measuring all-cause 30-day inpatient readmission.
+
+The current version uses a focused MVP variable set: demographics, index hospitalization dates, length of stay, prior utilization, outpatient follow-up within 7, 14, and 30 days, ED revisit within 30 days when identifiable, and 30-day inpatient readmission. Additional variables such as disease subgroups, discharge disposition, payer, mortality, medication counts, and lab values are treated as exploratory only if the Synthea export supports defensible derivation.
+
+Outpatient follow-up measures are interpreted as observational utilization measures. This project does not claim that outpatient follow-up causes a change in readmission risk.
+
 ## Technical Environment
 
 - SQL
@@ -62,29 +70,27 @@ The project also incorporates a healthcare operations and population health dash
 
 The BI layer is designed around readmission KPIs, follow-up analytics, ED revisit reporting, cohort summaries, and operational healthcare metrics. It is intended to support clear communication of cohort trends and post-discharge utilization patterns without presenting the project as a clinical decision tool.
 
-## Current Results Snapshot
+![Post-discharge utilization dashboard mockup](outputs/figures/dashboard_mockup.png)
 
-The current workflow has completed data profiling, SQL cohort construction, validation QA, and aggregate BI/dashboard output generation using local Synthea synthetic CSV data. These results are synthetic-data workflow outputs for portfolio demonstration only.
+Dashboard-ready aggregate tables are available in `outputs/bi/` and can be imported into Power BI or Tableau:
 
-Key aggregate outputs:
+- `cohort_summary_table.csv`
+- `readmission_kpi_table.csv`
+- `followup_timing_table.csv`
+- `ed_revisit_table.csv`
+- `demographic_utilization_summary_table.csv`
 
-- Final analysis dataset: 255 adult patients with a first eligible inpatient encounter
-- 30-day inpatient readmission: 13 patients, 5.1%
-- Outpatient follow-up: 9.0% within 7 days, 12.9% within 14 days, and 21.6% within 30 days
-- ED revisit within 30 days: 2 patients, 0.8%
-- One index encounter per patient validation: 255 index rows and 255 distinct patients
-- Date validation: no missing or invalid encounter start/stop dates in the final analysis dataset
-- Exploratory logistic regression completed with 255 observations and 13 readmission events; model outputs are provided as synthetic-data demonstration results only
+## Results Overview
 
-![Cohort attrition and analysis dataset construction](outputs/figures/cohort_attrition.png)
+The current workflow has completed data profiling, SQL cohort construction, validation QA, aggregate BI output generation, descriptive analysis, and exploratory modeling using local Synthea synthetic CSV data. These results are included to demonstrate reproducible healthcare analytics workflow design, not clinical performance or causal inference.
 
-![Post-discharge utilization and readmission KPIs](outputs/figures/postdischarge_kpis.png)
+The final analytic dataset includes 255 adult patients with a first eligible inpatient encounter. Validation outputs confirmed one index encounter per patient, no missing primary readmission outcome, and no invalid index encounter start or stop dates in the final analytic dataset.
 
-![Synthea encounter class distribution](outputs/figures/encounter_class_distribution.png)
+All-cause inpatient readmission within 30 days occurred for 13 patients, or 5.1% of the cohort. Outpatient follow-up was observed for 9.0% of patients within 7 days, 12.9% within 14 days, and 21.6% within 30 days. ED revisit within 30 days was uncommon in this synthetic cohort at 0.8%, while any post-discharge encounter within 30 days occurred for 37.6% of patients.
 
-![Exploratory logistic regression odds ratios](outputs/figures/logistic_regression_odds_ratios.png)
+The most useful takeaway is operational: the workflow shows how a healthcare analyst can validate EHR-style encounter data, define post-discharge timing windows, produce aggregate utilization measures, and prepare a stakeholder-facing readout. The exploratory logistic regression included 255 observations and 13 readmission events and should be interpreted only as a demonstration of analytic workflow mechanics.
 
-The current report is available in `report/final_report.md`. Dashboard-ready aggregate tables are available in `outputs/bi/`.
+The full report is available in `report/final_report.md`.
 
 ## Analysis Layer
 
@@ -96,19 +102,11 @@ Logistic regression remains appropriate for an interpretable adjusted associatio
 
 The analysis interpretation document is available in `docs/09_analysis_interpretation.md`.
 
-## Dashboard Mockup
+## Stakeholder Use Case
 
-The project includes a static dashboard mockup built from aggregate BI-ready outputs. It is intended to show how the current KPI tables could support a Power BI or Tableau dashboard for healthcare operations or population health stakeholders.
+A physician investigator, care transitions leader, quality improvement team, or population health analytics group could use this type of readout to move from raw encounter data toward operational questions about post-discharge care.
 
-![Post-discharge utilization dashboard mockup](outputs/figures/dashboard_mockup.png)
-
-## Analytic Scope
-
-The project design is informed by health services research on outpatient follow-up and readmissions, including Balasubramanian et al. (2025), as well as published readmission studies and CMS readmission reporting examples. These sources motivate clear definitions for post-discharge time windows, outpatient follow-up exposure, inpatient readmission, ED revisits, mortality flags when available, comorbidity burden, age groups, disease groups, prior utilization, and baseline risk.
-
-The first project version will focus on a core MVP variable set: patient demographics, index hospitalization dates, length of stay, prior utilization, outpatient follow-up within 7, 14, and 30 days, ED revisit within 30 days when identifiable, and 30-day inpatient readmission. Additional variables such as disease subgroups, discharge disposition, payer, mortality, post-acute setting, medication counts, and lab values will be treated as optional exploratory variables only if the Synthea export supports defensible derivation.
-
-Planned validation checks include patient and encounter count reconciliation, duplicate review, encounter date ordering, length-of-stay plausibility, readmission window verification, follow-up timing verification, and assessment of missing or unexpected values in key analytic fields. Outpatient follow-up variables will be interpreted as observational utilization measures, not as evidence that follow-up causes readmission reduction.
+The current outputs would support discussion of outpatient follow-up access, high-utilization patients, encounter classification quality, timing-window validation, subgroup reporting, and whether the cohort definition matches the intended operational question. These outputs should be used to frame stakeholder review and next analytic questions, not to make clinical claims from synthetic data.
 
 ## Skills Demonstrated
 
@@ -130,18 +128,11 @@ Planned validation checks include patient and encounter count reconciliation, du
 - Mock IRB/data governance documentation
 - Lightweight Gradio portfolio demo app
 
-## Planned Workflow
+## Workflow Status
 
-1. Project setup and documentation
-2. Synthea data ingestion
-3. SQL cohort definition
-4. Post-discharge utilization measure derivation
-5. 30-day readmission outcome derivation
-6. Data validation and missingness assessment
-7. Descriptive statistics
-8. Logistic regression
-9. Manuscript-style outputs
-10. Hugging Face demo
+The current repository includes documentation, Synthea data profiling, SQL cohort construction, post-discharge utilization derivation, 30-day readmission logic, validation QA outputs, BI-ready aggregate tables, descriptive analysis notebooks, exploratory logistic regression, report materials, and a lightweight Gradio portfolio demo.
+
+Future refinements should focus on improving dashboard design, strengthening stakeholder-facing interpretation, and adding sensitivity analyses only after the current cohort definitions and validation outputs are reviewed.
 
 ## Repository Structure
 
