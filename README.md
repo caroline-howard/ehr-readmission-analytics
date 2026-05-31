@@ -96,11 +96,29 @@ The full report is available in `report/final_report.md`.
 
 The analysis layer includes more than dashboard-level summary statistics. Current aggregate outputs include Table 1 baseline comparisons, post-discharge utilization summaries, risk stratification summaries, and an exploratory adjusted logistic regression model.
 
-The clearest descriptive signal in the current synthetic cohort is prior utilization. Readmitted patients had higher prior encounters in the 12 months before index admission and higher prior ED visit counts than non-readmitted patients. Outpatient follow-up within 30 days was similar between readmitted and non-readmitted patients, which reinforces that the project should not make causal claims about follow-up reducing readmission.
+The analytic story is that the workflow can move from raw EHR-style extracts to a validated cohort, compare baseline characteristics by readmission status, evaluate post-discharge timing windows, stratify utilization patterns by patient groups, fit an adjusted association model with appropriate limitations, and translate findings into stakeholder questions.
 
-Logistic regression remains appropriate for an interpretable adjusted association analysis because the outcome is binary and odds ratios are common in healthcare research reporting. However, the model is intentionally framed as exploratory because the synthetic cohort has only 13 readmission events. A real health system analysis with low event counts would consider penalized logistic regression, Firth-style rare-events logistic regression, or a prespecified parsimonious model before any prediction-focused machine learning.
+The clearest descriptive signal in the current synthetic cohort is prior utilization:
 
-The analysis interpretation document is available in `docs/09_analysis_interpretation.md`.
+- Prior encounters in the 12 months before index admission were higher among readmitted patients: 4.92 versus 3.66 encounters, p = 0.0405.
+- Prior ED visits in the 12 months before index admission were higher among readmitted patients: 0.69 versus 0.24 visits, p = 0.0005.
+- Outpatient follow-up within 30 days was similar between groups: 23.1% among readmitted patients versus 21.5% among non-readmitted patients.
+- ED revisit within 30 days was rare overall and should not be overinterpreted.
+
+Risk stratification outputs summarize readmission and utilization patterns by age group, chronic condition burden, and sex. These outputs are meant to show how a healthcare analyst would identify candidate subgroups for stakeholder review. Several strata have small cell counts, so the results should be used to generate questions rather than stable clinical risk estimates.
+
+Logistic regression remains appropriate for an interpretable adjusted association analysis because the outcome is binary and odds ratios are common in healthcare research reporting. However, the model is intentionally framed as exploratory because the synthetic cohort has only 13 readmission events. In the current model, log length of stay was associated with higher odds of 30-day readmission, while age, sex, prior encounters, chronic condition count, and outpatient follow-up within 30 days did not show clear adjusted associations.
+
+A real health system analysis with low event counts would consider penalized logistic regression, Firth-style rare-events logistic regression, or a prespecified parsimonious model before any prediction-focused machine learning. More complex machine learning would only be appropriate if the objective changed from explanatory healthcare analytics to validated prediction with enough data for training, testing, calibration, and performance reporting.
+
+The most useful next analyses would be sensitivity analyses that test cohort and timing assumptions:
+
+- Compare 7-day, 14-day, and 30-day outpatient follow-up windows.
+- Fit adjusted models with and without outpatient follow-up variables because of timing bias concerns.
+- Stratify summaries by prior utilization burden, such as prior ED use or high prior encounter count.
+- Review same-day returns and possible transfer-like encounters separately.
+- Repeat descriptive summaries for age 65+ versus under 65.
+- Consider disease-specific cohorts only if condition grouping logic is defensible.
 
 ## Stakeholder Use Case
 
@@ -196,7 +214,6 @@ Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 - Static dashboard mockup
 - Lightweight Gradio demo app
 - Reproducibility guide
-- Portfolio and resume summary
 
 Future milestones may add sensitivity analyses or expanded dashboard views after the current SQL/QA/BI, analysis, report, and app layers are reviewed.
 
@@ -205,7 +222,7 @@ Future milestones may add sensitivity analyses or expanded dashboard views after
 - Final report: `report/final_report.md`
 - Gradio demo app: `app/app.py`
 - Reproducibility guide: `docs/07_reproducibility_guide.md`
-- Portfolio summary and resume bullets: `docs/08_portfolio_summary.md`
+- Analysis interpretation: `docs/09_analysis_interpretation.md`
 
 ## Responsible Use
 

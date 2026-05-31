@@ -200,7 +200,7 @@ patient-level synthetic records, clinical decision support, or causal claims.
 - Main README: `README.md`
 - Final report: `report/final_report.md`
 - Reproducibility guide: `docs/07_reproducibility_guide.md`
-- Portfolio summary: `docs/08_portfolio_summary.md`
+- Analysis interpretation: `docs/09_analysis_interpretation.md`
 """
                 )
 
