@@ -1,0 +1,9 @@
+stratification_domain,category,patient_count,readmitted_30d_count,readmission_rate_30d_percent,outpatient_followup_30d_percent,ed_revisit_30d_percent,interpretation_note
+age_group,Under 65,208,12,5.8,20.7,1.0,Synthetic subgroup summary; descriptive only.
+age_group,65+,47,1,2.1,25.5,0.0,Small cell count; do not overinterpret.
+chronic_condition_count,0,165,7,4.2,21.8,1.2,Synthetic subgroup summary; descriptive only.
+chronic_condition_count,1,78,5,6.4,17.9,0.0,Synthetic subgroup summary; descriptive only.
+chronic_condition_count,2,7,1,14.3,28.6,0.0,Small cell count; do not overinterpret.
+chronic_condition_count,3,5,0,0.0,60.0,0.0,Small cell count; do not overinterpret.
+sex,F,148,7,4.7,24.3,1.4,Synthetic subgroup summary; descriptive only.
+sex,M,107,6,5.6,17.8,0.0,Synthetic subgroup summary; descriptive only.

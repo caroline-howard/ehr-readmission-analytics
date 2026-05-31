@@ -10,6 +10,8 @@ This report summarizes the current SQL, validation, and BI/dashboard layer of th
 
 The current milestone includes data profiling, SQL cohort construction, validation QA outputs, aggregate dashboard-ready tables, descriptive analysis outputs, and an exploratory logistic regression model. It does not include causal inference.
 
+The main analytic signal in the current synthetic cohort is prior utilization. Patients with 30-day readmission had higher prior encounter and prior ED visit counts in Table 1. The exploratory model is included to demonstrate adjusted association reporting, but the event count is too small to support clinical prediction.
+
 ## Research Question
 
 Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, how are outpatient follow-up timing, demographic characteristics, clinical conditions, prior utilization, and discharge-related factors associated with all-cause inpatient readmission within 30 days of discharge?
@@ -122,8 +124,24 @@ The notebook workflow generates aggregate analysis outputs in `outputs/analysis/
 - `readmission_summary.csv`
 - `outpatient_followup_summary.csv`
 - `ed_revisit_summary.csv`
+- `risk_stratification_summary.csv`
 
 Table 1 compares baseline characteristics by 30-day readmission status using aggregate summaries only. Continuous variables are summarized as mean and standard deviation; categorical variables are summarized as count and percent.
+
+## Analytic Findings
+
+The analysis layer is intended to go beyond dashboard KPI summaries by describing baseline differences, subgroup patterns, and adjusted associations.
+
+In the current synthetic cohort, prior utilization is the clearest descriptive signal:
+
+- Prior encounters in the 12 months before index admission were higher among readmitted patients: 4.92 versus 3.66 encounters, p = 0.0405.
+- Prior ED visits in the 12 months before index admission were higher among readmitted patients: 0.69 versus 0.24 visits, p = 0.0005.
+- Outpatient follow-up within 30 days was similar between groups: 23.1% among readmitted patients versus 21.5% among non-readmitted patients.
+- ED revisit within 30 days was rare overall and should not be overinterpreted.
+
+Risk stratification outputs are available in `outputs/analysis/risk_stratification_summary.csv`. These outputs summarize readmission and utilization patterns by selected age, chronic condition burden, and sex groups. Several strata have small event counts, so the purpose is to identify stakeholder questions rather than make stable clinical risk claims.
+
+In a real health system setting, these findings would support discussion of whether prior ED use or broader prior utilization should be used for transition-of-care review, outreach prioritization, or more detailed subgroup analysis.
 
 ## Exploratory Logistic Regression
 
@@ -150,6 +168,20 @@ The model included 255 observations and 13 readmission events. The model converg
 ![Exploratory logistic regression odds ratios](../outputs/figures/logistic_regression_odds_ratios.png)
 
 These model results are synthetic-data demonstration outputs. They should not be interpreted as clinically valid estimates.
+
+Logistic regression is appropriate for the primary adjusted association analysis because the outcome is binary and odds ratios are standard in clinical research and healthcare analytics reporting. However, it is not sufficient by itself to tell the analytic story. The current model has only 13 readmission events, so estimates may be unstable and confidence intervals should be interpreted cautiously.
+
+In a real analysis with a larger governed dataset, next modeling steps could include penalized logistic regression, Firth-style rare-events logistic regression, or a prespecified parsimonious adjusted model with validation. Machine learning models would only be appropriate if the objective changed to validated prediction and sufficient data were available for training, testing, calibration, and performance reporting.
+
+## Sensitivity Analysis Priorities
+
+The next analysis pass should focus on sensitivity analyses before adding more complex models:
+
+- Compare 7-day, 14-day, and 30-day outpatient follow-up windows.
+- Fit adjusted models with and without outpatient follow-up variables because of timing bias concerns.
+- Stratify summaries by prior ED use, prior encounter burden, chronic condition count, age group, and length-of-stay category.
+- Review same-day returns and possible transfer-like encounters separately.
+- Consider disease-specific cohorts only if diagnosis grouping logic is defensible from condition records.
 
 ## Translation to a Real Health System Setting
 

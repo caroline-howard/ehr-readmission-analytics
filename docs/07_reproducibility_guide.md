@@ -91,11 +91,12 @@ These notebooks regenerate:
 - `outputs/analysis/readmission_summary.csv`
 - `outputs/analysis/outpatient_followup_summary.csv`
 - `outputs/analysis/ed_revisit_summary.csv`
+- `outputs/analysis/risk_stratification_summary.csv`
 - `outputs/analysis/logistic_regression_results.csv`
 - `outputs/analysis/logistic_regression_model_notes.csv`
 - `outputs/figures/logistic_regression_odds_ratios.png`
 
-The notebooks use patient-level synthetic records only in local memory and export aggregate summaries or model coefficients only.
+The notebooks use patient-level synthetic records only in local memory and export aggregate summaries or model coefficients only. The analysis interpretation document in `docs/09_analysis_interpretation.md` explains how to interpret Table 1, risk stratification, and the exploratory logistic regression results.
 
 ## 6. Regenerate Figures
 
