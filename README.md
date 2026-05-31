@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Results](#results-overview) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -92,6 +92,16 @@ The most useful takeaway is operational: the workflow shows how a healthcare ana
 
 The full report is available in `report/final_report.md`.
 
+## Analysis Layer
+
+The analysis layer includes more than dashboard-level summary statistics. Current aggregate outputs include Table 1 baseline comparisons, post-discharge utilization summaries, risk stratification summaries, and an exploratory adjusted logistic regression model.
+
+The clearest descriptive signal in the current synthetic cohort is prior utilization. Readmitted patients had higher prior encounters in the 12 months before index admission and higher prior ED visit counts than non-readmitted patients. Outpatient follow-up within 30 days was similar between readmitted and non-readmitted patients, which reinforces that the project should not make causal claims about follow-up reducing readmission.
+
+Logistic regression remains appropriate for an interpretable adjusted association analysis because the outcome is binary and odds ratios are common in healthcare research reporting. However, the model is intentionally framed as exploratory because the synthetic cohort has only 13 readmission events. A real health system analysis with low event counts would consider penalized logistic regression, Firth-style rare-events logistic regression, or a prespecified parsimonious model before any prediction-focused machine learning.
+
+The analysis interpretation document is available in `docs/09_analysis_interpretation.md`.
+
 ## Stakeholder Use Case
 
 A physician investigator, care transitions leader, quality improvement team, or population health analytics group could use this type of readout to move from raw encounter data toward operational questions about post-discharge care.
@@ -178,7 +188,9 @@ Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 - BI-ready demographic/utilization summary table
 - Table 1 baseline characteristics
 - Readmission, outpatient follow-up, and ED revisit summary tables
+- Risk stratification summary
 - Exploratory logistic regression results
+- Analysis interpretation document
 - Report-ready figures
 - Current report summary
 - Static dashboard mockup

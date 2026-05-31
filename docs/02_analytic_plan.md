@@ -169,6 +169,10 @@ Planned descriptive stratification will include:
 
 These strata are intended to describe whether follow-up patterns and readmission rates differ across patient risk profiles. They will not establish clinical effectiveness.
 
+Risk stratification is included because healthcare analytics teams often need to identify which patient groups should be reviewed with clinical or operational stakeholders before any intervention or prediction model is considered. The initial readout will emphasize interpretable strata rather than complex modeling: age group, prior ED use or prior encounter burden, chronic condition count, and length-of-stay category.
+
+Small strata will be clearly flagged. Stratified readmission percentages will be used to generate questions for stakeholder review, not to claim stable clinical risk estimates.
+
 ## Disease and Condition Grouping
 
 If feasible with Synthea data, the project may document simplified disease groupings for common readmission-relevant conditions, such as heart failure, COPD, diabetes, hypertension, chronic kidney disease, and AMI-like cardiovascular conditions. These groupings are optional exploratory variables, not required for the MVP workflow.
@@ -252,6 +256,19 @@ Logistic regression was selected as the primary modeling approach because the ou
 Model covariates will be chosen based on clinical interpretability, literature-informed readmission domains, missingness, and availability in the synthetic export. The model will not be presented as a validated clinical risk prediction tool.
 
 Outpatient follow-up variables may be included as exploratory covariates only, with careful interpretation due to temporal sequencing, confounding by illness severity, and differences in baseline readmission risk. The analysis will describe associations and will not claim that follow-up causes changes in readmission.
+
+Because the current synthetic cohort has a small number of readmission events, the adjusted model should remain parsimonious. In a real health system analysis with a larger governed dataset, a penalized logistic regression or Firth-style rare-events logistic regression would be considered if event counts remain low or separation is present. Machine learning models would only be appropriate if the project objective changed from interpretable healthcare analytics to validated prediction and if there were enough data for training, validation, and performance assessment.
+
+## Sensitivity Analysis Plan
+
+Planned sensitivity analyses will focus on cohort and timing assumptions rather than adding model complexity first:
+
+- Compare outpatient follow-up windows of 7, 14, and 30 days.
+- Fit adjusted models with and without outpatient follow-up variables because of timing bias and confounding concerns.
+- Review same-day returns or transfer-like encounters separately.
+- Repeat descriptive summaries by age group, prior utilization burden, chronic condition burden, and length-of-stay category.
+- Exclude or flag patients without complete 30-day follow-up if observation-window completeness can be measured.
+- Consider disease-specific cohorts only if diagnosis grouping logic is defensible from Synthea condition records.
 
 ## Planned Outputs
 
