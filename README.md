@@ -70,7 +70,7 @@ The project also incorporates a healthcare operations and population health dash
 
 The BI layer is designed around readmission KPIs, follow-up analytics, ED revisit reporting, cohort summaries, and operational healthcare metrics. It is intended to support clear communication of cohort trends and post-discharge utilization patterns without presenting the project as a clinical decision tool.
 
-![Post-discharge utilization dashboard mockup](outputs/figures/dashboard_mockup.png)
+![Post-discharge utilization dashboard mockup](outputs/figures/dashboard_mockup_professional.png)
 
 Dashboard-ready aggregate tables are available in `outputs/bi/` and can be imported into Power BI or Tableau:
 
@@ -79,6 +79,14 @@ Dashboard-ready aggregate tables are available in `outputs/bi/` and can be impor
 - `followup_timing_table.csv`
 - `ed_revisit_table.csv`
 - `demographic_utilization_summary_table.csv`
+
+Report-ready visuals are generated from aggregate synthetic-data outputs and include:
+
+- cohort construction and validation: `outputs/figures/cohort_attrition_flow.png`
+- dashboard-ready BI outputs: `outputs/figures/dashboard_mockup_professional.png`
+- follow-up timing: `outputs/figures/cumulative_outpatient_followup_curve.png`
+- prior utilization signal: `outputs/figures/readmission_by_prior_utilization_group.png`
+- exploratory adjusted association model: `outputs/figures/logistic_regression_forest_plot_professional.png`
 
 ## Results Overview
 
@@ -211,7 +219,7 @@ Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 - Analysis interpretation document
 - Report-ready figures
 - Current report summary
-- Static dashboard mockup
+- Professional dashboard mockup
 - Lightweight Gradio demo app
 - Reproducibility guide
 

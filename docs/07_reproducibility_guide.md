@@ -92,13 +92,14 @@ These notebooks regenerate:
 - `outputs/analysis/outpatient_followup_summary.csv`
 - `outputs/analysis/ed_revisit_summary.csv`
 - `outputs/analysis/risk_stratification_summary.csv`
+- `outputs/analysis/prior_utilization_group_summary.csv`
 - `outputs/analysis/logistic_regression_results.csv`
 - `outputs/analysis/logistic_regression_model_notes.csv`
 - `outputs/figures/logistic_regression_odds_ratios.png`
 
 The notebooks use patient-level synthetic records only in local memory and export aggregate summaries or model coefficients only. The analysis interpretation document in `docs/09_analysis_interpretation.md` explains how to interpret Table 1, risk stratification, and the exploratory logistic regression results.
 
-## 6. Regenerate Figures
+## 6. Regenerating Report Figures
 
 Report figures are generated from aggregate outputs and stored in:
 
@@ -106,7 +107,13 @@ Report figures are generated from aggregate outputs and stored in:
 outputs/figures/
 ```
 
-Current figures include cohort attrition, post-discharge KPIs, encounter class distribution, the logistic regression odds ratio plot, and a dashboard mockup.
+Run:
+
+```bash
+python scripts/generate_professional_figures.py
+```
+
+This script regenerates the professional dashboard mockup, cohort attrition flow diagram, cumulative outpatient follow-up curve, readmission by prior utilization group figure, and exploratory logistic regression forest plot from aggregate synthetic-data outputs.
 
 ## 7. Run the Gradio Demo
 
