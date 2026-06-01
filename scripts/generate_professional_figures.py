@@ -196,55 +196,17 @@ def plot_forest(ax, reg: pd.DataFrame, title: str, compact: bool = False):
 
 
 def make_dashboard():
-    cohort = read_csv(BI_DIR / "cohort_summary_table.csv").iloc[0]
-    readmission = read_csv(BI_DIR / "readmission_kpi_table.csv").iloc[0]
-    followup = read_csv(BI_DIR / "followup_timing_table.csv")
-    ed = read_csv(BI_DIR / "ed_revisit_table.csv").iloc[0]
-    prior = read_csv(ANALYSIS_DIR / "prior_utilization_group_summary.csv")
-    risk = read_csv(ANALYSIS_DIR / "risk_stratification_summary.csv")
-    reg = prepare_regression()
-
-    fig = plt.figure(figsize=(16, 13), facecolor=COLORS["light_gray"])
-    gs = fig.add_gridspec(5, 12, left=0.04, right=0.98, top=0.90, bottom=0.055, hspace=0.75, wspace=0.60)
-    fig.text(0.04, 0.965, "Post-Discharge Utilization Dashboard", fontsize=25, fontweight="bold", color=COLORS["navy"])
-    fig.text(
-        0.04,
-        0.935,
-        "Synthetic Synthea EHR cohort | Aggregate portfolio dashboard mockup | Not for clinical decision-making",
-        fontsize=10.5,
-        color=COLORS["gray"],
+    # The dashboard image is a designed static portfolio mockup committed to
+    # outputs/figures/dashboard_mockup_professional.png. Preserve it when this
+    # script is rerun so the README, report, and app use the approved dashboard.
+    dashboard_path = FIGURE_DIR / "dashboard_mockup_professional.png"
+    if dashboard_path.exists():
+        print(f"Preserved {dashboard_path.relative_to(PROJECT_ROOT)}")
+        return
+    raise FileNotFoundError(
+        "Missing outputs/figures/dashboard_mockup_professional.png. "
+        "Restore the approved dashboard asset before regenerating report figures."
     )
-
-    kpis = [
-        ("Final analytic cohort", f"{int(cohort['cohort_patients']):,}", "patients"),
-        ("30-day readmission", pct(readmission["readmission_rate_30d_percent"]), f"{int(readmission['readmitted_30d_count'])} patients"),
-        (
-            "30-day outpatient follow-up",
-            pct(followup.loc[followup["followup_window_days"] == 30, "followup_percent"].iloc[0]),
-            f"{int(followup.loc[followup['followup_window_days'] == 30, 'followup_count'].iloc[0])} patients",
-        ),
-        ("30-day ED revisit", pct(ed["ed_revisit_30d_percent"]), f"{int(ed['ed_revisit_30d_count'])} patients"),
-    ]
-    for idx, (label, value, detail) in enumerate(kpis):
-        ax = fig.add_subplot(gs[0, idx * 3 : (idx + 1) * 3])
-        add_kpi_card(ax, label, value, detail)
-
-    plot_followup_curve(fig.add_subplot(gs[1, 0:6]), followup)
-    ax_prior = fig.add_subplot(gs[1, 6:12])
-    plot_prior_utilization(ax_prior, prior)
-    ax_prior.set_ylabel("")
-    plot_age_group(fig.add_subplot(gs[2, 0:6]), risk)
-    plot_chronic_burden(fig.add_subplot(gs[2, 6:12]), risk)
-    plot_forest(fig.add_subplot(gs[3:5, 0:12]), reg, "Model insight: exploratory logistic regression odds ratios", compact=False)
-
-    fig.text(
-        0.04,
-        0.02,
-        "Synthetic-data demonstration only. Dashboard values are aggregate portfolio outputs and are not clinical evidence.",
-        fontsize=9,
-        color=COLORS["gray"],
-    )
-    save(fig, "dashboard_mockup_professional.png")
 
 
 def make_cohort_flow():

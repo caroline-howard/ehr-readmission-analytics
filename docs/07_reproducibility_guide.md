@@ -113,7 +113,7 @@ Run:
 python scripts/generate_professional_figures.py
 ```
 
-This script regenerates the professional dashboard mockup, cohort attrition flow diagram, cumulative outpatient follow-up curve, readmission by prior utilization group figure, and exploratory logistic regression forest plot from aggregate synthetic-data outputs.
+This script preserves the approved static dashboard mockup and regenerates the cohort attrition flow diagram, cumulative outpatient follow-up curve, readmission by prior utilization group figure, and exploratory logistic regression forest plot from aggregate synthetic-data outputs.
 
 ## 7. Run the Gradio Demo
 
