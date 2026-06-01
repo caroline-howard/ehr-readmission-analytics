@@ -1,0 +1,5 @@
+condition_group,patient_count,patient_percent,readmitted_30d_count,not_readmitted_count,readmission_rate_30d_percent,p_value,interpretation_note
+COPD,4,1.6,0,4,0.0,1.0,Derived from simplified Synthea condition flags in aggregate Table 1; descriptive only.
+Chronic kidney disease,8,3.1,1,7,12.5,0.8804,Derived from simplified Synthea condition flags in aggregate Table 1; descriptive only.
+Diabetes,21,8.2,2,19,9.5,0.6565,Derived from simplified Synthea condition flags in aggregate Table 1; descriptive only.
+Hypertension,74,29.0,4,70,5.4,1.0,Derived from simplified Synthea condition flags in aggregate Table 1; descriptive only.
