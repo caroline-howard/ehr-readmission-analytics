@@ -1,0 +1,7 @@
+measure_name,measure_group,window_days,count,denominator,percent,mean_days_to_event,interpretation_note
+Outpatient follow-up 0-7 days,Outpatient follow-up,7,23,255,9.0,1.62,Cumulative outpatient or ambulatory follow-up window after discharge.
+Outpatient follow-up 0-14 days,Outpatient follow-up,14,33,255,12.9,4.39,Cumulative outpatient or ambulatory follow-up window after discharge.
+Outpatient follow-up 0-30 days,Outpatient follow-up,30,55,255,21.6,10.71,Cumulative outpatient or ambulatory follow-up window after discharge.
+30-day ED revisit,ED revisit,30,2,255,0.8,,ED revisit within 30 days; secondary utilization measure.
+30-day inpatient readmission,Readmission,30,13,255,5.1,20.98,Primary outcome; all-cause inpatient readmission within 30 days.
+Any post-discharge encounter within 30 days,Any encounter,30,96,255,37.6,,Any observed post-discharge encounter within 30 days.

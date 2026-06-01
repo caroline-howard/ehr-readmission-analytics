@@ -1,0 +1,318 @@
+# Tableau Dashboard Build Guide
+
+## Purpose
+
+This guide supports manual Tableau dashboard development for the EHR Readmissions Analysis project. The dashboard should be presented as a portfolio-ready healthcare analytics mockup based on synthetic Synthea EHR data.
+
+The repository does not include a completed or published Tableau workbook. These files are intended to help build the dashboard manually in Tableau Desktop or Tableau Public.
+
+## Data Files
+
+Use the aggregate CSV files in `tableau_dashboard/`:
+
+| CSV file | Purpose |
+| --- | --- |
+| `kpi_summary.csv` | KPI cards for cohort size, readmission, follow-up, ED revisit, and any post-discharge encounter |
+| `readmission_by_age_group.csv` | Age-group readmission and utilization summary |
+| `readmission_by_condition_group.csv` | Condition-flag readmission summary using simplified Synthea condition groups |
+| `utilization_summary.csv` | Post-discharge utilization measures and timing windows |
+| `data_quality_summary.csv` | Data validation and missingness checks |
+
+Each file is aggregated and dashboard-friendly. Do not connect Tableau to raw patient-level files for this portfolio dashboard.
+
+## Tableau Connections
+
+1. Open Tableau Desktop or Tableau Public.
+2. Connect to `Text file`.
+3. Add each CSV from `tableau_dashboard/` as a separate data source.
+4. Confirm field types:
+   - Counts and denominators: Number whole
+   - Percent fields: Number decimal
+   - Category fields: String
+   - Notes/status fields: String
+5. Rename data sources in Tableau:
+   - `KPI Summary`
+   - `Readmission by Age Group`
+   - `Readmission by Condition Group`
+   - `Utilization Summary`
+   - `Data Quality Summary`
+
+Do not join these files unless you intentionally need a combined worksheet. The package is designed so each sheet can use its own aggregate data source.
+
+## Calculated Fields
+
+Create these calculated fields in the relevant Tableau data sources. The CSVs already include percentage columns, but these formulas show transparent rate logic and make the workbook easier to audit.
+
+### Readmission Rate
+
+Use in `Readmission by Age Group` and `Readmission by Condition Group`.
+
+```text
+SUM([readmitted_30d_count]) / SUM([patient_count])
+```
+
+Format as Percentage with 1 decimal place.
+
+### ED Revisit Rate
+
+Use in `Readmission by Age Group`.
+
+```text
+SUM([ed_revisit_30d_count]) / SUM([patient_count])
+```
+
+Format as Percentage with 1 decimal place.
+
+### Follow-Up Rate
+
+Use in `Readmission by Age Group`.
+
+```text
+SUM([outpatient_followup_30d_count]) / SUM([patient_count])
+```
+
+Format as Percentage with 1 decimal place.
+
+For `Utilization Summary`, use:
+
+```text
+SUM([count]) / SUM([denominator])
+```
+
+Format as Percentage with 1 decimal place.
+
+### Percent Missing
+
+Use in `Data Quality Summary`.
+
+```text
+SUM([value]) / SUM([denominator])
+```
+
+Format as Percentage with 1 decimal place.
+
+## Recommended Dashboard Title
+
+```text
+Post-Discharge Utilization and 30-Day Readmission Dashboard
+Synthetic Synthea EHR cohort | Aggregate portfolio dashboard | Not for clinical decision-making
+```
+
+## Sheet 1: KPI Cards
+
+Data source: `KPI Summary`
+
+Recommended chart type: Text cards
+
+Build steps:
+
+1. Create a new worksheet named `KPI Cards`.
+2. Drag `kpi_name` to Columns.
+3. Drag `display_value` to Text on the Marks card.
+4. Drag `kpi_category` to Color.
+5. Drag `count`, `denominator`, `percent`, and `interpretation_note` to Tooltip.
+6. Set Marks type to Text.
+7. Increase font size for `display_value`.
+8. Hide field labels for columns.
+9. Sort KPI cards manually in this order:
+   - Final analytic cohort
+   - 30-day inpatient readmission
+   - 30-day outpatient follow-up
+   - 30-day ED revisit
+   - Any post-discharge encounter within 30 days
+
+Suggested tooltip:
+
+```text
+<kpi_name>
+Count: <count>
+Denominator: <denominator>
+Percent: <percent>%
+Note: <interpretation_note>
+```
+
+## Sheet 2: Readmission Rate by Age Group
+
+Data source: `Readmission by Age Group`
+
+Recommended chart type: Bar chart
+
+Build steps:
+
+1. Create a worksheet named `Readmission Rate by Age Group`.
+2. Drag `age_group` to Rows.
+3. Drag `Readmission Rate` to Columns.
+4. Drag `readmitted_30d_count` to Label.
+5. Drag `patient_count` to Tooltip.
+6. Drag `age_group` to Color or use one consistent healthcare-friendly color.
+7. Drag `sort_order` to Sort so `Under 65` appears before `65+`.
+8. Format `Readmission Rate` as Percentage with 1 decimal place.
+9. Add a title: `30-Day Readmission Rate by Age Group`.
+
+Suggested tooltip:
+
+```text
+Age group: <age_group>
+Patients: <patient_count>
+Readmitted: <readmitted_30d_count>
+Readmission rate: <Readmission Rate>
+Outpatient follow-up rate: <Follow-Up Rate>
+ED revisit rate: <ED Revisit Rate>
+Note: <interpretation_note>
+```
+
+Interpretation note: age-group findings are descriptive and should be interpreted cautiously because readmission event counts are small.
+
+## Sheet 3: Readmission Rate by Condition Group
+
+Data source: `Readmission by Condition Group`
+
+Recommended chart type: Horizontal bar chart
+
+Build steps:
+
+1. Create a worksheet named `Readmission Rate by Condition Group`.
+2. Drag `condition_group` to Rows.
+3. Drag `Readmission Rate` to Columns.
+4. Drag `readmitted_30d_count` to Label.
+5. Drag `patient_count`, `patient_percent`, `p_value`, and `interpretation_note` to Tooltip.
+6. Sort descending by `Readmission Rate`.
+7. Format `Readmission Rate` as Percentage with 1 decimal place.
+8. Use a restrained palette, such as navy/teal with a muted accent color.
+9. Add a title: `30-Day Readmission Rate by Condition Group`.
+
+Suggested tooltip:
+
+```text
+Condition group: <condition_group>
+Patients with condition: <patient_count>
+Readmitted: <readmitted_30d_count>
+Readmission rate: <Readmission Rate>
+p-value from aggregate Table 1: <p_value>
+Note: <interpretation_note>
+```
+
+Interpretation note: condition groups are simplified Synthea flags and are not clinically validated disease phenotypes.
+
+## Sheet 4: 30-Day ED Revisit vs Outpatient Follow-Up
+
+Data source: `Utilization Summary`
+
+Recommended chart type: Bar chart with filtered utilization measures
+
+Build steps:
+
+1. Create a worksheet named `30-Day ED Revisit vs Outpatient Follow-Up`.
+2. Drag `measure_name` to Rows.
+3. Drag `Follow-Up Rate` to Columns.
+4. Drag `measure_group` to Color.
+5. Drag `count` to Label.
+6. Drag `denominator`, `percent`, `window_days`, and `interpretation_note` to Tooltip.
+7. Add a filter on `measure_name`.
+8. Select:
+   - Outpatient follow-up 0-7 days
+   - Outpatient follow-up 0-14 days
+   - Outpatient follow-up 0-30 days
+   - 30-day ED revisit
+   - 30-day inpatient readmission
+9. Format `Follow-Up Rate` as Percentage with 1 decimal place.
+10. Add a title: `Post-Discharge Utilization Within 30 Days`.
+
+Suggested tooltip:
+
+```text
+Measure: <measure_name>
+Group: <measure_group>
+Count: <count>
+Denominator: <denominator>
+Rate: <Follow-Up Rate>
+Window: <window_days> days
+Note: <interpretation_note>
+```
+
+Even though the calculated field is named `Follow-Up Rate`, it functions as a generic `count / denominator` rate in this utilization sheet.
+
+## Sheet 5: Data Quality Summary
+
+Data source: `Data Quality Summary`
+
+Recommended chart type: Text table or highlight table
+
+Build steps:
+
+1. Create a worksheet named `Data Quality Summary`.
+2. Drag `quality_domain` to Rows.
+3. Drag `check_name` to Rows after `quality_domain`.
+4. Drag `status` to Color.
+5. Drag `value` to Text.
+6. Drag `Percent Missing` to Tooltip.
+7. Drag `denominator` and `interpretation_note` to Tooltip.
+8. Use status colors:
+   - Pass: muted green or teal
+   - Expected: muted blue
+   - Review: muted amber
+9. Add a title: `Data Quality and Validation Checks`.
+
+Suggested tooltip:
+
+```text
+Domain: <quality_domain>
+Check: <check_name>
+Value: <value>
+Denominator: <denominator>
+Percent: <Percent Missing>
+Status: <status>
+Note: <interpretation_note>
+```
+
+## Dashboard Wireframe
+
+Recommended size: Automatic or 1400 x 900.
+
+```text
++--------------------------------------------------------------------------------+
+| Post-Discharge Utilization and 30-Day Readmission Dashboard                     |
+| Synthetic Synthea EHR cohort | Aggregate portfolio dashboard | Not clinical CDS |
++--------------------------------------------------------------------------------+
+| KPI Cards: Cohort | Readmission | Follow-Up | ED Revisit | Any Encounter       |
++------------------------------------------+-------------------------------------+
+| Readmission Rate by Age Group            | Readmission Rate by Condition Group |
+| Horizontal or vertical bar chart          | Horizontal bar chart                |
++------------------------------------------+-------------------------------------+
+| 30-Day ED Revisit vs Outpatient Follow-Up                                      |
+| Bar chart comparing follow-up windows, ED revisit, readmission, any encounter  |
++--------------------------------------------------------------------------------+
+| Data Quality Summary                                                            |
+| Highlight table showing pass/expected/review validation checks                  |
++--------------------------------------------------------------------------------+
+| Footer: Synthetic Synthea EHR data. Aggregate portfolio demonstration only.     |
+| Not for clinical decision-making, quality reporting, or causal inference.       |
++--------------------------------------------------------------------------------+
+```
+
+## Dashboard Formatting Recommendations
+
+- Use a restrained healthcare analytics palette: navy, teal, muted blue, muted red for readmission, and light gray backgrounds.
+- Keep KPI cards at the top so reviewers immediately understand cohort size and core rates.
+- Use concise titles and tooltips rather than long explanatory text inside the dashboard.
+- Include a footer stating that the data are synthetic and not for clinical decision-making.
+- Avoid patient-level detail tables.
+- Avoid causal language about outpatient follow-up and readmission.
+
+## Suggested Dashboard Story
+
+The dashboard should communicate this flow:
+
+1. The analytic cohort includes 255 adult synthetic patients with one first eligible inpatient encounter.
+2. The primary outcome is all-cause 30-day inpatient readmission.
+3. Post-discharge utilization includes outpatient follow-up windows, ED revisit, readmission, and any encounter within 30 days.
+4. Age and condition-group views are descriptive subgroup summaries.
+5. Data quality checks support the cohort and outcome derivation logic but do not establish clinical validity.
+
+## Responsible Use Language
+
+Use this language in the dashboard footer or project notes:
+
+```text
+This dashboard uses synthetic Synthea EHR data for portfolio demonstration only. It does not contain real patient data and is not intended for clinical decision-making, quality reporting, operational deployment, or causal inference.
+```

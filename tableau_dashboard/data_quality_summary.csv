@@ -1,0 +1,15 @@
+quality_domain,check_name,value,denominator,percent,status,interpretation_note
+Cohort construction,Final analysis dataset rows,255,255,100.0,Pass,Final aggregate cohort available for dashboard reporting.
+Index encounter,One index encounter per patient,1,1,100.0,Pass,255 index rows and 255 distinct patients.
+Index encounter,Duplicate patient index rows,0,255,0.0,Pass,Duplicate patient index rows should be zero.
+Date validity,Invalid or missing final encounter dates,0,255,0.0,Pass,"Missing, invalid, or temporally inconsistent final analysis dates."
+Outcome derivation,Missing readmission outcome rows,0,255,0.0,Pass,Primary outcome should be populated for all final analysis rows.
+Follow-up timing,Non-monotonic follow-up window rows,0,255,0.0,Pass,7/14/30-day outpatient follow-up flags should be monotonic.
+Missingness,Missingness: days_to_readmission,242,255,94.9,Expected,Timing fields are missing when the corresponding event is not observed; other variables require review.
+Missingness,Missingness: readmission_encounter_id,242,255,94.9,Expected,Timing fields are missing when the corresponding event is not observed; other variables require review.
+Missingness,Missingness: days_to_first_outpatient_followup,200,255,78.43,Expected,Timing fields are missing when the corresponding event is not observed; other variables require review.
+Missingness,Missingness: death_date,166,255,65.1,Review,Timing fields are missing when the corresponding event is not observed; other variables require review.
+Missingness,Missingness: days_to_first_postdischarge_encounter,159,255,62.35,Expected,Timing fields are missing when the corresponding event is not observed; other variables require review.
+Missingness,Missingness: age_at_index,0,255,0.0,Review,Timing fields are missing when the corresponding event is not observed; other variables require review.
+Missingness,Missingness: birth_date,0,255,0.0,Review,Timing fields are missing when the corresponding event is not observed; other variables require review.
+Missingness,Missingness: chronic_condition_count,0,255,0.0,Review,Timing fields are missing when the corresponding event is not observed; other variables require review.

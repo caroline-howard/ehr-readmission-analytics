@@ -1,0 +1,6 @@
+kpi_name,kpi_category,count,denominator,percent,display_value,interpretation_note
+Final analytic cohort,Cohort,255,255,100.0,255 patients,Adult patients with one first eligible index inpatient encounter. Synthetic data only.
+30-day inpatient readmission,Outcome,13,255,5.1,5.1%,All-cause inpatient readmission within 30 days of index discharge. Descriptive only.
+30-day outpatient follow-up,Utilization,55,255,21.6,21.6%,Outpatient or ambulatory follow-up within 30 days. Not interpreted causally.
+30-day ED revisit,Utilization,2,255,0.8,0.8%,ED revisit within 30 days. Rare event in this synthetic cohort.
+Any post-discharge encounter within 30 days,Utilization,96,255,37.6,37.6%,Any observed post-discharge encounter within 30 days.
