@@ -52,7 +52,7 @@ The final analysis dataset includes one index encounter per adult patient with a
 | Index encounters | 255 |
 | Final analysis dataset rows | 255 |
 
-![Cohort attrition and analysis dataset construction](../outputs/figures/cohort_attrition.png)
+![Figure 1. Cohort attrition flow diagram](../outputs/figures/cohort_attrition_flow.png)
 
 ## Encounter Classification
 
@@ -66,8 +66,6 @@ The source `encounters.csv` file contains distinguishable encounter classes need
 | urgentcare | 2,564 | 4.17 |
 | emergency | 2,168 | 3.53 |
 | inpatient | 1,728 | 2.81 |
-
-![Synthea encounter class distribution](../outputs/figures/encounter_class_distribution.png)
 
 ## Validation Findings
 
@@ -84,22 +82,6 @@ Validation checks support the current SQL cohort logic:
 
 Missingness is expected for timing variables that only apply to patients with observed readmission or outpatient follow-up. For example, `days_to_readmission` is missing for patients without a 30-day readmission, and `days_to_first_outpatient_followup` is missing for patients without observed outpatient follow-up.
 
-## Aggregate Results Snapshot
-
-| Measure | Value |
-| --- | ---: |
-| Final analysis cohort | 255 patients |
-| 30-day inpatient readmission | 13 patients |
-| 30-day inpatient readmission rate | 5.1% |
-| Mean days to readmission | 20.98 |
-| Outpatient follow-up within 7 days | 23 patients, 9.0% |
-| Outpatient follow-up within 14 days | 33 patients, 12.9% |
-| Outpatient follow-up within 30 days | 55 patients, 21.6% |
-| ED revisit within 30 days | 2 patients, 0.8% |
-| Any post-discharge encounter within 30 days | 96 patients, 37.6% |
-
-![Post-discharge utilization and readmission KPIs](../outputs/figures/postdischarge_kpis.png)
-
 ## Dashboard Layer
 
 The project includes dashboard-ready aggregate CSV files in `outputs/bi/`:
@@ -114,7 +96,23 @@ These tables are designed for Power BI or Tableau import and support stakeholder
 
 The project also includes a static dashboard mockup that illustrates how the aggregate outputs could be arranged for a healthcare operations or population health audience.
 
-![Post-discharge utilization dashboard mockup](../outputs/figures/dashboard_mockup.png)
+![Figure 2. Post-discharge utilization dashboard mockup](../outputs/figures/dashboard_mockup_professional.png)
+
+## Aggregate Results Snapshot
+
+| Measure | Value |
+| --- | ---: |
+| Final analysis cohort | 255 patients |
+| 30-day inpatient readmission | 13 patients |
+| 30-day inpatient readmission rate | 5.1% |
+| Mean days to readmission | 20.98 |
+| Outpatient follow-up within 7 days | 23 patients, 9.0% |
+| Outpatient follow-up within 14 days | 33 patients, 12.9% |
+| Outpatient follow-up within 30 days | 55 patients, 21.6% |
+| ED revisit within 30 days | 2 patients, 0.8% |
+| Any post-discharge encounter within 30 days | 96 patients, 37.6% |
+
+![Figure 3. Cumulative outpatient follow-up curve](../outputs/figures/cumulative_outpatient_followup_curve.png)
 
 ## Descriptive Analysis Outputs
 
@@ -143,6 +141,8 @@ Risk stratification outputs are available in `outputs/analysis/risk_stratificati
 
 In a real health system setting, these findings would support discussion of whether prior ED use or broader prior utilization should be used for transition-of-care review, outreach prioritization, or more detailed subgroup analysis.
 
+![Figure 4. Readmission rate by prior utilization group](../outputs/figures/readmission_by_prior_utilization_group.png)
+
 ## Exploratory Logistic Regression
 
 An exploratory logistic regression model was fit for 30-day inpatient readmission using a parsimonious predictor set:
@@ -165,7 +165,7 @@ The model included 255 observations and 13 readmission events. The model converg
 | Chronic condition count | 0.8868 | 0.3387-2.3218 | 0.8067 |
 | Outpatient follow-up within 30 days | 0.9978 | 0.2193-4.5402 | 0.9977 |
 
-![Exploratory logistic regression odds ratios](../outputs/figures/logistic_regression_odds_ratios.png)
+![Figure 5. Exploratory logistic regression forest plot](../outputs/figures/logistic_regression_forest_plot_professional.png)
 
 These model results are synthetic-data demonstration outputs. They should not be interpreted as clinically valid estimates.
 
@@ -225,4 +225,5 @@ To reproduce the current outputs:
 4. Review BI-ready aggregate outputs in `outputs/bi/`.
 5. Run `notebooks/02_descriptive_analysis.ipynb` and `notebooks/03_logistic_regression.ipynb`.
 6. Review analysis outputs in `outputs/analysis/`.
-7. Review report figures in `outputs/figures/`.
+7. Regenerate professional report figures with `python scripts/generate_professional_figures.py`.
+8. Review report figures in `outputs/figures/`.

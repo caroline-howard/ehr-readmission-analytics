@@ -1,0 +1,4 @@
+prior_utilization_group,patient_count,readmitted_30d_count,readmission_rate_30d_percent,outpatient_followup_30d_count,outpatient_followup_30d_percent,ed_revisit_30d_count,ed_revisit_30d_percent,mean_prior_encounters_12mo,interpretation_note
+Low prior utilization (0-1 encounters),88,2,2.3,5,5.7,0,0.0,0.58,Descriptive synthetic-data subgroup; not a clinical risk estimate.
+Medium prior utilization (2-4 encounters),101,3,3.0,19,18.8,0,0.0,2.84,Descriptive synthetic-data subgroup; not a clinical risk estimate.
+High prior utilization (5+ encounters),66,8,12.1,31,47.0,2,3.0,9.27,Descriptive synthetic-data subgroup; not a clinical risk estimate.
