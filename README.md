@@ -1,12 +1,29 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Visual Summary](#visual-summary) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
 This project demonstrates an end-to-end retrospective healthcare utilization analytics workflow using Synthea synthetic EHR data. It simulates a health system analytics request to define an adult inpatient cohort, track core post-discharge utilization measures, identify outpatient follow-up timing, and evaluate factors associated with 30-day inpatient readmission.
 
 The project is built for healthcare analytics, clinical research analytics, and health system research data analyst roles where reproducibility, data governance, SQL logic, and clear communication are essential.
+
+## Post-Discharge Utilization Analytics Summary
+
+Synthetic Synthea EHR cohort | Aggregate portfolio dashboard mockup | Not for clinical decision-making
+
+![Post-Discharge Utilization Analytics Summary](outputs/figures/post_discharge_utilization_summary_visual.png)
+
+### Visual Summary
+
+This multi-panel visual summarizes the core workflow and analytic outputs:
+
+- A: Cohort attrition from source encounters to final analytic cohort
+- B: Days to readmission among readmitted patients
+- C: 30-day post-discharge utilization KPIs
+- D: Readmission rate by age group
+- E: Cumulative outpatient follow-up timing
+- F: Prior utilization and chronic condition comparison by readmission status
 
 ## Research Question
 
@@ -68,9 +85,7 @@ Outpatient follow-up measures are interpreted as observational utilization measu
 
 The project also incorporates a healthcare operations and population health dashboard layer intended to simulate stakeholder-facing KPI reporting and utilization analytics workflows commonly used in health systems.
 
-The BI layer is designed around readmission KPIs, follow-up analytics, ED revisit reporting, cohort summaries, and operational healthcare metrics. It is intended to support clear communication of cohort trends and post-discharge utilization patterns without presenting the project as a clinical decision tool.
-
-![Post-discharge utilization dashboard mockup](outputs/figures/dashboard_mockup_professional.png)
+The BI layer is designed around readmission KPIs, follow-up analytics, ED revisit reporting, cohort summaries, and operational healthcare metrics. It is intended to support clear communication of cohort trends and post-discharge utilization patterns without presenting the project as a clinical decision tool. The repository includes dashboard-ready aggregate tables and a professional multi-panel summary visual for portfolio review.
 
 Dashboard-ready aggregate tables are available in `outputs/bi/` and can be imported into Power BI or Tableau:
 
@@ -83,12 +98,14 @@ Dashboard-ready aggregate tables are available in `outputs/bi/` and can be impor
 Report-ready visuals are generated from aggregate synthetic-data outputs and include:
 
 - cohort construction and validation: `outputs/figures/cohort_attrition_flow.png`
-- dashboard-ready BI outputs: `outputs/figures/dashboard_mockup_professional.png`
+- dashboard-ready BI summary: `outputs/figures/post_discharge_utilization_summary_visual.png`
 - follow-up timing: `outputs/figures/cumulative_outpatient_followup_curve.png`
 - prior utilization signal: `outputs/figures/readmission_by_prior_utilization_group.png`
 - exploratory adjusted association model: `outputs/figures/logistic_regression_forest_plot_professional.png`
 
 Tableau dashboard build materials are available in `tableau_dashboard/`. The package includes aggregate Tableau-ready CSVs, a reproducible export notebook, and a manual build guide. It does not represent a completed or published Tableau workbook.
+
+Together, these materials support cohort attrition reporting, post-discharge utilization KPI reporting, follow-up timing visualization, prior utilization/readmission comparison, subgroup uncertainty review, and exploratory readmission modeling outputs.
 
 ## Statistical Caution for Subgroup Comparisons
 
@@ -234,7 +251,7 @@ Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 - Analysis interpretation document
 - Report-ready figures
 - Current report summary
-- Professional dashboard mockup
+- Professional multi-panel utilization summary visual
 - Lightweight Gradio demo app
 - Reproducibility guide
 

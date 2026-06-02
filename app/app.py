@@ -158,8 +158,8 @@ patient-level synthetic records, clinical decision support, or causal claims.
         with gr.Tabs():
             with gr.Tab("Dashboard"):
                 gr.Image(
-                    value=str(FIGURE_DIR / "dashboard_mockup.png"),
-                    label="Dashboard mockup",
+                    value=str(FIGURE_DIR / "post_discharge_utilization_summary_visual.png"),
+                    label="Post-discharge utilization analytics summary",
                     height=620,
                 )
                 with gr.Row():
