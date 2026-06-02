@@ -96,6 +96,13 @@ Subgroup readmission rates in the Tableau exports are descriptive and explorator
 
 The age-group comparison uses Fisher's exact test or chi-square testing where appropriate based on expected cell counts. Condition-group outputs include subgroup sample-size notes, and groups with fewer than 30 patients are flagged for cautious interpretation. These summaries use synthetic Synthea data, are not clinically representative, and should not be interpreted as causal or clinically validated findings.
 
+Current Tableau subgroup exports include:
+
+- Age under 65: 5.8% readmission, Wilson 95% CI 3.3%-9.8%.
+- Age 65+: 2.1% readmission, Wilson 95% CI 0.4%-11.1%.
+- Age-group comparison: Fisher's exact test, p = 0.4726.
+- Condition-group examples: COPD, chronic kidney disease, and diabetes are flagged as small subgroups because each has fewer than 30 patients.
+
 ## Results Overview
 
 The current workflow has completed data profiling, SQL cohort construction, validation QA, aggregate BI output generation, descriptive analysis, and exploratory modeling using local Synthea synthetic CSV data. These results are included to demonstrate reproducible healthcare analytics workflow design, not clinical performance or causal inference.
