@@ -1,0 +1,10 @@
+source_step,target_step,count
+All Synthea Patients,Patients With Any Encounter,1163
+Patients With Any Encounter,Patients With Any Inpatient Encounter,285
+Patients With Any Encounter,Excluded: No Inpatient Encounter,878
+Patients With Any Inpatient Encounter,"Valid Patient Linkage, Birth Date, and Inpatient Dates",285
+"Valid Patient Linkage, Birth Date, and Inpatient Dates",Adult Patients With Eligible Inpatient Encounter,255
+"Valid Patient Linkage, Birth Date, and Inpatient Dates",Excluded: Under Age 18 at Valid Inpatient Encounter,30
+Adult Patients With Eligible Inpatient Encounter,First Eligible Inpatient Encounter Selected as Index Admission,255
+First Eligible Inpatient Encounter Selected as Index Admission,30-Day Follow-Up and Readmission Outcome Derived,255
+30-Day Follow-Up and Readmission Outcome Derived,Final Analytic Cohort,255

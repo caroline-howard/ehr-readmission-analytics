@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Cohort Attrition](#cohort-construction-and-attrition) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -87,6 +87,14 @@ Report-ready visuals are generated from aggregate synthetic-data outputs and inc
 - follow-up timing: `outputs/figures/cumulative_outpatient_followup_curve.png`
 - prior utilization signal: `outputs/figures/readmission_by_prior_utilization_group.png`
 - exploratory adjusted association model: `outputs/figures/logistic_regression_forest_plot_professional.png`
+
+## Cohort Construction and Attrition
+
+The source Synthea dataset contains 1,163 synthetic patients. The final analytic cohort contains 255 adult patients with a valid first eligible inpatient encounter. This narrowing is intentional: the project studies post-discharge utilization and 30-day readmission, so patients without an inpatient hospitalization cannot contribute an index admission for readmission analysis.
+
+The largest cohort reduction is the inpatient encounter requirement. Of 1,163 source patients, 878 did not have an inpatient encounter. Another 30 patients were excluded because they were under age 18 across valid inpatient encounters. No patients were excluded for missing encounter records, invalid inpatient dates, index admission selection, or 30-day readmission outcome derivation.
+
+Detailed attrition outputs are available in `outputs/cohort_attrition.csv`, `outputs/cohort_flow_summary.csv`, and `notebooks/04_cohort_attrition_analysis.ipynb`. The full audit is documented in `docs/cohort_attrition_report.md`.
 
 ## Results Overview
 

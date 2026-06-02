@@ -1,0 +1,9 @@
+Step Number,Cohort Step,Patients Remaining,Patients Excluded At Step,Percent Remaining,Exclusion Reason
+0,All Synthea Patients,1163,0,100.0,Starting population from patients.csv.
+1,Patients With Any Encounter,1163,0,100.0,No patients excluded; every source patient had at least one encounter record.
+2,Patients With Any Inpatient Encounter,285,878,24.5,Excluded patients without an inpatient encounter because the readmission workflow requires an index hospitalization.
+3,"Valid Patient Linkage, Birth Date, and Inpatient Dates",285,0,24.5,"No additional patients excluded; inpatient encounters linked to patients, had birth dates, valid admission dates, valid discharge dates, and discharge was not before admission."
+4,Adult Patients With Eligible Inpatient Encounter,255,30,21.9,Excluded patients who were under age 18 across valid inpatient encounters.
+5,First Eligible Inpatient Encounter Selected as Index Admission,255,0,21.9,No patients excluded; first eligible inpatient encounter was selected to create one index admission per patient.
+6,30-Day Follow-Up and Readmission Outcome Derived,255,0,21.9,No patients excluded; 30-day post-discharge utilization and readmission fields were derived for every index patient.
+7,Final Analytic Cohort,255,0,21.9,Final analysis dataset rows match the dashboard KPI cohort count.
