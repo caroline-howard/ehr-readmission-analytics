@@ -20,6 +20,14 @@ Use the aggregate CSV files in `tableau_dashboard/`:
 
 Each file is aggregated and dashboard-friendly. Do not connect Tableau to raw patient-level files for this portfolio dashboard.
 
+## Statistical Caution for Subgroup Comparisons
+
+Subgroup rates are descriptive and exploratory. Wilson 95% confidence intervals are included to show uncertainty around readmission proportions, especially where subgroup counts are small.
+
+The age-group comparison includes Fisher's exact or chi-square testing where appropriate based on expected cell counts. Condition-group outputs include sample-size notes and flag subgroups with fewer than 30 patients. These outputs use synthetic Synthea data, are not clinically representative, and should not be interpreted as causal or clinically validated findings.
+
+Use neutral dashboard titles such as `Descriptive Readmission Rate by Age Group` or `Exploratory Condition-Group Readmission Summary`. Avoid titles that imply a causal effect, validated risk model, or production quality-reporting metric.
+
 ## Tableau Connections
 
 1. Open Tableau Desktop or Tableau Public.
@@ -144,10 +152,12 @@ Build steps:
 3. Drag `Readmission Rate` to Columns.
 4. Drag `readmitted_30d_count` to Label.
 5. Drag `patient_count` to Tooltip.
-6. Drag `age_group` to Color or use one consistent healthcare-friendly color.
-7. Drag `sort_order` to Sort so `Under 65` appears before `65+`.
-8. Format `Readmission Rate` as Percentage with 1 decimal place.
-9. Add a title: `30-Day Readmission Rate by Age Group`.
+6. Drag `readmission_rate_ci_low_percent` and `readmission_rate_ci_high_percent` to Tooltip.
+7. Drag `comparison_test`, `comparison_p_value`, and `comparison_interpretation` to Tooltip.
+8. Drag `age_group` to Color or use one consistent healthcare-friendly color.
+9. Drag `sort_order` to Sort so `Under 65` appears before `65+`.
+10. Format `Readmission Rate` as Percentage with 1 decimal place.
+11. Add a title: `Descriptive 30-Day Readmission Rate by Age Group`.
 
 Suggested tooltip:
 
@@ -155,10 +165,13 @@ Suggested tooltip:
 Age group: <age_group>
 Patients: <patient_count>
 Readmitted: <readmitted_30d_count>
-Readmission rate: <Readmission Rate>
+Readmission rate: <readmission_rate_30d_percent>%
+95% CI: <readmission_rate_ci_low_percent>%–<readmission_rate_ci_high_percent>%
+Comparison test: <comparison_test>
+p-value: <comparison_p_value>
+Note: <comparison_interpretation>
 Outpatient follow-up rate: <Follow-Up Rate>
 ED revisit rate: <ED Revisit Rate>
-Note: <interpretation_note>
 ```
 
 Interpretation note: age-group findings are descriptive and should be interpreted cautiously because readmission event counts are small.
@@ -176,10 +189,12 @@ Build steps:
 3. Drag `Readmission Rate` to Columns.
 4. Drag `readmitted_30d_count` to Label.
 5. Drag `patient_count`, `patient_percent`, `p_value`, and `interpretation_note` to Tooltip.
-6. Sort descending by `Readmission Rate`.
-7. Format `Readmission Rate` as Percentage with 1 decimal place.
-8. Use a restrained palette, such as navy/teal with a muted accent color.
-9. Add a title: `30-Day Readmission Rate by Condition Group`.
+6. Drag `readmission_rate_ci_low_percent` and `readmission_rate_ci_high_percent` to Tooltip.
+7. Drag `subgroup_sample_size_note` to Tooltip.
+8. Sort descending by `Readmission Rate`.
+9. Format `Readmission Rate` as Percentage with 1 decimal place.
+10. Use a restrained palette, such as navy/teal with a muted accent color.
+11. Add a title: `Exploratory Readmission Rate by Condition Group`.
 
 Suggested tooltip:
 
@@ -187,9 +202,10 @@ Suggested tooltip:
 Condition group: <condition_group>
 Patients with condition: <patient_count>
 Readmitted: <readmitted_30d_count>
-Readmission rate: <Readmission Rate>
+Readmission rate: <readmission_rate_30d_percent>%
+95% CI: <readmission_rate_ci_low_percent>%–<readmission_rate_ci_high_percent>%
 p-value from aggregate Table 1: <p_value>
-Note: <interpretation_note>
+Note: <subgroup_sample_size_note>
 ```
 
 Interpretation note: condition groups are simplified Synthea flags and are not clinically validated disease phenotypes.

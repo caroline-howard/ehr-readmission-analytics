@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -87,6 +87,14 @@ Report-ready visuals are generated from aggregate synthetic-data outputs and inc
 - follow-up timing: `outputs/figures/cumulative_outpatient_followup_curve.png`
 - prior utilization signal: `outputs/figures/readmission_by_prior_utilization_group.png`
 - exploratory adjusted association model: `outputs/figures/logistic_regression_forest_plot_professional.png`
+
+Tableau dashboard build materials are available in `tableau_dashboard/`. The package includes aggregate Tableau-ready CSVs, a reproducible export notebook, and a manual build guide. It does not represent a completed or published Tableau workbook.
+
+## Statistical Caution for Subgroup Comparisons
+
+Subgroup readmission rates in the Tableau exports are descriptive and exploratory. Wilson 95% confidence intervals are included for age-group and condition-group readmission rates to show uncertainty around small subgroup proportions.
+
+The age-group comparison uses Fisher's exact test or chi-square testing where appropriate based on expected cell counts. Condition-group outputs include subgroup sample-size notes, and groups with fewer than 30 patients are flagged for cautious interpretation. These summaries use synthetic Synthea data, are not clinically representative, and should not be interpreted as causal or clinically validated findings.
 
 ## Results Overview
 
