@@ -162,19 +162,19 @@ patient-level synthetic records, clinical decision support, or causal claims.
         with gr.Tabs():
             with gr.Tab("Dashboard"):
                 gr.Image(
-                    value=str(FIGURE_DIR / "post_discharge_utilization_summary_visual.png"),
-                    label="Post-discharge utilization analytics summary",
+                    value=str(FIGURE_DIR / "post_discharge_utilization_dashboard_final.png"),
+                    label="Post-discharge utilization dashboard",
                     height=620,
                 )
                 with gr.Row():
                     gr.Image(
-                        value=str(FIGURE_DIR / "postdischarge_kpis.png"),
-                        label="Post-discharge KPIs",
+                        value=str(FIGURE_DIR / "sensitivity_interpretation_dashboard.png"),
+                        label="Sensitivity and interpretation",
                         height=360,
                     )
                     gr.Image(
-                        value=str(FIGURE_DIR / "cohort_attrition.png"),
-                        label="Cohort attrition",
+                        value=str(FIGURE_DIR / "workflow_architecture.png"),
+                        label="Workflow architecture",
                         height=360,
                     )
 

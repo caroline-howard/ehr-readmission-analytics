@@ -38,15 +38,21 @@ The SQL workflow uses DuckDB-compatible scripts to:
 
 The current workflow intentionally separates data profiling, cohort construction, validation, and dashboard output generation so each layer can be reviewed independently.
 
+## Workflow Architecture
+
+The project follows a validation-first SQL and Python workflow. Raw Synthea CSV files remain local, while GitHub contains documentation, SQL scripts, notebooks, validation outputs, BI-ready aggregate tables, report materials, and portfolio visuals.
+
+![Figure 1. Workflow architecture](../outputs/figures/workflow_architecture.png)
+
 ## Post-Discharge Utilization Analytics Summary
 
 Synthetic Synthea EHR cohort | Aggregate portfolio dashboard mockup | Not for clinical decision-making
 
-![Figure 1. Post-Discharge Utilization Analytics Summary](../outputs/figures/post_discharge_utilization_summary_visual.png)
+![Figure 2. Post-Discharge Utilization Analytics Summary](../outputs/figures/post_discharge_utilization_dashboard_final.png)
 
-Figure 1. Post-Discharge Utilization Analytics Summary. Multi-panel summary of the synthetic Synthea post-discharge utilization workflow. Panel A shows cohort attrition from source encounters to the final analytic cohort. Panel B shows days to readmission among patients with a 30-day readmission. Panel C summarizes post-discharge encounter types within 30 days. Panel D compares readmission rates across age groups. Panel E shows cumulative outpatient follow-up within 7, 14, and 30 days. Panel F compares prior utilization and chronic condition burden by readmission status. This figure uses synthetic data only and is intended for portfolio demonstration, not clinical decision-making.
+Figure 2. Post-Discharge Utilization Analytics Summary. Multi-panel summary of the synthetic Synthea post-discharge utilization workflow. Panel A shows cohort attrition from source encounters to the final analytic cohort. Panel B shows days to readmission among patients with a 30-day readmission. Panel C summarizes post-discharge encounter types within 30 days. Panel D compares readmission rates across age groups. Panel E shows cumulative outpatient follow-up within 7, 14, and 30 days. Panel F compares prior utilization by readmission status. This figure uses synthetic data only and is intended for portfolio demonstration, not clinical decision-making.
 
-## How to Read Figure 1
+## How to Read Figure 2
 
 - Panel A: Documents the cohort construction pathway and confirms that the final analysis dataset includes 255 adult patients with one index inpatient encounter per patient.
 - Panel B: Shows timing among the 13 patients with 30-day inpatient readmission, with mean days to readmission of 20.98 days.
@@ -59,7 +65,7 @@ Figure 1. Post-Discharge Utilization Analytics Summary. Multi-panel summary of t
 
 The final analysis dataset includes one index encounter per adult patient with a first eligible inpatient encounter.
 
-Panel A of Figure 1 summarizes the cohort attrition process, beginning with 61,459 source encounters and ending with 255 adult patients in the final analytic dataset.
+Panel A of Figure 2 summarizes the cohort attrition process, beginning with 61,459 source encounters and ending with 255 adult patients in the final analytic dataset.
 
 | Cohort step | Count |
 | --- | ---: |
@@ -71,7 +77,7 @@ Panel A of Figure 1 summarizes the cohort attrition process, beginning with 61,4
 | Index encounters | 255 |
 | Final analysis dataset rows | 255 |
 
-![Figure 2. Cohort attrition flow diagram](../outputs/figures/cohort_attrition_flow.png)
+![Figure 3. Cohort attrition flow diagram](../outputs/figures/cohort_attrition_flow.png)
 
 ## Encounter Classification
 
@@ -115,7 +121,7 @@ These tables are designed for Power BI or Tableau import and support stakeholder
 
 The project also includes a multi-panel healthcare analytics summary visual that illustrates how aggregate outputs could be arranged for a healthcare operations or population health audience.
 
-Panel C and Panel E of Figure 1 summarize the post-discharge utilization measures used for dashboard reporting, including any 30-day encounter, outpatient follow-up, ED revisit, and readmission.
+Panel C and Panel E of Figure 2 summarize the post-discharge utilization measures used for dashboard reporting, including any 30-day encounter, outpatient follow-up, ED revisit, and readmission.
 
 ## Aggregate Results Snapshot
 
@@ -131,9 +137,9 @@ Panel C and Panel E of Figure 1 summarize the post-discharge utilization measure
 | ED revisit within 30 days | 2 patients, 0.8% |
 | Any post-discharge encounter within 30 days | 96 patients, 37.6% |
 
-Panel B of Figure 1 shows the distribution of days to readmission among the 13 readmitted patients, supporting the report's timing-focused interpretation of post-discharge utilization. Panel E shows that outpatient follow-up accumulates gradually across the 30-day window.
+Panel B of Figure 2 shows the distribution of days to readmission among the 13 readmitted patients, supporting the report's timing-focused interpretation of post-discharge utilization. Panel E shows that outpatient follow-up accumulates gradually across the 30-day window.
 
-![Figure 3. Cumulative outpatient follow-up curve](../outputs/figures/cumulative_outpatient_followup_curve.png)
+![Figure 4. Cumulative outpatient follow-up curve](../outputs/figures/cumulative_outpatient_followup_curve.png)
 
 ## Descriptive Analysis Outputs
 
@@ -164,13 +170,13 @@ In the current synthetic cohort, prior utilization is the clearest descriptive s
 
 Risk stratification outputs are available in `outputs/analysis/risk_stratification_summary.csv`. These outputs summarize readmission and utilization patterns by selected age, chronic condition burden, and sex groups. Several strata have small event counts, so the purpose is to identify stakeholder questions rather than make stable clinical risk claims.
 
-Panel D of Figure 1 provides a descriptive age-group comparison. These rates should be interpreted as exploratory because of the small number of readmission events.
+Panel D of Figure 2 provides a descriptive age-group comparison. These rates should be interpreted as exploratory because of the small number of readmission events.
 
 In a real health system setting, these findings would support discussion of whether prior ED use or broader prior utilization should be used for transition-of-care review, outreach prioritization, or more detailed subgroup analysis.
 
-Panel F of Figure 1 visually summarizes the strongest descriptive signal in the current synthetic cohort: patients with 30-day readmission had higher mean prior encounter and prior ED visit counts than patients without readmission.
+Panel F of Figure 2 visually summarizes the strongest descriptive signal in the current synthetic cohort: patients with 30-day readmission had higher mean prior encounter and prior ED visit counts than patients without readmission.
 
-![Figure 4. Readmission rate by prior utilization group](../outputs/figures/readmission_by_prior_utilization_group.png)
+![Figure 5. Readmission rate by prior utilization group](../outputs/figures/readmission_by_prior_utilization_group.png)
 
 ## Statistical Caution for Tableau Subgroup Outputs
 
@@ -211,7 +217,7 @@ The model included 255 observations and 13 readmission events. The model converg
 | Chronic condition count | 0.8868 | 0.3387-2.3218 | 0.8067 |
 | Outpatient follow-up within 30 days | 0.9978 | 0.2193-4.5402 | 0.9977 |
 
-![Figure 5. Exploratory logistic regression forest plot](../outputs/figures/logistic_regression_forest_plot_professional.png)
+![Figure 6. Exploratory logistic regression forest plot](../outputs/figures/logistic_regression_forest_plot_professional.png)
 
 These model results are synthetic-data demonstration outputs. They should not be interpreted as clinically valid estimates.
 
@@ -222,6 +228,8 @@ In a real analysis with a larger governed dataset, next modeling steps could inc
 ## Sensitivity and Stratified Analysis
 
 The sensitivity analysis layer was added to make the current results more useful for a healthcare operations or population health audience. The goal is to show whether the analytic story changes across practical utilization strata and follow-up timing assumptions, not to claim causal effects.
+
+![Figure 7. Sensitivity and interpretation dashboard](../outputs/figures/sensitivity_interpretation_dashboard.png)
 
 ### Prior Utilization Stratification
 

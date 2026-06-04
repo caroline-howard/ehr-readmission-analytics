@@ -134,7 +134,13 @@ Run:
 python scripts/generate_professional_figures.py
 ```
 
-This script regenerates the professional dashboard mockup, cohort attrition flow diagram, cumulative outpatient follow-up curve, readmission by prior utilization group figure, and exploratory logistic regression forest plot from aggregate synthetic-data outputs. The multi-panel utilization summary visual used in the README, report, and app is stored separately as `outputs/figures/post_discharge_utilization_summary_visual.png`.
+This script regenerates the professional dashboard mockup, cohort attrition flow diagram, cumulative outpatient follow-up curve, readmission by prior utilization group figure, and exploratory logistic regression forest plot from aggregate synthetic-data outputs.
+
+The final portfolio visuals used in the README, report, and app are stored separately:
+
+- `outputs/figures/post_discharge_utilization_dashboard_final.png`
+- `outputs/figures/sensitivity_interpretation_dashboard.png`
+- `outputs/figures/workflow_architecture.png`
 
 ## 7. Run the Gradio Demo
 
