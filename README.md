@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Visual Summary](#visual-summary) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Visual Summary](#visual-summary) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -103,7 +103,22 @@ Report-ready visuals are generated from aggregate synthetic-data outputs and inc
 - prior utilization signal: `outputs/figures/readmission_by_prior_utilization_group.png`
 - exploratory adjusted association model: `outputs/figures/logistic_regression_forest_plot_professional.png`
 
-Together, these materials support cohort attrition reporting, post-discharge utilization KPI reporting, follow-up timing visualization, prior utilization/readmission comparison, and exploratory readmission modeling outputs.
+Tableau dashboard build materials are available in `tableau_dashboard/`. The package includes aggregate Tableau-ready CSVs, a reproducible export notebook, and a manual build guide. It does not represent a completed or published Tableau workbook.
+
+Together, these materials support cohort attrition reporting, post-discharge utilization KPI reporting, follow-up timing visualization, prior utilization/readmission comparison, subgroup uncertainty review, and exploratory readmission modeling outputs.
+
+## Statistical Caution for Subgroup Comparisons
+
+Subgroup readmission rates in the Tableau exports are descriptive and exploratory. Wilson 95% confidence intervals are included for age-group and condition-group readmission rates to show uncertainty around small subgroup proportions.
+
+The age-group comparison uses Fisher's exact test or chi-square testing where appropriate based on expected cell counts. Condition-group outputs include subgroup sample-size notes, and groups with fewer than 30 patients are flagged for cautious interpretation. These summaries use synthetic Synthea data, are not clinically representative, and should not be interpreted as causal or clinically validated findings.
+
+Current Tableau subgroup exports include:
+
+- Age under 65: 5.8% readmission, Wilson 95% CI 3.3%-9.8%.
+- Age 65+: 2.1% readmission, Wilson 95% CI 0.4%-11.1%.
+- Age-group comparison: Fisher's exact test, p = 0.4726.
+- Condition-group examples: COPD, chronic kidney disease, and diabetes are flagged as small subgroups because each has fewer than 30 patients.
 
 ## Results Overview
 

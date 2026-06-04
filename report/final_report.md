@@ -168,6 +168,23 @@ Panel F of Figure 1 visually summarizes the strongest descriptive signal in the 
 
 ![Figure 4. Readmission rate by prior utilization group](../outputs/figures/readmission_by_prior_utilization_group.png)
 
+## Statistical Caution for Tableau Subgroup Outputs
+
+The Tableau dashboard export package includes additional uncertainty fields for age-group and condition-group readmission summaries. These fields are intended to make subgroup charts more transparent, not to convert the synthetic-data analysis into a clinically validated inference.
+
+For age group, 30-day readmission was 5.8% among patients under 65, with a Wilson 95% confidence interval of 3.3% to 9.8%, and 2.1% among patients age 65 or older, with a Wilson 95% confidence interval of 0.4% to 11.1%. Fisher's exact test was used for the age-group comparison because at least one expected cell count was less than 5; the exploratory comparison p-value was 0.4726.
+
+For condition groups, readmission rates were exported with Wilson 95% confidence intervals and subgroup sample-size notes:
+
+| Condition group | Patients | Readmitted | Readmission rate | Wilson 95% CI | Sample-size note |
+| --- | ---: | ---: | ---: | --- | --- |
+| COPD | 4 | 0 | 0.0% | 0.0%-49.0% | Small subgroup; rate should be interpreted cautiously. |
+| Chronic kidney disease | 8 | 1 | 12.5% | 2.2%-47.1% | Small subgroup; rate should be interpreted cautiously. |
+| Diabetes | 21 | 2 | 9.5% | 2.7%-28.9% | Small subgroup; rate should be interpreted cautiously. |
+| Hypertension | 74 | 4 | 5.4% | 2.1%-13.1% | Subgroup size >= 30; still descriptive and exploratory. |
+
+These subgroup results are based on synthetic Synthea data and simplified condition flags. They should be interpreted as exploratory dashboard context only. They are not causal findings, not clinically representative estimates, and not a validated risk stratification model.
+
 ## Exploratory Logistic Regression
 
 An exploratory logistic regression model was fit for 30-day inpatient readmission using a parsimonious predictor set:
