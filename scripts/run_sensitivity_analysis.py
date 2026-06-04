@@ -196,6 +196,8 @@ def fit_logistic_model(
             }
         )
         converged = bool(model.mle_retvals.get("converged", False))
+        if not converged:
+            terms[["coefficient", "odds_ratio", "ci_lower", "ci_upper", "p_value"]] = np.nan
         model_note = {
             "model_name": model_name,
             "includes_followup_variable": includes_followup,
@@ -203,10 +205,10 @@ def fit_logistic_model(
             "n_observations": int(model.nobs),
             "readmission_events": int(y.sum()),
             "converged": converged,
-            "pseudo_r_squared": round(float(model.prsquared), 4),
-            "aic": round(float(model.aic), 2),
-            "bic": round(float(model.bic), 2),
-            "llr_p_value": round(float(model.llr_pvalue), 4),
+            "pseudo_r_squared": round(float(model.prsquared), 4) if converged else np.nan,
+            "aic": round(float(model.aic), 2) if converged else np.nan,
+            "bic": round(float(model.bic), 2) if converged else np.nan,
+            "llr_p_value": round(float(model.llr_pvalue), 4) if converged else np.nan,
             "interpretation_note": (
                 "Exploratory adjusted association model using synthetic data. Compare model sets "
                 "for sensitivity to follow-up timing variables; do not interpret causally."
