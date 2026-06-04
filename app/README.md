@@ -6,7 +6,7 @@ The app displays aggregate project outputs only:
 
 - project overview
 - cohort, readmission, outpatient follow-up, and ED revisit KPI cards
-- multi-panel utilization summary visual and report-ready figures
+- final dashboard visual, sensitivity interpretation visual, workflow architecture visual, and report-ready figures
 - BI-ready aggregate tables
 - Table 1, sensitivity analysis, and exploratory logistic regression outputs
 - report excerpt and repository guide links

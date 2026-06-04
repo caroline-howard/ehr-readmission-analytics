@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Final Results](#final-results-summary) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Sensitivity](#sensitivity-and-stratified-analysis) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Final Results](#final-results-summary) | [Visuals](#portfolio-visuals) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Sensitivity](#sensitivity-and-stratified-analysis) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -33,6 +33,16 @@ The clearest descriptive story is prior utilization. Patients with high prior en
 Prior ED use also provided a practical operational stratification signal: patients with any prior ED use had a 14.0% observed readmission rate compared with 2.5% among patients with no prior ED use.
 
 The honest interpretation is that prior utilization burden is the strongest stakeholder-facing signal in this synthetic cohort. Outpatient follow-up timing is reported as observed utilization only and is not interpreted causally.
+
+## Portfolio Visuals
+
+The figures below summarize the completed portfolio workflow and final analytic story using aggregate synthetic-data outputs only.
+
+![Retrospective EHR readmission and post-discharge utilization dashboard](outputs/figures/post_discharge_utilization_dashboard_final.png)
+
+![Sensitivity and interpretation dashboard](outputs/figures/sensitivity_interpretation_dashboard.png)
+
+![Validation-first workflow architecture](outputs/figures/workflow_architecture.png)
 
 ## Research Question
 
@@ -94,7 +104,7 @@ Outpatient follow-up measures are interpreted as observational utilization measu
 
 The project also incorporates a healthcare operations and population health dashboard layer intended to simulate stakeholder-facing KPI reporting and utilization analytics workflows commonly used in health systems.
 
-The BI layer is designed around readmission KPIs, follow-up analytics, ED revisit reporting, cohort summaries, and operational healthcare metrics. It is intended to support clear communication of cohort trends and post-discharge utilization patterns without presenting the project as a clinical decision tool. The repository includes dashboard-ready aggregate tables and a professional multi-panel summary visual for portfolio review.
+The BI layer is designed around readmission KPIs, follow-up analytics, ED revisit reporting, cohort summaries, and operational healthcare metrics. It is intended to support clear communication of cohort trends and post-discharge utilization patterns without presenting the project as a clinical decision tool. The repository includes dashboard-ready aggregate tables and final portfolio visuals for healthcare analytics portfolio review.
 
 Dashboard-ready aggregate tables are available in `outputs/bi/` and can be imported into Power BI or Tableau:
 
@@ -104,9 +114,9 @@ Dashboard-ready aggregate tables are available in `outputs/bi/` and can be impor
 - `ed_revisit_table.csv`
 - `demographic_utilization_summary_table.csv`
 
-Report-ready visuals are generated from aggregate synthetic-data outputs and are available in `outputs/figures/`. The root README intentionally emphasizes final results in text rather than relying on figures.
+Report-ready visuals are generated from aggregate synthetic-data outputs and are available in `outputs/figures/`. The root README includes the final dashboard, sensitivity interpretation visual, and workflow architecture visual so reviewers can understand the project quickly.
 
-Selected visuals include cohort attrition, follow-up timing, prior utilization, and exploratory model summaries.
+Selected visuals include cohort attrition, follow-up timing, prior utilization, sensitivity interpretation, workflow architecture, and exploratory model summaries.
 
 Tableau dashboard build materials are available in `tableau_dashboard/`. The package includes aggregate Tableau-ready CSVs, a reproducible export notebook, and a manual build guide. It does not represent a completed or published Tableau workbook.
 
@@ -230,9 +240,9 @@ scripts/    Command-line utilities for local data profiling and reproducible wor
 
 ## Data Source
 
-This project will use synthetic EHR data generated by Synthea. Synthea creates realistic but artificial patient records for testing, education, and demonstration.
+This project uses synthetic EHR data generated by Synthea. Synthea creates realistic but artificial patient records for testing, education, and demonstration.
 
-This repository will not contain real patient data. It will also avoid committing large synthetic data files, local databases, or generated artifacts unless they are intentionally small and appropriate for portfolio review.
+This repository does not contain real patient data. It also avoids committing large synthetic data files, local databases, or generated artifacts unless they are intentionally small and appropriate for portfolio review.
 
 ## Data Setup
 
@@ -277,7 +287,7 @@ Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 - Analysis interpretation document
 - Report-ready figures
 - Current report summary
-- Professional multi-panel utilization summary visual
+- Final dashboard, sensitivity interpretation, and workflow architecture visuals
 - Lightweight Gradio demo app
 - Reproducibility guide
 
