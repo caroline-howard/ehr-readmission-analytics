@@ -1,0 +1,7 @@
+model_name,includes_followup_variable,followup_window_days,term,coefficient,odds_ratio,ci_lower,ci_upper,p_value,label,model_converged,term_interpretation_note
+No follow-up covariate,False,,const,-4.4075,0.0122,0.002,0.0749,0.0,Intercept,True,Exploratory adjusted association estimate; synthetic data only.
+No follow-up covariate,False,,age_per_10_years,0.1096,1.1158,0.8205,1.5174,0.4848,"Age, per 10 years",True,Exploratory adjusted association estimate; synthetic data only.
+No follow-up covariate,False,,male_sex,0.2621,1.2996,0.3919,4.3096,0.6683,Male sex,True,Exploratory adjusted association estimate; synthetic data only.
+No follow-up covariate,False,,log_length_of_stay,0.5216,1.6847,1.1195,2.5352,0.0124,Log length of stay,True,Exploratory adjusted association estimate; synthetic data only.
+No follow-up covariate,False,,prior_encounters_12mo,0.0602,1.062,0.9546,1.1815,0.2686,"Prior encounters, 12 months",True,Exploratory adjusted association estimate; synthetic data only.
+No follow-up covariate,False,,chronic_condition_count,-0.12,0.8869,0.34,2.3135,0.8062,Chronic condition count,True,Exploratory adjusted association estimate; synthetic data only.

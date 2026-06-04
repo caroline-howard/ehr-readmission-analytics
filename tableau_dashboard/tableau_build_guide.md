@@ -17,6 +17,12 @@ Use the aggregate CSV files in `tableau_dashboard/`:
 | `readmission_by_condition_group.csv` | Condition-flag readmission summary using simplified Synthea condition groups |
 | `utilization_summary.csv` | Post-discharge utilization measures and timing windows |
 | `data_quality_summary.csv` | Data validation and missingness checks |
+| `prior_utilization_stratification.csv` | Low, medium, and high prior encounter burden groups |
+| `prior_ed_use_stratification.csv` | Any prior ED use versus no prior ED use |
+| `followup_window_sensitivity.csv` | Observed 7-, 14-, and 30-day outpatient follow-up window comparison |
+| `model_comparison_sensitivity.csv` | Adjusted model comparison with and without outpatient follow-up covariates |
+| `model_without_followup_results.csv` | Baseline adjusted model coefficients without follow-up covariates |
+| `model_with_followup_results.csv` | Adjusted model coefficients with 7-, 14-, and 30-day follow-up covariates |
 
 Each file is aggregated and dashboard-friendly. Do not connect Tableau to raw patient-level files for this portfolio dashboard.
 
@@ -44,6 +50,12 @@ Use neutral dashboard titles such as `Descriptive Readmission Rate by Age Group`
    - `Readmission by Condition Group`
    - `Utilization Summary`
    - `Data Quality Summary`
+   - `Prior Utilization Stratification`
+   - `Prior ED Use Stratification`
+   - `Follow-Up Window Sensitivity`
+   - `Model Comparison Sensitivity`
+   - `Model Without Follow-Up Results`
+   - `Model With Follow-Up Results`
 
 Do not join these files unless you intentionally need a combined worksheet. The package is designed so each sheet can use its own aggregate data source.
 
@@ -281,6 +293,130 @@ Status: <status>
 Note: <interpretation_note>
 ```
 
+## Sheet 6: Readmission by Prior Utilization Group
+
+Data source: `Prior Utilization Stratification`
+
+Recommended chart type: Horizontal bar chart
+
+Build steps:
+
+1. Create a worksheet named `Readmission by Prior Utilization Group`.
+2. Drag `prior_utilization_group` to Rows.
+3. Drag `Readmission Rate` to Columns.
+4. Drag `sort_order` to Sort so low, medium, and high groups appear in order.
+5. Drag `readmitted_30d_count` to Label.
+6. Drag `patient_count`, `not_readmitted_count`, `readmission_rate_ci_low_percent`, and `readmission_rate_ci_high_percent` to Tooltip.
+7. Drag `outpatient_followup_30d_percent`, `ed_revisit_30d_percent`, `mean_prior_encounters_12mo`, and `interpretation_note` to Tooltip.
+8. Use a muted red or burgundy accent for readmission rate bars.
+9. Add a title: `Descriptive Readmission Rate by Prior Utilization Group`.
+
+Suggested tooltip:
+
+```text
+Prior utilization group: <prior_utilization_group>
+Patients: <patient_count>
+Readmitted: <readmitted_30d_count>
+Readmission rate: <readmission_rate_30d_percent>%
+95% CI: <readmission_rate_ci_low_percent>%–<readmission_rate_ci_high_percent>%
+30-day follow-up: <outpatient_followup_30d_percent>%
+30-day ED revisit: <ed_revisit_30d_percent>%
+Mean prior encounters: <mean_prior_encounters_12mo>
+Note: <interpretation_note>
+```
+
+Interpretation note: this is the strongest descriptive dashboard story in the current synthetic cohort. Present it as prior utilization burden, not as a validated prediction score.
+
+## Sheet 7: Readmission by Prior ED Use
+
+Data source: `Prior ED Use Stratification`
+
+Recommended chart type: Bar chart or side-by-side KPI comparison
+
+Build steps:
+
+1. Create a worksheet named `Readmission by Prior ED Use`.
+2. Drag `prior_ed_use_group` to Rows.
+3. Drag `Readmission Rate` to Columns.
+4. Drag `sort_order` to Sort so `No prior ED use` appears before `Any prior ED use`.
+5. Drag `readmitted_30d_count` to Label.
+6. Drag `patient_count`, `readmission_rate_ci_low_percent`, `readmission_rate_ci_high_percent`, `outpatient_followup_30d_percent`, and `ed_revisit_30d_percent` to Tooltip.
+7. Use color to distinguish the two groups, but keep the palette restrained.
+8. Add a title: `Descriptive Readmission Rate by Prior ED Use`.
+
+Suggested tooltip:
+
+```text
+Prior ED use group: <prior_ed_use_group>
+Patients: <patient_count>
+Readmitted: <readmitted_30d_count>
+Readmission rate: <readmission_rate_30d_percent>%
+95% CI: <readmission_rate_ci_low_percent>%–<readmission_rate_ci_high_percent>%
+30-day follow-up: <outpatient_followup_30d_percent>%
+30-day ED revisit: <ed_revisit_30d_percent>%
+Note: <interpretation_note>
+```
+
+## Sheet 8: Follow-Up Window Sensitivity
+
+Data source: `Follow-Up Window Sensitivity`
+
+Recommended chart type: Line chart or bar chart
+
+Build steps:
+
+1. Create a worksheet named `Follow-Up Window Sensitivity`.
+2. Drag `followup_window_days` to Columns.
+3. Drag `followup_percent` to Rows.
+4. Drag `followup_window` to Label or Detail.
+5. Drag `followup_count`, `readmission_rate_with_followup_percent`, `readmission_rate_without_followup_percent`, and `interpretation_note` to Tooltip.
+6. Format percent fields as percentages with 1 decimal place.
+7. Add a title: `Observed Outpatient Follow-Up by Timing Window`.
+
+Suggested tooltip:
+
+```text
+Window: <followup_window>
+Patients with follow-up: <followup_count>
+Follow-up percent: <followup_percent>%
+Readmission rate with follow-up: <readmission_rate_with_followup_percent>%
+Readmission rate without follow-up: <readmission_rate_without_followup_percent>%
+Note: <interpretation_note>
+```
+
+Interpretation note: use language such as `observed follow-up patterns`; avoid language suggesting follow-up prevented readmission.
+
+## Sheet 9: Model Sensitivity Summary
+
+Data source: `Model Comparison Sensitivity`
+
+Recommended chart type: Text table or compact bar chart
+
+Build steps:
+
+1. Create a worksheet named `Model Sensitivity Summary`.
+2. Drag `model_name` to Rows.
+3. Drag `aic`, `pseudo_r_squared`, and `llr_p_value` to Text or Measure Values.
+4. Drag `converged` to Color.
+5. Drag `readmission_events`, `n_observations`, `formatted_llr_p_value`, `interpretation_note`, and `comparison_note` to Tooltip.
+6. Use a clear status color for convergence: muted teal for `True`, muted amber for `False`.
+7. Add a title: `Adjusted Model Sensitivity to Follow-Up Timing Variables`.
+
+Suggested tooltip:
+
+```text
+Model: <model_name>
+Observations: <n_observations>
+Readmission events: <readmission_events>
+Converged: <converged>
+Pseudo R-squared: <pseudo_r_squared>
+AIC: <aic>
+LLR p-value: <formatted_llr_p_value>
+Note: <interpretation_note>
+```
+
+Interpretation note: the 7-day follow-up model did not converge cleanly in this synthetic cohort. Treat this as a sparse-data and timing-bias caution, not as a finding about follow-up effectiveness.
+
 ## Dashboard Wireframe
 
 Recommended size: Automatic or 1400 x 900.
@@ -295,8 +431,11 @@ Recommended size: Automatic or 1400 x 900.
 | Readmission Rate by Age Group            | Readmission Rate by Condition Group |
 | Horizontal or vertical bar chart          | Horizontal bar chart                |
 +------------------------------------------+-------------------------------------+
-| 30-Day ED Revisit vs Outpatient Follow-Up                                      |
-| Bar chart comparing follow-up windows, ED revisit, readmission, any encounter  |
+| Readmission by Prior Utilization Group   | Readmission by Prior ED Use         |
+| Horizontal bar chart                      | Side-by-side bar or KPI comparison  |
++------------------------------------------+-------------------------------------+
+| Follow-Up Window Sensitivity             | Model Sensitivity Summary           |
+| Line/bar chart of observed windows        | Text table with convergence status  |
 +--------------------------------------------------------------------------------+
 | Data Quality Summary                                                            |
 | Highlight table showing pass/expected/review validation checks                  |
@@ -322,8 +461,11 @@ The dashboard should communicate this flow:
 1. The analytic cohort includes 255 adult synthetic patients with one first eligible inpatient encounter.
 2. The primary outcome is all-cause 30-day inpatient readmission.
 3. Post-discharge utilization includes outpatient follow-up windows, ED revisit, readmission, and any encounter within 30 days.
-4. Age and condition-group views are descriptive subgroup summaries.
-5. Data quality checks support the cohort and outcome derivation logic but do not establish clinical validity.
+4. Prior utilization and prior ED use provide the clearest descriptive operational story in the current synthetic cohort.
+5. Follow-up timing windows describe observed care patterns but do not imply causality.
+6. Model sensitivity outputs show why timing variables and sparse events require caution.
+7. Age and condition-group views are descriptive subgroup summaries.
+8. Data quality checks support the cohort and outcome derivation logic but do not establish clinical validity.
 
 ## Responsible Use Language
 

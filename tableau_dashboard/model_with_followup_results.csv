@@ -1,0 +1,22 @@
+model_name,includes_followup_variable,followup_window_days,term,coefficient,odds_ratio,ci_lower,ci_upper,p_value,label,model_converged,term_interpretation_note
+With 7-day follow-up covariate,True,7,const,,,,,,Intercept,False,Model did not converge cleanly; coefficient and interval should not be interpreted.
+With 7-day follow-up covariate,True,7,age_per_10_years,,,,,,"Age, per 10 years",False,Model did not converge cleanly; coefficient and interval should not be interpreted.
+With 7-day follow-up covariate,True,7,male_sex,,,,,,Male sex,False,Model did not converge cleanly; coefficient and interval should not be interpreted.
+With 7-day follow-up covariate,True,7,log_length_of_stay,,,,,,Log length of stay,False,Model did not converge cleanly; coefficient and interval should not be interpreted.
+With 7-day follow-up covariate,True,7,prior_encounters_12mo,,,,,,"Prior encounters, 12 months",False,Model did not converge cleanly; coefficient and interval should not be interpreted.
+With 7-day follow-up covariate,True,7,chronic_condition_count,,,,,,Chronic condition count,False,Model did not converge cleanly; coefficient and interval should not be interpreted.
+With 7-day follow-up covariate,True,7,outpatient_followup_7d,,,,,,Outpatient follow-up within 7 days,False,Model did not converge cleanly; coefficient and interval should not be interpreted.
+With 14-day follow-up covariate,True,14,const,-4.7278,0.0088,0.0013,0.0617,0.0,Intercept,True,Exploratory adjusted association estimate; synthetic data only.
+With 14-day follow-up covariate,True,14,age_per_10_years,0.1319,1.141,0.8345,1.56,0.4086,"Age, per 10 years",True,Exploratory adjusted association estimate; synthetic data only.
+With 14-day follow-up covariate,True,14,male_sex,0.3471,1.415,0.4161,4.812,0.5783,Male sex,True,Exploratory adjusted association estimate; synthetic data only.
+With 14-day follow-up covariate,True,14,log_length_of_stay,0.543,1.7211,1.1403,2.5979,0.0097,Log length of stay,True,Exploratory adjusted association estimate; synthetic data only.
+With 14-day follow-up covariate,True,14,prior_encounters_12mo,0.0556,1.0572,0.9461,1.1813,0.326,"Prior encounters, 12 months",True,Exploratory adjusted association estimate; synthetic data only.
+With 14-day follow-up covariate,True,14,chronic_condition_count,-0.1258,0.8818,0.3378,2.3018,0.7972,Chronic condition count,True,Exploratory adjusted association estimate; synthetic data only.
+With 14-day follow-up covariate,True,14,outpatient_followup_14d,0.9271,2.5271,0.6127,10.4242,0.1997,Outpatient follow-up within 14 days,True,Exploratory adjusted association estimate; synthetic data only.
+With 30-day follow-up covariate,True,30,const,-4.407,0.0122,0.0019,0.0774,0.0,Intercept,True,Exploratory adjusted association estimate; synthetic data only.
+With 30-day follow-up covariate,True,30,age_per_10_years,0.1096,1.1158,0.8201,1.518,0.4855,"Age, per 10 years",True,Exploratory adjusted association estimate; synthetic data only.
+With 30-day follow-up covariate,True,30,male_sex,0.2619,1.2994,0.3896,4.3341,0.67,Male sex,True,Exploratory adjusted association estimate; synthetic data only.
+With 30-day follow-up covariate,True,30,log_length_of_stay,0.5216,1.6847,1.1189,2.5365,0.0125,Log length of stay,True,Exploratory adjusted association estimate; synthetic data only.
+With 30-day follow-up covariate,True,30,prior_encounters_12mo,0.0602,1.0621,0.9457,1.1929,0.3092,"Prior encounters, 12 months",True,Exploratory adjusted association estimate; synthetic data only.
+With 30-day follow-up covariate,True,30,chronic_condition_count,-0.1202,0.8868,0.3387,2.3218,0.8067,Chronic condition count,True,Exploratory adjusted association estimate; synthetic data only.
+With 30-day follow-up covariate,True,30,outpatient_followup_30d,-0.0022,0.9978,0.2193,4.5402,0.9977,Outpatient follow-up within 30 days,True,Exploratory adjusted association estimate; synthetic data only.

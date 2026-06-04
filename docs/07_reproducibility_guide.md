@@ -78,11 +78,12 @@ Processed DuckDB databases are ignored by git.
 
 ## 5. Run Analysis Notebooks
 
-Run the descriptive and modeling notebooks after SQL outputs have been reviewed:
+Run the descriptive, modeling, and sensitivity notebooks after SQL outputs have been reviewed:
 
 ```bash
 jupyter notebook notebooks/02_descriptive_analysis.ipynb
 jupyter notebook notebooks/03_logistic_regression.ipynb
+jupyter notebook notebooks/04_sensitivity_analysis.ipynb
 ```
 
 These notebooks regenerate:
@@ -93,11 +94,31 @@ These notebooks regenerate:
 - `outputs/analysis/ed_revisit_summary.csv`
 - `outputs/analysis/risk_stratification_summary.csv`
 - `outputs/analysis/prior_utilization_group_summary.csv`
+- `outputs/analysis/prior_utilization_stratification.csv`
+- `outputs/analysis/prior_ed_use_stratification.csv`
+- `outputs/analysis/followup_window_sensitivity.csv`
+- `outputs/analysis/model_comparison_sensitivity.csv`
+- `outputs/analysis/model_without_followup_results.csv`
+- `outputs/analysis/model_with_followup_results.csv`
 - `outputs/analysis/logistic_regression_results.csv`
 - `outputs/analysis/logistic_regression_model_notes.csv`
 - `outputs/figures/logistic_regression_odds_ratios.png`
 
-The notebooks use patient-level synthetic records only in local memory and export aggregate summaries or model coefficients only. The analysis interpretation document in `docs/09_analysis_interpretation.md` explains how to interpret Table 1, risk stratification, and the exploratory logistic regression results.
+The sensitivity outputs can also be regenerated from the command line:
+
+```bash
+python scripts/run_sensitivity_analysis.py
+```
+
+This script writes matching aggregate CSVs to `outputs/analysis/` and `tableau_dashboard/` for prior utilization stratification, prior ED use stratification, follow-up window sensitivity, and model comparison sensitivity.
+
+To refresh the full Tableau dashboard package, including KPI, subgroup, validation, and sensitivity CSVs, run:
+
+```bash
+python scripts/build_tableau_dashboard_exports.py
+```
+
+The notebooks use patient-level synthetic records only in local memory and export aggregate summaries or model coefficients only. The analysis interpretation document in `docs/09_analysis_interpretation.md` explains how to interpret Table 1, risk stratification, sensitivity analysis, and the exploratory logistic regression results.
 
 ## 6. Regenerating Report Figures
 
@@ -123,7 +144,7 @@ After aggregate outputs exist, run:
 python app/app.py
 ```
 
-The app displays aggregate KPI cards, figures, dashboard-ready tables, Table 1 outputs, exploratory logistic regression results, and report links.
+The app displays aggregate KPI cards, figures, dashboard-ready tables, Table 1 outputs, sensitivity analysis tables, exploratory logistic regression results, and report links.
 
 ## Data Governance Notes
 

@@ -261,12 +261,15 @@ Because the current synthetic cohort has a small number of readmission events, t
 
 ## Sensitivity Analysis Plan
 
-Planned sensitivity analyses will focus on cohort and timing assumptions rather than adding model complexity first:
+Sensitivity analyses will focus on cohort, utilization, and timing assumptions rather than adding model complexity first. The first implemented sensitivity pass will support a more operational dashboard story by emphasizing prior utilization burden, prior ED use, observed follow-up windows, and timing-aware model comparisons.
 
-- Compare outpatient follow-up windows of 7, 14, and 30 days.
-- Fit adjusted models with and without outpatient follow-up variables because of timing bias and confounding concerns.
-- Review same-day returns or transfer-like encounters separately.
-- Repeat descriptive summaries by age group, prior utilization burden, chronic condition burden, and length-of-stay category.
+- Stratify patients into low, medium, and high prior encounter burden groups using prior encounters in the 12 months before index hospitalization.
+- Stratify patients by prior ED use, defined as any versus no ED visits in the 12 months before index hospitalization.
+- Compare observed outpatient follow-up windows of 7, 14, and 30 days.
+- Fit adjusted models with outpatient follow-up excluded and with 7-day, 14-day, and 30-day outpatient follow-up variables included separately because of timing bias and confounding concerns.
+- Clearly flag models that do not converge or show sparse-data instability.
+- Review same-day returns or transfer-like encounters separately in a later pass.
+- Repeat descriptive summaries by age group, chronic condition burden, and length-of-stay category as secondary stratifications.
 - Exclude or flag patients without complete 30-day follow-up if observation-window completeness can be measured.
 - Consider disease-specific cohorts only if diagnosis grouping logic is defensible from Synthea condition records.
 
@@ -279,6 +282,10 @@ Planned sensitivity analyses will focus on cohort and timing assumptions rather 
 - Readmission summary
 - Outpatient follow-up timing summary
 - ED revisit summary, if supported by encounter data
+- Prior utilization stratification summary
+- Prior ED use stratification summary
+- Follow-up window sensitivity summary
+- Model comparison sensitivity summary
 - Logistic regression results table
 - Cohort flow figure
 - Odds ratio plot

@@ -53,8 +53,10 @@ These sources informed the planned attention to outpatient follow-up timing, 7-d
 - Draft data dictionary for planned analytic variables
 - SQL scripts for cohort construction, outcome derivation, and validation
 - Notebook-based descriptive and statistical analysis
+- Sensitivity analysis focused on prior utilization, prior ED use, outpatient follow-up windows, and timing-aware model comparison
 - Cohort attrition, missingness, and validation summaries
 - Manuscript-style tables and figures
+- Tableau-ready aggregate exports and build guidance
 - Lightweight Gradio app for portfolio presentation
 
 ## Out of Scope
