@@ -39,6 +39,7 @@ outputs/*
 !outputs/analysis/
 !outputs/analysis/README.md
 !outputs/analysis/*.csv
+!tableau_dashboard/*.csv
 report/generated/
 
 # App/runtime

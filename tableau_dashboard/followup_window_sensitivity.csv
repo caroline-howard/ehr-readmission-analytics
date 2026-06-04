@@ -1,0 +1,4 @@
+followup_window,followup_window_days,cohort_patients,followup_count,followup_percent,readmitted_with_followup_count,readmission_rate_with_followup_percent,readmitted_without_followup_count,readmission_rate_without_followup_percent,readmission_before_outpatient_followup_count,interpretation_note
+0-7 days,7,255,23,9.0,0,0.0,13,5.6,0,"Observed outpatient follow-up pattern only. Patients readmitted before follow-up create timing bias, so this should not be interpreted as a causal effect."
+0-14 days,14,255,33,12.9,3,9.1,10,4.5,0,"Observed outpatient follow-up pattern only. Patients readmitted before follow-up create timing bias, so this should not be interpreted as a causal effect."
+0-30 days,30,255,55,21.6,3,5.5,10,5.0,0,"Observed outpatient follow-up pattern only. Patients readmitted before follow-up create timing bias, so this should not be interpreted as a causal effect."

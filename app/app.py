@@ -137,6 +137,10 @@ def build_app() -> gr.Blocks:
     ed_summary = read_csv(BI_DIR / "ed_revisit_table.csv")
     table1 = read_csv(ANALYSIS_DIR / "table1_baseline_characteristics.csv")
     regression = read_csv(ANALYSIS_DIR / "logistic_regression_results.csv")
+    prior_utilization = read_csv(ANALYSIS_DIR / "prior_utilization_stratification.csv")
+    prior_ed_use = read_csv(ANALYSIS_DIR / "prior_ed_use_stratification.csv")
+    followup_sensitivity = read_csv(ANALYSIS_DIR / "followup_window_sensitivity.csv")
+    model_sensitivity = read_csv(ANALYSIS_DIR / "model_comparison_sensitivity.csv")
 
     with gr.Blocks(title="EHR Readmission Analytics") as demo:
         gr.HTML(f"<style>{CUSTOM_CSS}</style>")
@@ -182,8 +186,12 @@ patient-level synthetic records, clinical decision support, or causal claims.
                 gr.Dataframe(ed_summary, label="ED revisit summary")
 
             with gr.Tab("Analysis"):
-                gr.Markdown("## Table 1 and exploratory model outputs")
+                gr.Markdown("## Table 1, sensitivity analysis, and exploratory model outputs")
                 gr.Dataframe(table1, label="Table 1 baseline characteristics")
+                gr.Dataframe(prior_utilization, label="Prior utilization stratification")
+                gr.Dataframe(prior_ed_use, label="Prior ED use stratification")
+                gr.Dataframe(followup_sensitivity, label="Follow-up window sensitivity")
+                gr.Dataframe(model_sensitivity, label="Model comparison sensitivity")
                 gr.Dataframe(regression, label="Exploratory logistic regression")
                 gr.Image(
                     value=str(FIGURE_DIR / "logistic_regression_odds_ratios.png"),

@@ -8,7 +8,7 @@ The app displays aggregate project outputs only:
 - cohort, readmission, outpatient follow-up, and ED revisit KPI cards
 - multi-panel utilization summary visual and report-ready figures
 - BI-ready aggregate tables
-- Table 1 and exploratory logistic regression outputs
+- Table 1, sensitivity analysis, and exploratory logistic regression outputs
 - report excerpt and repository guide links
 
 The app does not contain real patient data, patient-level synthetic records, clinical decision support, or causal claims.

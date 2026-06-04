@@ -2,15 +2,15 @@
 
 ## Abstract
 
-This project demonstrates a retrospective healthcare analytics workflow using Synthea synthetic EHR data. The analysis defines an adult inpatient cohort, selects the first eligible inpatient encounter as the index hospitalization, derives post-discharge outpatient follow-up timing and ED revisit measures, identifies all-cause 30-day inpatient readmission, validates cohort and temporal logic, and produces aggregate reporting outputs for healthcare operations and research analytics audiences. The final synthetic cohort included 255 adult patients with a first eligible inpatient encounter. The 30-day inpatient readmission rate was 5.1%, outpatient follow-up within 30 days was 21.6%, and ED revisit within 30 days was 0.8%. An exploratory logistic regression model was fit for demonstration only and should not be interpreted as clinical evidence. The project is intended as a portfolio workflow and does not use real patient data.
+This project demonstrates a retrospective healthcare analytics workflow using Synthea synthetic EHR data. The analysis defines an adult inpatient cohort, selects the first eligible inpatient encounter as the index hospitalization, derives post-discharge outpatient follow-up timing and ED revisit measures, identifies all-cause 30-day inpatient readmission, validates cohort and temporal logic, and produces aggregate reporting outputs for healthcare operations and research analytics audiences. The final synthetic cohort included 255 adult patients with a first eligible inpatient encounter. The 30-day inpatient readmission rate was 5.1%, outpatient follow-up within 30 days was 21.6%, and ED revisit within 30 days was 0.8%. Sensitivity analyses highlight prior utilization and prior ED use as the clearest descriptive utilization signals in the current synthetic cohort. Exploratory logistic regression models were fit for demonstration only and should not be interpreted as clinical evidence. The project is intended as a portfolio workflow and does not use real patient data.
 
 ## Executive Summary
 
 This report summarizes the current SQL, validation, and BI/dashboard layer of the `ehr-readmission-analytics` portfolio project. The project uses Synthea synthetic EHR data to demonstrate a retrospective healthcare analytics workflow focused on inpatient cohort definition, post-discharge utilization tracking, outpatient follow-up timing, ED revisits, and all-cause 30-day inpatient readmission.
 
-The current milestone includes data profiling, SQL cohort construction, validation QA outputs, aggregate dashboard-ready tables, descriptive analysis outputs, and an exploratory logistic regression model. It does not include causal inference.
+The current milestone includes data profiling, SQL cohort construction, validation QA outputs, aggregate dashboard-ready tables, descriptive analysis outputs, sensitivity analysis outputs, and exploratory logistic regression models. It does not include causal inference.
 
-The main analytic signal in the current synthetic cohort is prior utilization. Patients with 30-day readmission had higher prior encounter and prior ED visit counts in Table 1. The exploratory model is included to demonstrate adjusted association reporting, but the event count is too small to support clinical prediction.
+The main analytic signal in the current synthetic cohort is prior utilization. Patients with 30-day readmission had higher prior encounter and prior ED visit counts in Table 1, and stratified sensitivity outputs show higher observed readmission rates among patients with high prior utilization or any prior ED use. The exploratory models are included to demonstrate adjusted association reporting and timing-bias awareness, but the event count is too small to support clinical prediction.
 
 ## Research Question
 
@@ -34,7 +34,7 @@ The SQL workflow uses DuckDB-compatible scripts to:
 6. Create the final analysis dataset.
 7. Export aggregate validation QA tables.
 8. Export Power BI/Tableau-ready aggregate tables.
-9. Generate descriptive analysis outputs and exploratory logistic regression results in notebooks.
+9. Generate descriptive analysis outputs, sensitivity analyses, and exploratory logistic regression results in notebooks and scripts.
 
 The current workflow intentionally separates data profiling, cohort construction, validation, and dashboard output generation so each layer can be reviewed independently.
 
@@ -144,6 +144,10 @@ The notebook workflow generates aggregate analysis outputs in `outputs/analysis/
 - `outpatient_followup_summary.csv`
 - `ed_revisit_summary.csv`
 - `risk_stratification_summary.csv`
+- `prior_utilization_stratification.csv`
+- `prior_ed_use_stratification.csv`
+- `followup_window_sensitivity.csv`
+- `model_comparison_sensitivity.csv`
 
 Table 1 compares baseline characteristics by 30-day readmission status using aggregate summaries only. Continuous variables are summarized as mean and standard deviation; categorical variables are summarized as count and percent.
 
@@ -215,15 +219,59 @@ Logistic regression is appropriate for the primary adjusted association analysis
 
 In a real analysis with a larger governed dataset, next modeling steps could include penalized logistic regression, Firth-style rare-events logistic regression, or a prespecified parsimonious adjusted model with validation. Machine learning models would only be appropriate if the objective changed to validated prediction and sufficient data were available for training, testing, calibration, and performance reporting.
 
-## Sensitivity Analysis Priorities
+## Sensitivity and Stratified Analysis
 
-The next analysis pass should focus on sensitivity analyses before adding more complex models:
+The sensitivity analysis layer was added to make the current results more useful for a healthcare operations or population health audience. The goal is to show whether the analytic story changes across practical utilization strata and follow-up timing assumptions, not to claim causal effects.
 
-- Compare 7-day, 14-day, and 30-day outpatient follow-up windows.
-- Fit adjusted models with and without outpatient follow-up variables because of timing bias concerns.
-- Stratify summaries by prior ED use, prior encounter burden, chronic condition count, age group, and length-of-stay category.
-- Review same-day returns and possible transfer-like encounters separately.
-- Consider disease-specific cohorts only if diagnosis grouping logic is defensible from condition records.
+### Prior Utilization Stratification
+
+Prior utilization was categorized into low, medium, and high prior encounter burden in the 12 months before index hospitalization.
+
+| Prior utilization group | Patients | Readmitted | Readmission rate | 30-day follow-up | ED revisit |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Low prior utilization, 0-1 encounters | 88 | 2 | 2.3% | 5.7% | 0.0% |
+| Medium prior utilization, 2-4 encounters | 101 | 3 | 3.0% | 18.8% | 0.0% |
+| High prior utilization, 5+ encounters | 66 | 8 | 12.1% | 47.0% | 3.0% |
+
+This is the clearest dashboard story in the current synthetic cohort: patients with higher prior encounter burden had higher observed readmission, follow-up, and ED revisit rates. In a real health system setting, this type of table could support discussion about whether prior utilization should be used for transition-of-care review or outreach prioritization.
+
+### Prior ED Use Stratification
+
+Prior ED use was summarized as a yes/no utilization marker.
+
+| Prior ED use group | Patients | Readmitted | Readmission rate | 30-day follow-up | ED revisit |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| No prior ED use | 198 | 5 | 2.5% | 18.7% | 0.0% |
+| Any prior ED use | 57 | 8 | 14.0% | 31.6% | 3.5% |
+
+Patients with any prior ED use had a higher observed readmission rate than patients without prior ED use. This should be interpreted as a descriptive utilization signal from synthetic data, not a validated risk factor.
+
+### Follow-Up Window Sensitivity
+
+Observed outpatient follow-up increased as the window widened:
+
+| Follow-up window | Follow-up count | Follow-up percent | Readmission rate with follow-up | Readmission rate without follow-up |
+| --- | ---: | ---: | ---: | ---: |
+| 0-7 days | 23 | 9.0% | 0.0% | 5.6% |
+| 0-14 days | 33 | 12.9% | 9.1% | 4.5% |
+| 0-30 days | 55 | 21.6% | 5.5% | 5.0% |
+
+These results should be described as observed follow-up patterns only. The follow-up groups are not randomized, and timing can be affected by early readmission, illness severity, care access, and scheduling processes.
+
+### Model Sensitivity
+
+Adjusted logistic regression models were fit with and without outpatient follow-up variables:
+
+| Model | Follow-up variable | Converged | Pseudo R-squared | AIC | LLR p-value |
+| --- | --- | --- | ---: | ---: | ---: |
+| No follow-up covariate | None | Yes | 0.0665 | 107.88 | 0.2336 |
+| With 7-day follow-up covariate | 7-day follow-up | No | Not estimable | Not estimable | Not estimable |
+| With 14-day follow-up covariate | 14-day follow-up | Yes | 0.0806 | 108.43 | 0.2181 |
+| With 30-day follow-up covariate | 30-day follow-up | Yes | 0.0665 | 109.88 | 0.3368 |
+
+The 7-day follow-up model could not be estimated because no readmissions occurred among patients with observed 7-day outpatient follow-up in this synthetic cohort, producing sparse-data or separation instability. This is a useful portfolio signal: the analysis identifies a timing and sparse-data problem rather than overinterpreting an unstable coefficient.
+
+Overall, the sensitivity analysis supports a more practical dashboard interpretation: prior utilization is a stronger descriptive story than outpatient follow-up as an adjusted predictor in this small synthetic cohort.
 
 ## Translation to a Real Health System Setting
 
@@ -265,7 +313,8 @@ To reproduce the current outputs:
 2. Run SQL scripts `01` through `08` in `sql/` using DuckDB.
 3. Review aggregate QA outputs in `outputs/validation/`.
 4. Review BI-ready aggregate outputs in `outputs/bi/`.
-5. Run `notebooks/02_descriptive_analysis.ipynb` and `notebooks/03_logistic_regression.ipynb`.
+5. Run `notebooks/02_descriptive_analysis.ipynb`, `notebooks/03_logistic_regression.ipynb`, and `notebooks/04_sensitivity_analysis.ipynb`.
 6. Review analysis outputs in `outputs/analysis/`.
-7. Regenerate professional report figures with `python scripts/generate_professional_figures.py`.
-8. Review report figures in `outputs/figures/`.
+7. Regenerate sensitivity outputs with `python scripts/run_sensitivity_analysis.py` when needed.
+8. Regenerate professional report figures with `python scripts/generate_professional_figures.py`.
+9. Review report figures in `outputs/figures/`.

@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Visual Summary](#visual-summary) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Visual Summary](#visual-summary) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Sensitivity](#sensitivity-and-stratified-analysis) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -120,6 +120,23 @@ Current Tableau subgroup exports include:
 - Age-group comparison: Fisher's exact test, p = 0.4726.
 - Condition-group examples: COPD, chronic kidney disease, and diabetes are flagged as small subgroups because each has fewer than 30 patients.
 
+## Sensitivity and Stratified Analysis
+
+The current analysis now includes a sensitivity layer designed to make the project more useful for healthcare analytics and population health portfolio review. This layer focuses on practical utilization stratification and timing-aware model interpretation rather than adding complex models prematurely.
+
+Key sensitivity outputs include:
+
+- Prior utilization groups: low, medium, and high prior encounter burden.
+- Prior ED use groups: no prior ED use versus any prior ED use in the 12 months before index hospitalization.
+- Observed outpatient follow-up windows: 7-day, 14-day, and 30-day follow-up.
+- Adjusted logistic regression comparisons with outpatient follow-up excluded and included as 7-day, 14-day, or 30-day covariates.
+
+The strongest descriptive story remains prior utilization. In this synthetic cohort, readmission was 2.3% in the low prior-utilization group, 3.0% in the medium group, and 12.1% in the high group. Patients with any prior ED use had a 14.0% readmission rate compared with 2.5% among patients without prior ED use.
+
+Observed outpatient follow-up increased from 9.0% within 7 days to 12.9% within 14 days and 21.6% within 30 days. These are utilization patterns only. The project does not claim that outpatient follow-up prevents readmission.
+
+Model sensitivity results show why timing-aware interpretation matters. The no-follow-up model converged, while the 7-day follow-up model did not converge cleanly because no readmissions occurred among patients with 7-day follow-up in this synthetic cohort. This is documented as an analytic caution rather than treated as a stable effect estimate.
+
 ## Results Overview
 
 The current workflow has completed data profiling, SQL cohort construction, validation QA, aggregate BI output generation, descriptive analysis, and exploratory modeling using local Synthea synthetic CSV data. These results are included to demonstrate reproducible healthcare analytics workflow design, not clinical performance or causal inference.
@@ -128,7 +145,7 @@ The final analytic dataset includes 255 adult patients with a first eligible inp
 
 All-cause inpatient readmission within 30 days occurred for 13 patients, or 5.1% of the cohort. Outpatient follow-up was observed for 9.0% of patients within 7 days, 12.9% within 14 days, and 21.6% within 30 days. ED revisit within 30 days was uncommon in this synthetic cohort at 0.8%, while any post-discharge encounter within 30 days occurred for 37.6% of patients.
 
-The most useful takeaway is operational: the workflow shows how a healthcare analyst can validate EHR-style encounter data, define post-discharge timing windows, produce aggregate utilization measures, and prepare a stakeholder-facing readout. The exploratory logistic regression included 255 observations and 13 readmission events and should be interpreted only as a demonstration of analytic workflow mechanics.
+The most useful takeaway is operational: the workflow shows how a healthcare analyst can validate EHR-style encounter data, define post-discharge timing windows, produce aggregate utilization measures, stratify patients by prior utilization burden, and prepare a stakeholder-facing readout. The exploratory logistic regression included 255 observations and 13 readmission events and should be interpreted only as a demonstration of analytic workflow mechanics.
 
 The full report is available in `report/final_report.md`.
 
@@ -136,7 +153,7 @@ The full report is available in `report/final_report.md`.
 
 The analysis layer includes more than dashboard-level summary statistics. Current aggregate outputs include Table 1 baseline comparisons, post-discharge utilization summaries, risk stratification summaries, and an exploratory adjusted logistic regression model.
 
-The analytic story is that the workflow can move from raw EHR-style extracts to a validated cohort, compare baseline characteristics by readmission status, evaluate post-discharge timing windows, stratify utilization patterns by patient groups, fit an adjusted association model with appropriate limitations, and translate findings into stakeholder questions.
+The analytic story is that the workflow can move from raw EHR-style extracts to a validated cohort, compare baseline characteristics by readmission status, evaluate post-discharge timing windows, stratify utilization patterns by patient groups, compare timing-sensitive model specifications, and translate findings into stakeholder questions.
 
 The clearest descriptive signal in the current synthetic cohort is prior utilization:
 
@@ -151,14 +168,13 @@ Logistic regression remains appropriate for an interpretable adjusted associatio
 
 A real health system analysis with low event counts would consider penalized logistic regression, Firth-style rare-events logistic regression, or a prespecified parsimonious model before any prediction-focused machine learning. More complex machine learning would only be appropriate if the objective changed from explanatory healthcare analytics to validated prediction with enough data for training, testing, calibration, and performance reporting.
 
-The most useful next analyses would be sensitivity analyses that test cohort and timing assumptions:
+Sensitivity outputs now test the core utilization and timing assumptions:
 
-- Compare 7-day, 14-day, and 30-day outpatient follow-up windows.
-- Fit adjusted models with and without outpatient follow-up variables because of timing bias concerns.
-- Stratify summaries by prior utilization burden, such as prior ED use or high prior encounter count.
-- Review same-day returns and possible transfer-like encounters separately.
-- Repeat descriptive summaries for age 65+ versus under 65.
-- Consider disease-specific cohorts only if condition grouping logic is defensible.
+- High prior-utilization patients had a higher observed readmission rate than low or medium prior-utilization patients.
+- Patients with any prior ED use had a higher observed readmission rate than patients with no prior ED use.
+- Follow-up window summaries compare 7-day, 14-day, and 30-day observed outpatient follow-up patterns.
+- Model comparisons are reported with and without follow-up variables because follow-up timing can introduce bias in retrospective EHR analysis.
+- The 7-day follow-up model is flagged as unstable because it did not converge cleanly in this small synthetic cohort.
 
 ## Stakeholder Use Case
 
@@ -247,6 +263,9 @@ Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 - Table 1 baseline characteristics
 - Readmission, outpatient follow-up, and ED revisit summary tables
 - Risk stratification summary
+- Prior utilization and prior ED use stratification summaries
+- Follow-up window sensitivity summary
+- Model comparison sensitivity outputs
 - Exploratory logistic regression results
 - Analysis interpretation document
 - Report-ready figures
@@ -255,7 +274,7 @@ Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 - Lightweight Gradio demo app
 - Reproducibility guide
 
-Future milestones may add sensitivity analyses or expanded dashboard views after the current SQL/QA/BI, analysis, report, and app layers are reviewed.
+Future milestones may add expanded dashboard views, refined visuals, or additional edge-case sensitivity checks after the current SQL/QA/BI, analysis, report, and app layers are reviewed.
 
 ## Portfolio Materials
 

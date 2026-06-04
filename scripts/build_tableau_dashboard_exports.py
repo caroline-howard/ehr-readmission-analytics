@@ -421,7 +421,7 @@ def validate_tableau_outputs(age: pd.DataFrame, condition: pd.DataFrame) -> list
     return checks
 
 
-def build_tableau_exports() -> dict[str, pd.DataFrame]:
+def build_tableau_exports(include_sensitivity: bool = True) -> dict[str, pd.DataFrame]:
     TABLEAU_DIR.mkdir(exist_ok=True)
     inputs = load_inputs()
 
@@ -446,6 +446,12 @@ def build_tableau_exports() -> dict[str, pd.DataFrame]:
     print("\nValidation checks:")
     for message in validation_messages:
         print(f"- {message}")
+
+    if include_sensitivity:
+        from scripts.run_sensitivity_analysis import run_sensitivity_analysis
+
+        sensitivity_outputs = run_sensitivity_analysis()
+        outputs.update(sensitivity_outputs)
 
     return outputs
 
