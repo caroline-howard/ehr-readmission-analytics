@@ -1,6 +1,6 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Visual Summary](#visual-summary) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Sensitivity](#sensitivity-and-stratified-analysis) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Final Results](#final-results-summary) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Sensitivity](#sensitivity-and-stratified-analysis) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -8,22 +8,31 @@ This project demonstrates an end-to-end retrospective healthcare utilization ana
 
 The project is built for healthcare analytics, clinical research analytics, and health system research data analyst roles where reproducibility, data governance, SQL logic, and clear communication are essential.
 
-## Post-Discharge Utilization Analytics Summary
+## Final Results Summary
 
-Synthetic Synthea EHR cohort | Aggregate portfolio dashboard mockup | Not for clinical decision-making
+This project is complete as a portfolio demonstration of a retrospective EHR analytics workflow using synthetic Synthea data. The final result is not a clinical finding; it is a documented analytics workflow showing cohort definition, QA, post-discharge utilization derivation, statistical analysis, sensitivity analysis, and stakeholder-facing interpretation.
 
-![Post-Discharge Utilization Analytics Summary](outputs/figures/post_discharge_utilization_summary_visual.png)
+| Result | Finding |
+| --- | --- |
+| Final analytic cohort | 255 adult patients with one first eligible inpatient encounter |
+| 30-day inpatient readmission | 13 patients, 5.1% |
+| Outpatient follow-up within 7 days | 23 patients, 9.0% |
+| Outpatient follow-up within 14 days | 33 patients, 12.9% |
+| Outpatient follow-up within 30 days | 55 patients, 21.6% |
+| ED revisit within 30 days | 2 patients, 0.8% |
+| Any post-discharge encounter within 30 days | 96 patients, 37.6% |
 
-### Visual Summary
+The clearest descriptive story is prior utilization. Patients with high prior encounter burden had a higher observed 30-day readmission rate than patients with low or medium prior utilization.
 
-This multi-panel visual summarizes the core workflow and analytic outputs:
+| Prior utilization group | Patients | Readmission rate | 30-day follow-up |
+| --- | ---: | ---: | ---: |
+| Low prior utilization, 0-1 encounters | 88 | 2.3% | 5.7% |
+| Medium prior utilization, 2-4 encounters | 101 | 3.0% | 18.8% |
+| High prior utilization, 5+ encounters | 66 | 12.1% | 47.0% |
 
-- A: Cohort attrition from source encounters to final analytic cohort
-- B: Days to readmission among readmitted patients
-- C: 30-day post-discharge utilization KPIs
-- D: Readmission rate by age group
-- E: Cumulative outpatient follow-up timing
-- F: Prior utilization and chronic condition comparison by readmission status
+Prior ED use also provided a practical operational stratification signal: patients with any prior ED use had a 14.0% observed readmission rate compared with 2.5% among patients with no prior ED use.
+
+The honest interpretation is that prior utilization burden is the strongest stakeholder-facing signal in this synthetic cohort. Outpatient follow-up timing is reported as observed utilization only and is not interpreted causally.
 
 ## Research Question
 
@@ -68,7 +77,7 @@ Health system research and population health teams need reproducible workflows f
 
 The project is framed around post-discharge utilization analytics rather than generic readmission prediction. The core workflow focuses on defining an adult inpatient cohort, validating encounter and date logic, deriving outpatient follow-up timing, identifying ED revisits, and measuring all-cause 30-day inpatient readmission.
 
-The current version uses a focused MVP variable set: demographics, index hospitalization dates, length of stay, prior utilization, outpatient follow-up within 7, 14, and 30 days, ED revisit within 30 days when identifiable, and 30-day inpatient readmission. Additional variables such as disease subgroups, discharge disposition, payer, mortality, medication counts, and lab values are treated as exploratory only if the Synthea export supports defensible derivation.
+The completed portfolio version uses a focused MVP variable set: demographics, index hospitalization dates, length of stay, prior utilization, outpatient follow-up within 7, 14, and 30 days, ED revisit within 30 days when identifiable, and 30-day inpatient readmission. Additional variables such as disease subgroups, discharge disposition, payer, mortality, medication counts, and lab values are documented as exploratory extensions rather than required scope.
 
 Outpatient follow-up measures are interpreted as observational utilization measures. This project does not claim that outpatient follow-up causes a change in readmission risk.
 
@@ -95,13 +104,9 @@ Dashboard-ready aggregate tables are available in `outputs/bi/` and can be impor
 - `ed_revisit_table.csv`
 - `demographic_utilization_summary_table.csv`
 
-Report-ready visuals are generated from aggregate synthetic-data outputs and include:
+Report-ready visuals are generated from aggregate synthetic-data outputs and are available in `outputs/figures/`. The root README intentionally emphasizes final results in text rather than relying on figures.
 
-- cohort construction and validation: `outputs/figures/cohort_attrition_flow.png`
-- dashboard-ready BI summary: `outputs/figures/post_discharge_utilization_summary_visual.png`
-- follow-up timing: `outputs/figures/cumulative_outpatient_followup_curve.png`
-- prior utilization signal: `outputs/figures/readmission_by_prior_utilization_group.png`
-- exploratory adjusted association model: `outputs/figures/logistic_regression_forest_plot_professional.png`
+Selected visuals include cohort attrition, follow-up timing, prior utilization, and exploratory model summaries.
 
 Tableau dashboard build materials are available in `tableau_dashboard/`. The package includes aggregate Tableau-ready CSVs, a reproducible export notebook, and a manual build guide. It does not represent a completed or published Tableau workbook.
 
@@ -113,7 +118,7 @@ Subgroup readmission rates in the Tableau exports are descriptive and explorator
 
 The age-group comparison uses Fisher's exact test or chi-square testing where appropriate based on expected cell counts. Condition-group outputs include subgroup sample-size notes, and groups with fewer than 30 patients are flagged for cautious interpretation. These summaries use synthetic Synthea data, are not clinically representative, and should not be interpreted as causal or clinically validated findings.
 
-Current Tableau subgroup exports include:
+Current subgroup outputs include:
 
 - Age under 65: 5.8% readmission, Wilson 95% CI 3.3%-9.8%.
 - Age 65+: 2.1% readmission, Wilson 95% CI 0.4%-11.1%.
@@ -122,7 +127,7 @@ Current Tableau subgroup exports include:
 
 ## Sensitivity and Stratified Analysis
 
-The current analysis now includes a sensitivity layer designed to make the project more useful for healthcare analytics and population health portfolio review. This layer focuses on practical utilization stratification and timing-aware model interpretation rather than adding complex models prematurely.
+The completed analysis includes a sensitivity layer designed to make the project more useful for healthcare analytics and population health portfolio review. This layer focuses on practical utilization stratification and timing-aware model interpretation rather than adding complex models prematurely.
 
 Key sensitivity outputs include:
 
@@ -135,11 +140,11 @@ The strongest descriptive story remains prior utilization. In this synthetic coh
 
 Observed outpatient follow-up increased from 9.0% within 7 days to 12.9% within 14 days and 21.6% within 30 days. These are utilization patterns only. The project does not claim that outpatient follow-up prevents readmission.
 
-Model sensitivity results show why timing-aware interpretation matters. The no-follow-up model converged, while the 7-day follow-up model did not converge cleanly because no readmissions occurred among patients with 7-day follow-up in this synthetic cohort. This is documented as an analytic caution rather than treated as a stable effect estimate.
+Model sensitivity results show why timing-aware interpretation matters. The no-follow-up model converged, while the 7-day follow-up model was not estimable because no readmissions occurred among patients with 7-day follow-up in this synthetic cohort. This is documented as an analytic caution rather than treated as a stable effect estimate.
 
 ## Results Overview
 
-The current workflow has completed data profiling, SQL cohort construction, validation QA, aggregate BI output generation, descriptive analysis, and exploratory modeling using local Synthea synthetic CSV data. These results are included to demonstrate reproducible healthcare analytics workflow design, not clinical performance or causal inference.
+The workflow completed data profiling, SQL cohort construction, validation QA, aggregate BI output generation, descriptive analysis, sensitivity analysis, and exploratory modeling using local Synthea synthetic CSV data. These results are included to demonstrate reproducible healthcare analytics workflow design, not clinical performance or causal inference.
 
 The final analytic dataset includes 255 adult patients with a first eligible inpatient encounter. Validation outputs confirmed one index encounter per patient, no missing primary readmission outcome, and no invalid index encounter start or stop dates in the final analytic dataset.
 
@@ -198,15 +203,17 @@ The current outputs would support discussion of outpatient follow-up access, hig
 - BI/dashboard reporting workflows
 - Report-ready aggregate tables and figures
 - Table 1 descriptive analysis
+- Sensitivity analysis and stratified utilization summaries
 - Exploratory logistic regression
+- Tableau-ready dashboard export package
 - Mock IRB/data governance documentation
 - Lightweight Gradio portfolio demo app
 
 ## Workflow Status
 
-The current repository includes documentation, Synthea data profiling, SQL cohort construction, post-discharge utilization derivation, 30-day readmission logic, validation QA outputs, BI-ready aggregate tables, descriptive analysis notebooks, exploratory logistic regression, report materials, and a lightweight Gradio portfolio demo.
+The current repository includes documentation, Synthea data profiling, SQL cohort construction, post-discharge utilization derivation, 30-day readmission logic, validation QA outputs, BI-ready aggregate tables, descriptive analysis notebooks, sensitivity analysis outputs, exploratory logistic regression, report materials, Tableau-ready exports, and a lightweight Gradio portfolio demo.
 
-Future refinements should focus on improving dashboard design, strengthening stakeholder-facing interpretation, and adding sensitivity analyses only after the current cohort definitions and validation outputs are reviewed.
+This project is ready to serve as a portfolio example of retrospective healthcare analytics workflow design. Future refinements could focus on dashboard design polish or additional edge-case sensitivity checks, but the core analysis and documentation are complete.
 
 ## Repository Structure
 

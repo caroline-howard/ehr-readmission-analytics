@@ -273,6 +273,14 @@ The 7-day follow-up model could not be estimated because no readmissions occurre
 
 Overall, the sensitivity analysis supports a more practical dashboard interpretation: prior utilization is a stronger descriptive story than outpatient follow-up as an adjusted predictor in this small synthetic cohort.
 
+## Final Interpretation
+
+The final analytic story is that prior healthcare utilization is the most useful operational signal in this synthetic post-discharge cohort. Patients with high prior encounter burden and patients with any prior ED use had higher observed 30-day readmission rates than lower-utilization groups. This supports a realistic healthcare analytics interpretation: prior utilization could be used as a stakeholder-facing stratification variable for transition-of-care review, care management discussion, or further cohort refinement.
+
+Outpatient follow-up timing remains important to measure, but it should be interpreted cautiously. Follow-up within 7, 14, and 30 days describes observed post-discharge utilization patterns; it does not show whether follow-up prevents readmission. The sensitivity models reinforce that caution, because the 7-day follow-up model was not estimable in this small synthetic cohort due to sparse-data or separation instability.
+
+The project therefore demonstrates the full workflow expected in retrospective healthcare analytics: define the cohort, validate the data, derive post-discharge outcomes, summarize utilization patterns, test sensitivity to timing assumptions, document limitations, and translate findings into practical stakeholder questions without overclaiming clinical validity.
+
 ## Translation to a Real Health System Setting
 
 In a real hospital or health system analytics environment, this workflow would map to a common post-discharge utilization request from a physician investigator, quality improvement leader, or population health team. The same structure could be adapted to deidentified EHR warehouse tables by replacing Synthea source files with governed encounter, patient, diagnosis, payer, and utilization extracts.
