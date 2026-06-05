@@ -1,12 +1,22 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-[Overview](#project-overview) | [Final Results](#final-results-summary) | [Visuals](#portfolio-visuals) | [Research Question](#research-question) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Sensitivity](#sensitivity-and-stratified-analysis) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+![Retrospective EHR readmission and post-discharge utilization dashboard](outputs/figures/post_discharge_utilization_dashboard_final.png)
+
+[Overview](#project-overview) | [Research Question](#research-question) | [Final Results](#final-results-summary) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Sensitivity](#sensitivity-and-stratified-analysis) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
 This project demonstrates an end-to-end retrospective healthcare utilization analytics workflow using Synthea synthetic EHR data. It simulates a health system analytics request to define an adult inpatient cohort, track core post-discharge utilization measures, identify outpatient follow-up timing, and evaluate factors associated with 30-day inpatient readmission.
 
 The project is built for healthcare analytics, clinical research analytics, and health system research data analyst roles where reproducibility, data governance, SQL logic, and clear communication are essential.
+
+## Research Question
+
+Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, how are outpatient follow-up timing, demographic characteristics, clinical conditions, prior utilization, and discharge-related factors associated with all-cause inpatient readmission within 30 days of discharge?
+
+## What This Project Demonstrates
+
+This project demonstrates the practical workflow behind a retrospective EHR analytics request: profiling raw data extracts, validating encounter classifications, defining an eligible inpatient cohort, deriving post-discharge utilization measures, creating a 30-day readmission outcome, and preparing reproducible analysis-ready outputs.
 
 ## Final Results Summary
 
@@ -34,25 +44,9 @@ Prior ED use also provided a practical operational stratification signal: patien
 
 The honest interpretation is that prior utilization burden is the strongest stakeholder-facing signal in this synthetic cohort. Outpatient follow-up timing is reported as observed utilization only and is not interpreted causally.
 
-## Portfolio Visuals
-
-The figures below summarize the completed portfolio workflow and final analytic story using aggregate synthetic-data outputs only.
-
-![Retrospective EHR readmission and post-discharge utilization dashboard](outputs/figures/post_discharge_utilization_dashboard_final.png)
-
-![Sensitivity and interpretation dashboard](outputs/figures/sensitivity_interpretation_dashboard.png)
+## Healthcare Analytics Workflow Design
 
 ![Validation-first workflow architecture](outputs/figures/workflow_architecture.png)
-
-## Research Question
-
-Among adult patients with a first eligible acute inpatient hospitalization in Synthea synthetic EHR data, how are outpatient follow-up timing, demographic characteristics, clinical conditions, prior utilization, and discharge-related factors associated with all-cause inpatient readmission within 30 days of discharge?
-
-## What This Project Demonstrates
-
-This project demonstrates the practical workflow behind a retrospective EHR analytics request: profiling raw data extracts, validating encounter classifications, defining an eligible inpatient cohort, deriving post-discharge utilization measures, creating a 30-day readmission outcome, and preparing reproducible analysis-ready outputs.
-
-## Healthcare Analytics Workflow Design
 
 This project follows a validation-first analytics workflow common in healthcare operations, population health, and clinical research analytics. Raw synthetic EHR extracts are profiled before cohort construction so available tables, fields, encounter classes, date structures, and missingness patterns are understood before outcome derivation.
 
@@ -138,6 +132,8 @@ Current subgroup outputs include:
 ## Sensitivity and Stratified Analysis
 
 The completed analysis includes a sensitivity layer designed to make the project more useful for healthcare analytics and population health portfolio review. This layer focuses on practical utilization stratification and timing-aware model interpretation rather than adding complex models prematurely.
+
+![Sensitivity and interpretation dashboard](outputs/figures/sensitivity_interpretation_dashboard.png)
 
 Key sensitivity outputs include:
 
