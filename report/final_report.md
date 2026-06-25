@@ -2,15 +2,15 @@
 
 ## Abstract
 
-This project demonstrates a retrospective healthcare analytics workflow using Synthea synthetic EHR data. The analysis defines an adult inpatient cohort, selects the first eligible inpatient encounter as the index hospitalization, derives post-discharge outpatient follow-up timing and ED revisit measures, identifies all-cause 30-day inpatient readmission, validates cohort and temporal logic, and produces aggregate reporting outputs for healthcare operations and research analytics audiences. The final synthetic cohort included 255 adult patients with a first eligible inpatient encounter. The 30-day inpatient readmission rate was 5.1%, outpatient follow-up within 30 days was 21.6%, and ED revisit within 30 days was 0.8%. Sensitivity analyses highlight prior utilization and prior ED use as the clearest descriptive utilization signals in the current synthetic cohort. Exploratory logistic regression models were fit for demonstration only and should not be interpreted as clinical evidence. The project is intended as a portfolio workflow and does not use real patient data.
+This report presents a retrospective healthcare analytics workflow using Synthea synthetic EHR data. The analysis defines an adult inpatient cohort, selects the first eligible inpatient encounter as the index hospitalization, derives post-discharge outpatient follow-up timing and ED revisit measures, identifies all-cause 30-day inpatient readmission, validates cohort and temporal logic, and produces aggregate reporting outputs for healthcare operations and research analytics audiences. The final synthetic cohort included 255 adult patients. The 30-day inpatient readmission rate was 5.1%, outpatient follow-up within 30 days was 21.6%, and ED revisit within 30 days was 0.8%. Prior utilization burden and prior ED use were the clearest descriptive signals in the cohort. Exploratory logistic regression was included as a secondary demonstration analysis and should not be interpreted as clinical evidence. The project uses synthetic data only and is not intended for clinical decision-making.
 
 ## Executive Summary
 
-This report summarizes the current SQL, validation, and BI/dashboard layer of the `ehr-readmission-analytics` portfolio project. The project uses Synthea synthetic EHR data to demonstrate a retrospective healthcare analytics workflow focused on inpatient cohort definition, post-discharge utilization tracking, outpatient follow-up timing, ED revisits, and all-cause 30-day inpatient readmission.
+This report summarizes a validated retrospective healthcare analytics workflow using Synthea synthetic EHR data. The analysis focuses on adult inpatient cohort definition, post-discharge utilization tracking, outpatient follow-up timing, ED revisits, and all-cause 30-day inpatient readmission.
 
-The current milestone includes data profiling, SQL cohort construction, validation QA outputs, aggregate dashboard-ready tables, descriptive analysis outputs, sensitivity analysis outputs, and exploratory logistic regression models. It does not include causal inference.
+The final analytic cohort included 255 adult patients with one index inpatient encounter per patient. The 30-day inpatient readmission rate was 5.1%. Outpatient follow-up within 30 days occurred for 21.6% of patients and is interpreted as an observed utilization measure, not as evidence that follow-up prevents readmission.
 
-The main analytic signal in the current synthetic cohort is prior utilization. Patients with 30-day readmission had higher prior encounter and prior ED visit counts in Table 1, and stratified sensitivity outputs show higher observed readmission rates among patients with high prior utilization or any prior ED use. The exploratory models are included to demonstrate adjusted association reporting and timing-bias awareness, but the event count is too small to support clinical prediction.
+The clearest descriptive signals were prior utilization burden and prior ED use. Patients with readmission had higher prior encounter counts and higher prior ED visit counts than patients without readmission. Stratified sensitivity outputs also showed higher observed readmission rates among patients with high prior utilization or any prior ED use. Exploratory logistic regression was included to demonstrate adjusted association reporting, but the small event count limits interpretation and does not support clinical prediction.
 
 ## Research Question
 
@@ -18,54 +18,29 @@ Among adult patients with a first eligible acute inpatient hospitalization in Sy
 
 ## Data Source
 
-The project uses Synthea synthetic EHR CSV files stored locally in `data/raw/`. Raw CSVs and processed database files are not committed to GitHub. The committed outputs are small aggregate validation and BI tables intended for portfolio review.
-
-No real patient data are included in this repository.
+The project uses Synthea synthetic EHR CSV files stored locally in `data/raw/`. The report uses aggregate validation tables, analysis outputs, and static report figures generated from the synthetic workflow. No real patient data are included.
 
 ## Methods Summary
 
-The SQL workflow uses DuckDB-compatible scripts to:
-
-1. Profile source tables and encounter classes.
-2. Define eligible adult inpatient encounters.
-3. Select the first eligible inpatient encounter as the index encounter.
-4. Derive post-discharge utilization measures.
-5. Derive all-cause 30-day inpatient readmission.
-6. Create the final analysis dataset.
-7. Export aggregate validation QA tables.
-8. Export Power BI/Tableau-ready aggregate tables.
-9. Generate descriptive analysis outputs, sensitivity analyses, and exploratory logistic regression results in notebooks and scripts.
-
-The current workflow intentionally separates data profiling, cohort construction, validation, and dashboard output generation so each layer can be reviewed independently.
+The SQL and Python workflow profiles source encounters, defines eligible adult inpatient encounters, selects the first eligible inpatient encounter as the index hospitalization, derives post-discharge utilization measures, identifies all-cause 30-day inpatient readmission, validates cohort and temporal logic, and generates report-ready aggregate outputs. The workflow separates cohort construction, validation, descriptive analysis, sensitivity analysis, and exploratory modeling so each analytic step can be reviewed independently.
 
 ## Workflow Architecture
 
-The project follows a validation-first SQL and Python workflow. Raw Synthea CSV files remain local, while GitHub contains documentation, SQL scripts, notebooks, validation outputs, BI-ready aggregate tables, report materials, and portfolio visuals.
+The project follows a validation-first SQL and Python workflow. Raw Synthea CSV files remain local, while the report uses aggregate validation outputs, analysis tables, and static figures to communicate cohort construction, post-discharge utilization, and readmission findings.
 
 ![Figure 1. Workflow architecture](../outputs/figures/workflow_architecture.png)
 
 ## Post-Discharge Utilization Analytics Summary
 
-Synthetic Synthea EHR cohort | Aggregate portfolio dashboard mockup | Not for clinical decision-making
+Synthetic Synthea EHR cohort | Static portfolio summary visual | Not for clinical decision-making
 
 ![Figure 2. Post-Discharge Utilization Analytics Summary](../outputs/figures/post_discharge_utilization_dashboard_final.png)
 
-Figure 2. Post-Discharge Utilization Analytics Summary. Multi-panel summary of the synthetic Synthea post-discharge utilization workflow. Panel A shows cohort attrition from source encounters to the final analytic cohort. Panel B shows days to readmission among patients with a 30-day readmission. Panel C summarizes post-discharge encounter types within 30 days. Panel D compares readmission rates across age groups. Panel E shows cumulative outpatient follow-up within 7, 14, and 30 days. Panel F compares prior utilization by readmission status. This figure uses synthetic data only and is intended for portfolio demonstration, not clinical decision-making.
-
-## How to Read Figure 2
-
-- Panel A: Documents the cohort construction pathway and confirms that the final analysis dataset includes 255 adult patients with one index inpatient encounter per patient.
-- Panel B: Shows timing among the 13 patients with 30-day inpatient readmission, with mean days to readmission of 20.98 days.
-- Panel C: Summarizes 30-day post-discharge utilization: any encounter, outpatient follow-up, ED revisit, and readmission.
-- Panel D: Displays descriptive readmission rate variation by age group. Interpret cautiously because several age groups have small cell counts.
-- Panel E: Shows outpatient follow-up accumulation over time, with 9.0% by 7 days, 12.9% by 14 days, and 21.6% by 30 days.
-- Panel F: Highlights the main descriptive signal in the synthetic cohort: patients with readmission had higher prior encounter and prior ED visit counts.
+Figure 2 summarizes the core analytic story in one view: cohort attrition, timing of readmission, post-discharge utilization, outpatient follow-up accumulation, and prior utilization differences by readmission status. The most important takeaway is that prior encounter burden and prior ED use stand out more clearly than outpatient follow-up as descriptive signals in this synthetic cohort.
 
 ## Cohort Construction
 
-The final analysis dataset includes one index encounter per adult patient with a first eligible inpatient encounter.
-
-Panel A of Figure 2 summarizes the cohort attrition process, beginning with 61,459 source encounters and ending with 255 adult patients in the final analytic dataset.
+The final analysis dataset includes one index encounter per adult patient with a first eligible inpatient encounter. Cohort construction began with 61,459 source encounters and ended with 255 adult patients in the final analytic dataset.
 
 | Cohort step | Count |
 | --- | ---: |
@@ -81,7 +56,7 @@ Panel A of Figure 2 summarizes the cohort attrition process, beginning with 61,4
 
 ## Encounter Classification
 
-The source `encounters.csv` file contains distinguishable encounter classes needed for the current MVP definitions.
+The source `encounters.csv` file contains distinguishable encounter classes needed for the inpatient cohort and post-discharge utilization definitions.
 
 | Encounter class | Count | Percent |
 | --- | ---: | ---: |
@@ -107,21 +82,9 @@ Validation checks support the current SQL cohort logic:
 
 Missingness is expected for timing variables that only apply to patients with observed readmission or outpatient follow-up. For example, `days_to_readmission` is missing for patients without a 30-day readmission, and `days_to_first_outpatient_followup` is missing for patients without observed outpatient follow-up.
 
-## Dashboard Layer
+## Static Reporting Outputs
 
-The project includes dashboard-ready aggregate CSV files in `outputs/bi/`:
-
-- `cohort_summary_table.csv`
-- `readmission_kpi_table.csv`
-- `followup_timing_table.csv`
-- `ed_revisit_table.csv`
-- `demographic_utilization_summary_table.csv`
-
-These tables are designed for Power BI or Tableau import and support stakeholder-facing reporting around readmission KPIs, outpatient follow-up timing, ED revisits, cohort demographics, and utilization summaries.
-
-The project also includes a multi-panel healthcare analytics summary visual that illustrates how aggregate outputs could be arranged for a healthcare operations or population health audience.
-
-Panel C and Panel E of Figure 2 summarize the post-discharge utilization measures used for dashboard reporting, including any 30-day encounter, outpatient follow-up, ED revisit, and readmission.
+The project includes report-ready aggregate tables and static summary visuals that support stakeholder-facing interpretation of readmission, follow-up timing, ED revisits, and cohort characteristics.
 
 ## Aggregate Results Snapshot
 
@@ -137,50 +100,30 @@ Panel C and Panel E of Figure 2 summarize the post-discharge utilization measure
 | ED revisit within 30 days | 2 patients, 0.8% |
 | Any post-discharge encounter within 30 days | 96 patients, 37.6% |
 
-Panel B of Figure 2 shows the distribution of days to readmission among the 13 readmitted patients, supporting the report's timing-focused interpretation of post-discharge utilization. Panel E shows that outpatient follow-up accumulates gradually across the 30-day window.
+Figure 4 shows that outpatient follow-up accumulates gradually across the 30-day window. These follow-up measures describe observed post-discharge utilization and should not be interpreted causally.
 
 ![Figure 4. Cumulative outpatient follow-up curve](../outputs/figures/cumulative_outpatient_followup_curve.png)
 
 ## Descriptive Analysis Outputs
 
-The notebook workflow generates aggregate analysis outputs in `outputs/analysis/`:
-
-- `table1_baseline_characteristics.csv`
-- `readmission_summary.csv`
-- `outpatient_followup_summary.csv`
-- `ed_revisit_summary.csv`
-- `risk_stratification_summary.csv`
-- `prior_utilization_stratification.csv`
-- `prior_ed_use_stratification.csv`
-- `followup_window_sensitivity.csv`
-- `model_comparison_sensitivity.csv`
-
-Table 1 compares baseline characteristics by 30-day readmission status using aggregate summaries only. Continuous variables are summarized as mean and standard deviation; categorical variables are summarized as count and percent.
+The analysis outputs include baseline characteristics, readmission summaries, outpatient follow-up summaries, ED revisit summaries, risk stratification tables, prior utilization stratification, prior ED use stratification, follow-up window sensitivity, and model sensitivity results. Table 1 compares baseline characteristics by 30-day readmission status using aggregate summaries only.
 
 ## Analytic Findings
 
-The analysis layer is intended to go beyond dashboard KPI summaries by describing baseline differences, subgroup patterns, and adjusted associations.
-
-In the current synthetic cohort, prior utilization is the clearest descriptive signal:
+Prior utilization was the clearest descriptive signal in the synthetic cohort:
 
 - Prior encounters in the 12 months before index admission were higher among readmitted patients: 4.92 versus 3.66 encounters, p = 0.0405.
 - Prior ED visits in the 12 months before index admission were higher among readmitted patients: 0.69 versus 0.24 visits, p = 0.0005.
 - Outpatient follow-up within 30 days was similar between groups: 23.1% among readmitted patients versus 21.5% among non-readmitted patients.
 - ED revisit within 30 days was rare overall and should not be overinterpreted.
 
-Risk stratification outputs are available in `outputs/analysis/risk_stratification_summary.csv`. These outputs summarize readmission and utilization patterns by selected age, chronic condition burden, and sex groups. Several strata have small event counts, so the purpose is to identify stakeholder questions rather than make stable clinical risk claims.
-
-Panel D of Figure 2 provides a descriptive age-group comparison. These rates should be interpreted as exploratory because of the small number of readmission events.
-
-In a real health system setting, these findings would support discussion of whether prior ED use or broader prior utilization should be used for transition-of-care review, outreach prioritization, or more detailed subgroup analysis.
-
-Panel F of Figure 2 visually summarizes the strongest descriptive signal in the current synthetic cohort: patients with 30-day readmission had higher mean prior encounter and prior ED visit counts than patients without readmission.
+These findings suggest that prior ED use and broader prior utilization may be useful operational signals for transition-of-care review, outreach prioritization, or further subgroup analysis. Age-group and condition-group patterns remain exploratory because several strata have small event counts.
 
 ![Figure 5. Readmission rate by prior utilization group](../outputs/figures/readmission_by_prior_utilization_group.png)
 
-## Statistical Caution for Tableau Subgroup Outputs
+## Statistical Caution for Subgroup Outputs
 
-The Tableau dashboard export package includes additional uncertainty fields for age-group and condition-group readmission summaries. These fields are intended to make subgroup charts more transparent, not to convert the synthetic-data analysis into a clinically validated inference.
+The subgroup outputs include uncertainty fields for age-group and condition-group readmission summaries. These fields are intended to make subgroup figures more transparent, not to convert the synthetic-data analysis into clinically validated inference.
 
 For age group, 30-day readmission was 5.8% among patients under 65, with a Wilson 95% confidence interval of 3.3% to 9.8%, and 2.1% among patients age 65 or older, with a Wilson 95% confidence interval of 0.4% to 11.1%. Fisher's exact test was used for the age-group comparison because at least one expected cell count was less than 5; the exploratory comparison p-value was 0.4726.
 
@@ -193,20 +136,11 @@ For condition groups, readmission rates were exported with Wilson 95% confidence
 | Diabetes | 21 | 2 | 9.5% | 2.7%-28.9% | Small subgroup; rate should be interpreted cautiously. |
 | Hypertension | 74 | 4 | 5.4% | 2.1%-13.1% | Subgroup size >= 30; still descriptive and exploratory. |
 
-These subgroup results are based on synthetic Synthea data and simplified condition flags. They should be interpreted as exploratory dashboard context only. They are not causal findings, not clinically representative estimates, and not a validated risk stratification model.
+These subgroup results are based on synthetic Synthea data and simplified condition flags. They should be interpreted as exploratory reporting context only. They are not causal findings, clinically representative estimates, or a validated risk stratification model.
 
 ## Exploratory Logistic Regression
 
-An exploratory logistic regression model was fit for 30-day inpatient readmission using a parsimonious predictor set:
-
-- Age, per 10 years
-- Male sex
-- Log length of stay
-- Prior encounters in the 12 months before index admission
-- Chronic condition count
-- Outpatient follow-up within 30 days
-
-The model included 255 observations and 13 readmission events. The model converged, with pseudo R-squared of 0.0665. Model coefficients and odds ratios are available in `outputs/analysis/logistic_regression_results.csv`.
+An exploratory logistic regression model was fit for 30-day inpatient readmission using age, sex, log length of stay, prior encounters, chronic condition count, and outpatient follow-up within 30 days. The model included 255 observations and 13 readmission events, so estimates may be unstable and should be interpreted cautiously. Log length of stay was the only statistically significant predictor, but the model should not be interpreted as clinically valid or predictive.
 
 | Predictor | Odds ratio | 95% CI | p-value |
 | --- | ---: | --- | ---: |
@@ -219,21 +153,15 @@ The model included 255 observations and 13 readmission events. The model converg
 
 ![Figure 6. Exploratory logistic regression forest plot](../outputs/figures/logistic_regression_forest_plot_professional.png)
 
-These model results are synthetic-data demonstration outputs. They should not be interpreted as clinically valid estimates.
-
-Logistic regression is appropriate for the primary adjusted association analysis because the outcome is binary and odds ratios are standard in clinical research and healthcare analytics reporting. However, it is not sufficient by itself to tell the analytic story. The current model has only 13 readmission events, so estimates may be unstable and confidence intervals should be interpreted cautiously.
-
-In a real analysis with a larger governed dataset, next modeling steps could include penalized logistic regression, Firth-style rare-events logistic regression, or a prespecified parsimonious adjusted model with validation. Machine learning models would only be appropriate if the objective changed to validated prediction and sufficient data were available for training, testing, calibration, and performance reporting.
+These model results are secondary to the descriptive and stratified findings. In this synthetic cohort, the main analytic story remains prior utilization burden and prior ED use, not model-based prediction.
 
 ## Sensitivity and Stratified Analysis
 
-The sensitivity analysis layer was added to make the current results more useful for a healthcare operations or population health audience. The goal is to show whether the analytic story changes across practical utilization strata and follow-up timing assumptions, not to claim causal effects.
+Sensitivity and stratified analyses were used to test whether the descriptive story changed across practical utilization groups and follow-up timing windows. These analyses are intended for healthcare operations interpretation, not causal inference.
 
-![Figure 7. Sensitivity and interpretation dashboard](../outputs/figures/sensitivity_interpretation_dashboard.png)
+![Figure 7. Sensitivity and interpretation summary visual](../outputs/figures/sensitivity_interpretation_dashboard.png)
 
 ### Prior Utilization Stratification
-
-Prior utilization was categorized into low, medium, and high prior encounter burden in the 12 months before index hospitalization.
 
 | Prior utilization group | Patients | Readmitted | Readmission rate | 30-day follow-up | ED revisit |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -241,11 +169,9 @@ Prior utilization was categorized into low, medium, and high prior encounter bur
 | Medium prior utilization, 2-4 encounters | 101 | 3 | 3.0% | 18.8% | 0.0% |
 | High prior utilization, 5+ encounters | 66 | 8 | 12.1% | 47.0% | 3.0% |
 
-This is the clearest dashboard story in the current synthetic cohort: patients with higher prior encounter burden had higher observed readmission, follow-up, and ED revisit rates. In a real health system setting, this type of table could support discussion about whether prior utilization should be used for transition-of-care review or outreach prioritization.
+Patients with higher prior encounter burden had higher observed readmission, follow-up, and ED revisit rates. In a real health system setting, this type of table could support discussion about whether prior utilization should inform transition-of-care review or outreach prioritization.
 
 ### Prior ED Use Stratification
-
-Prior ED use was summarized as a yes/no utilization marker.
 
 | Prior ED use group | Patients | Readmitted | Readmission rate | 30-day follow-up | ED revisit |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -256,19 +182,15 @@ Patients with any prior ED use had a higher observed readmission rate than patie
 
 ### Follow-Up Window Sensitivity
 
-Observed outpatient follow-up increased as the window widened:
-
 | Follow-up window | Follow-up count | Follow-up percent | Readmission rate with follow-up | Readmission rate without follow-up |
 | --- | ---: | ---: | ---: | ---: |
 | 0-7 days | 23 | 9.0% | 0.0% | 5.6% |
 | 0-14 days | 33 | 12.9% | 9.1% | 4.5% |
 | 0-30 days | 55 | 21.6% | 5.5% | 5.0% |
 
-These results should be described as observed follow-up patterns only. The follow-up groups are not randomized, and timing can be affected by early readmission, illness severity, care access, and scheduling processes.
+Observed outpatient follow-up increased as the window widened. These results describe observed follow-up patterns only. The follow-up groups are not randomized, and timing may be affected by early readmission, illness severity, care access, and scheduling processes.
 
 ### Model Sensitivity
-
-Adjusted logistic regression models were fit with and without outpatient follow-up variables:
 
 | Model | Follow-up variable | Converged | Pseudo R-squared | AIC | LLR p-value |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -277,9 +199,7 @@ Adjusted logistic regression models were fit with and without outpatient follow-
 | With 14-day follow-up covariate | 14-day follow-up | Yes | 0.0806 | 108.43 | 0.2181 |
 | With 30-day follow-up covariate | 30-day follow-up | Yes | 0.0665 | 109.88 | 0.3368 |
 
-The 7-day follow-up model could not be estimated because no readmissions occurred among patients with observed 7-day outpatient follow-up in this synthetic cohort, producing sparse-data or separation instability. This is a useful portfolio signal: the analysis identifies a timing and sparse-data problem rather than overinterpreting an unstable coefficient.
-
-Overall, the sensitivity analysis supports a more practical dashboard interpretation: prior utilization is a stronger descriptive story than outpatient follow-up as an adjusted predictor in this small synthetic cohort.
+The 7-day follow-up model could not be estimated because no readmissions occurred among patients with observed 7-day outpatient follow-up, producing sparse-data or separation instability. Overall, the sensitivity analysis supports a practical interpretation: prior utilization is a stronger descriptive signal than outpatient follow-up as an adjusted predictor in this small synthetic cohort.
 
 ## Final Interpretation
 
@@ -287,29 +207,13 @@ The final analytic story is that prior healthcare utilization is the most useful
 
 Outpatient follow-up timing remains important to measure, but it should be interpreted cautiously. Follow-up within 7, 14, and 30 days describes observed post-discharge utilization patterns; it does not show whether follow-up prevents readmission. The sensitivity models reinforce that caution, because the 7-day follow-up model was not estimable in this small synthetic cohort due to sparse-data or separation instability.
 
-The project therefore demonstrates the full workflow expected in retrospective healthcare analytics: define the cohort, validate the data, derive post-discharge outcomes, summarize utilization patterns, test sensitivity to timing assumptions, document limitations, and translate findings into practical stakeholder questions without overclaiming clinical validity.
+The project demonstrates a realistic retrospective healthcare analytics workflow: validated cohort construction, post-discharge outcome derivation, utilization stratification, sensitivity analysis, and stakeholder-facing interpretation without overclaiming clinical validity.
 
 ## Translation to a Real Health System Setting
 
-In a real hospital or health system analytics environment, this workflow would map to a common post-discharge utilization request from a physician investigator, quality improvement leader, or population health team. The same structure could be adapted to deidentified EHR warehouse tables by replacing Synthea source files with governed encounter, patient, diagnosis, payer, and utilization extracts.
+In a real hospital or health system analytics environment, this workflow would map to a common post-discharge utilization request from a physician investigator, quality improvement leader, or population health team. The same structure could be adapted to governed EHR warehouse tables after data access approval, privacy review, clinical validation of cohort definitions, and comparison against existing operational reporting logic.
 
-Operationally, the workflow would support:
-
-- confirming whether inpatient, outpatient, ambulatory, emergency, and observation encounters are reliably distinguishable
-- agreeing on cohort inclusion and exclusion criteria with clinical stakeholders
-- validating index admission, discharge timing, follow-up windows, and readmission logic
-- documenting how transfers, same-day returns, ED-only revisits, and incomplete follow-up windows are handled
-- producing aggregate QA outputs for analyst and stakeholder review before modeling
-- creating BI-ready tables for readmission KPIs, post-discharge follow-up monitoring, ED revisit reporting, and cohort summaries
-- communicating limitations, data quality concerns, and non-causal interpretation clearly
-
-Additional real-world steps would include IRB or quality-improvement determination, data access approvals, privacy review, code review, clinical validation of definitions, and comparison against known operational reporting logic.
-
-## Interpretation
-
-These results should be interpreted as synthetic-data workflow outputs. They demonstrate cohort construction, validation, temporal logic, and aggregate reporting, but they do not establish clinical validity or causal relationships.
-
-Outpatient follow-up measures are descriptive utilization measures. The current project does not claim that outpatient follow-up reduces or increases readmission risk.
+The strongest practical use would be identifying whether prior utilization and prior ED use should support transition-of-care review or outreach prioritization. The analysis would also help stakeholders distinguish descriptive utilization monitoring from causal claims about whether outpatient follow-up prevents readmission.
 
 ## Limitations
 
@@ -323,14 +227,4 @@ Outpatient follow-up measures are descriptive utilization measures. The current 
 
 ## Reproducibility
 
-To reproduce the current outputs:
-
-1. Place Synthea CSV files in `data/raw/`.
-2. Run SQL scripts `01` through `08` in `sql/` using DuckDB.
-3. Review aggregate QA outputs in `outputs/validation/`.
-4. Review BI-ready aggregate outputs in `outputs/bi/`.
-5. Run `notebooks/02_descriptive_analysis.ipynb`, `notebooks/03_logistic_regression.ipynb`, and `notebooks/04_sensitivity_analysis.ipynb`.
-6. Review analysis outputs in `outputs/analysis/`.
-7. Regenerate sensitivity outputs with `python scripts/run_sensitivity_analysis.py` when needed.
-8. Regenerate professional report figures with `python scripts/generate_professional_figures.py`.
-9. Review report figures in `outputs/figures/`.
+Detailed reproduction steps are better suited for the project README or technical documentation. The main report focuses on the analytic question, validated cohort logic, aggregate findings, sensitivity analyses, and interpretation.

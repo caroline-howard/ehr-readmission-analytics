@@ -1,8 +1,8 @@
 # Retrospective Post-Discharge Utilization Analytics Workflow
 
-![Retrospective EHR readmission and post-discharge utilization dashboard](outputs/figures/post_discharge_utilization_dashboard_final.png)
+![Retrospective EHR readmission and post-discharge utilization summary visual](outputs/figures/post_discharge_utilization_dashboard_final.png)
 
-[Overview](#project-overview) | [Research Question](#research-question) | [Final Results](#final-results-summary) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Dashboard and BI](#dashboard-and-bi-layer) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Sensitivity](#sensitivity-and-stratified-analysis) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
+[Overview](#project-overview) | [Research Question](#research-question) | [Final Results](#final-results-summary) | [Workflow Design](#healthcare-analytics-workflow-design) | [Analytics Focus](#core-analytics-focus) | [Analytic Scope](#analytic-scope) | [Technical Environment](#technical-environment) | [Reporting Outputs](#static-reporting-outputs) | [Subgroup Caution](#statistical-caution-for-subgroup-comparisons) | [Sensitivity](#sensitivity-and-stratified-analysis) | [Results](#results-overview) | [Analysis](#analysis-layer) | [Stakeholder Use](#stakeholder-use-case) | [Skills](#skills-demonstrated) | [Workflow Status](#workflow-status) | [Repository Structure](#repository-structure) | [Data Setup](#data-setup) | [Outputs](#current-outputs) | [Responsible Use](#responsible-use)
 
 ## Project Overview
 
@@ -91,16 +91,13 @@ Outpatient follow-up measures are interpreted as observational utilization measu
 - Python / pandas
 - Jupyter notebooks
 - Synthea synthetic EHR data
-- Power BI or Tableau
 - GitHub workflow with feature branching and pull requests
 
-## Dashboard and BI Layer
+## Static Reporting Outputs
 
-The project also incorporates a healthcare operations and population health dashboard layer intended to simulate stakeholder-facing KPI reporting and utilization analytics workflows commonly used in health systems.
+The project includes report-ready aggregate tables and static summary visuals that support stakeholder-facing interpretation of readmission, follow-up timing, ED revisits, cohort characteristics, prior utilization patterns, subgroup uncertainty, and exploratory model results.
 
-The BI layer is designed around readmission KPIs, follow-up analytics, ED revisit reporting, cohort summaries, and operational healthcare metrics. It is intended to support clear communication of cohort trends and post-discharge utilization patterns without presenting the project as a clinical decision tool. The repository includes dashboard-ready aggregate tables and final portfolio visuals for healthcare analytics portfolio review.
-
-Dashboard-ready aggregate tables are available in `outputs/bi/` and can be imported into Power BI or Tableau:
+Aggregate reporting tables are available in `outputs/bi/`:
 
 - `cohort_summary_table.csv`
 - `readmission_kpi_table.csv`
@@ -108,17 +105,11 @@ Dashboard-ready aggregate tables are available in `outputs/bi/` and can be impor
 - `ed_revisit_table.csv`
 - `demographic_utilization_summary_table.csv`
 
-Report-ready visuals are generated from aggregate synthetic-data outputs and are available in `outputs/figures/`. The root README includes the final dashboard, sensitivity interpretation visual, and workflow architecture visual so reviewers can understand the project quickly.
-
-Selected visuals include cohort attrition, follow-up timing, prior utilization, sensitivity interpretation, workflow architecture, and exploratory model summaries.
-
-Tableau dashboard build materials are available in `tableau_dashboard/`. The package includes aggregate Tableau-ready CSVs, a reproducible export notebook, and a manual build guide. It does not represent a completed or published Tableau workbook.
-
-Together, these materials support cohort attrition reporting, post-discharge utilization KPI reporting, follow-up timing visualization, prior utilization/readmission comparison, subgroup uncertainty review, and exploratory readmission modeling outputs.
+Static report visuals are generated from aggregate synthetic-data outputs and are available in `outputs/figures/`. Selected visuals include cohort attrition, follow-up timing, prior utilization, sensitivity interpretation, workflow architecture, and exploratory model summaries.
 
 ## Statistical Caution for Subgroup Comparisons
 
-Subgroup readmission rates in the Tableau exports are descriptive and exploratory. Wilson 95% confidence intervals are included for age-group and condition-group readmission rates to show uncertainty around small subgroup proportions.
+Subgroup readmission rates in the reporting outputs are descriptive and exploratory. Wilson 95% confidence intervals are included for age-group and condition-group readmission rates to show uncertainty around small subgroup proportions.
 
 The age-group comparison uses Fisher's exact test or chi-square testing where appropriate based on expected cell counts. Condition-group outputs include subgroup sample-size notes, and groups with fewer than 30 patients are flagged for cautious interpretation. These summaries use synthetic Synthea data, are not clinically representative, and should not be interpreted as causal or clinically validated findings.
 
@@ -133,7 +124,7 @@ Current subgroup outputs include:
 
 The completed analysis includes a sensitivity layer designed to make the project more useful for healthcare analytics and population health portfolio review. This layer focuses on practical utilization stratification and timing-aware model interpretation rather than adding complex models prematurely.
 
-![Sensitivity and interpretation dashboard](outputs/figures/sensitivity_interpretation_dashboard.png)
+![Sensitivity and interpretation summary visual](outputs/figures/sensitivity_interpretation_dashboard.png)
 
 Key sensitivity outputs include:
 
@@ -150,7 +141,7 @@ Model sensitivity results show why timing-aware interpretation matters. The no-f
 
 ## Results Overview
 
-The workflow completed data profiling, SQL cohort construction, validation QA, aggregate BI output generation, descriptive analysis, sensitivity analysis, and exploratory modeling using local Synthea synthetic CSV data. These results are included to demonstrate reproducible healthcare analytics workflow design, not clinical performance or causal inference.
+The workflow completed data profiling, SQL cohort construction, validation QA, aggregate reporting output generation, descriptive analysis, sensitivity analysis, and exploratory modeling using local Synthea synthetic CSV data. These results are included to demonstrate reproducible healthcare analytics workflow design, not clinical performance or causal inference.
 
 The final analytic dataset includes 255 adult patients with a first eligible inpatient encounter. Validation outputs confirmed one index encounter per patient, no missing primary readmission outcome, and no invalid index encounter start or stop dates in the final analytic dataset.
 
@@ -162,7 +153,7 @@ The full report is available in `report/final_report.md`.
 
 ## Analysis Layer
 
-The analysis layer includes more than dashboard-level summary statistics. Current aggregate outputs include Table 1 baseline comparisons, post-discharge utilization summaries, risk stratification summaries, and an exploratory adjusted logistic regression model.
+The analysis layer includes more than static summary statistics. Current aggregate outputs include Table 1 baseline comparisons, post-discharge utilization summaries, risk stratification summaries, and an exploratory adjusted logistic regression model.
 
 The analytic story is that the workflow can move from raw EHR-style extracts to a validated cohort, compare baseline characteristics by readmission status, evaluate post-discharge timing windows, stratify utilization patterns by patient groups, compare timing-sensitive model specifications, and translate findings into stakeholder questions.
 
@@ -206,20 +197,19 @@ The current outputs would support discussion of outpatient follow-up access, hig
 - ED revisit utilization measures
 - Data validation and QA
 - Missingness assessment
-- BI/dashboard reporting workflows
+- Static reporting workflows
 - Report-ready aggregate tables and figures
 - Table 1 descriptive analysis
 - Sensitivity analysis and stratified utilization summaries
 - Exploratory logistic regression
-- Tableau-ready dashboard export package
 - Mock IRB/data governance documentation
 - Lightweight Gradio portfolio demo app
 
 ## Workflow Status
 
-The current repository includes documentation, Synthea data profiling, SQL cohort construction, post-discharge utilization derivation, 30-day readmission logic, validation QA outputs, BI-ready aggregate tables, descriptive analysis notebooks, sensitivity analysis outputs, exploratory logistic regression, report materials, Tableau-ready exports, and a lightweight Gradio portfolio demo.
+The current repository includes documentation, Synthea data profiling, SQL cohort construction, post-discharge utilization derivation, 30-day readmission logic, validation QA outputs, report-ready aggregate tables, descriptive analysis notebooks, sensitivity analysis outputs, exploratory logistic regression, report materials, static summary visuals, and a lightweight Gradio portfolio demo.
 
-This project is ready to serve as a portfolio example of retrospective healthcare analytics workflow design. Future refinements could focus on dashboard design polish or additional edge-case sensitivity checks, but the core analysis and documentation are complete.
+This project is ready to serve as a portfolio example of retrospective healthcare analytics workflow design. Future refinements could focus on summary visual polish or additional edge-case sensitivity checks, but the core analysis and documentation are complete.
 
 ## Repository Structure
 
@@ -255,7 +245,7 @@ The profiling step checks which Synthea tables are available, reviews table shap
 
 The current profiling review is documented in `docs/06_synthea_profile_review.md`.
 
-Small aggregate validation and BI outputs are committed under `outputs/validation/` and `outputs/bi/` so reviewers can see the QA and dashboard layers without downloading raw data.
+Small aggregate validation and report-ready outputs are committed under `outputs/validation/` and `outputs/bi/` so reviewers can see QA and aggregate reporting outputs without downloading raw data.
 
 Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 
@@ -268,11 +258,11 @@ Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 - Readmission timing validation
 - Outpatient follow-up timing validation
 - Encounter class distribution
-- BI-ready cohort summary table
-- BI-ready readmission KPI table
-- BI-ready follow-up timing table
-- BI-ready ED revisit table
-- BI-ready demographic/utilization summary table
+- Report-ready cohort summary table
+- Report-ready readmission KPI table
+- Report-ready follow-up timing table
+- Report-ready ED revisit table
+- Report-ready demographic/utilization summary table
 - Table 1 baseline characteristics
 - Readmission, outpatient follow-up, and ED revisit summary tables
 - Risk stratification summary
@@ -283,11 +273,11 @@ Detailed reproduction steps are available in `docs/07_reproducibility_guide.md`.
 - Analysis interpretation document
 - Report-ready figures
 - Current report summary
-- Final dashboard, sensitivity interpretation, and workflow architecture visuals
+- Final summary, sensitivity interpretation, and workflow architecture visuals
 - Lightweight Gradio demo app
 - Reproducibility guide
 
-Future milestones may add expanded dashboard views, refined visuals, or additional edge-case sensitivity checks after the current SQL/QA/BI, analysis, report, and app layers are reviewed.
+Future refinements may add expanded static visuals or additional edge-case sensitivity checks after the current SQL/QA, analysis, report, and app layers are reviewed.
 
 ## Portfolio Materials
 
