@@ -117,7 +117,7 @@ Prior utilization was the clearest descriptive pattern in the synthetic cohort. 
 | Medium prior utilization, 2-4 encounters | 101 | 3 | 3.0% | 18.8% | 0.0% |
 | High prior utilization, 5+ encounters | 66 | 8 | 12.1% | 47.0% | 3.0% |
 
-Patients with higher prior encounter burden had higher observed readmission, follow-up, and ED revisit rates. In a real health system setting, this type of table could support discussion about whether prior utilization should be considered for transition-of-care review, care management discussion, or future cohort refinement.
+Patients with higher prior encounter burden had higher observed readmission, follow-up, and ED revisit rates. In an applied analytics setting, this type of table could support exploratory discussion about cohort refinement, reporting design, or candidate variables for future model development.
 
 | Prior ED use group | Patients | Readmitted | Readmission rate | 30-day follow-up | ED revisit |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -151,7 +151,7 @@ Observed outpatient follow-up increased as the window widened. These results des
 
 ## Conclusion
 
-Version 1 establishes a descriptive validation foundation for the project. It demonstrates cohort construction, temporal outcome engineering, descriptive utilization reporting, and honest interpretation of sparse synthetic data. This foundation can support future predictive risk stratification work using a larger synthetic cohort and stricter discharge-time feature design.
+Version 1 establishes a descriptive validation foundation for the project. It demonstrates cohort construction, temporal outcome engineering, descriptive utilization reporting, and honest interpretation of sparse synthetic data. This foundation can support future analytics work using a larger synthetic cohort and stricter discharge-time feature design.
 
 ## Appendix: Dashboard and Reporting Artifacts
 
@@ -161,4 +161,4 @@ The visuals in this appendix are useful portfolio and reporting artifacts. They 
 
 ![Dashboard B. Post-discharge utilization analytics summary](../outputs/figures/post_discharge_utilization_dashboard_final.png)
 
-![Dashboard C. Sensitivity and interpretation summary](../outputs/figures/sensitivity_interpretation_dashboard.png)
+![Dashboard C. Descriptive stratification and interpretation summary](../outputs/figures/sensitivity_interpretation_dashboard.png)
